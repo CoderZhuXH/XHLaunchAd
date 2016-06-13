@@ -43,7 +43,7 @@
         NSString *url = @"https://www.baidu.com";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     };
-    //3.添加至根控制器上
+    //3.添加至根控制器视图上
     [self.window.rootViewController.view addSubview:launchAd];
     
     [self.window makeKeyAndVisible];
