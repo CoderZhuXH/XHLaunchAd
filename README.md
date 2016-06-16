@@ -1,5 +1,5 @@
 ﻿# XHLaunchAd
-* 几行代码接入启动页广告功能.
+* 几行代码实现启动页广告功能.
 
 ## 效果
 ![image](http://b.hiphotos.baidu.com/image/pic/item/37d3d539b6003af3033cf25c3d2ac65c1038b603.jpg)
