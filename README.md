@@ -15,7 +15,7 @@
 *   1.实现基本启动页广告功能
 
 ## 效果
-![image](http://f.hiphotos.baidu.com/image/pic/item/d788d43f8794a4c200779e0906f41bd5ad6e39bf.jpg)
+![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/DEMO.gif?raw=true)
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage
 *    1.设置方法:在Assets.xcassets中新建LaunchImage<br>
