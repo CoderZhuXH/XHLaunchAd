@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "XHLaunchAd"
-  s.version      = "1.0"
-  s.summary      = "几行代码接入启动页广告功能"
+  s.version      = "1.1"
+  s.summary      = "几行代码实现启动页广告功能"
   s.homepage     = "https://github.com/CoderZhuXH/XHLaunchAd"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.authors      = { "Zhu Xiaohui" => "977950862@qq.com"}

@@ -40,6 +40,11 @@ typedef void(^XHLaunchAdClickBlock)();
 @property (nonatomic, assign) CGRect adFrame;
 
 /**
+ *  是否影藏'倒计时/跳过'按钮(默认显示)
+ */
+@property (nonatomic ,assign) BOOL hideSkip;
+
+/**
  *  初始化启动页广告
  *
  *  @param frame    广告frame
@@ -47,7 +52,7 @@ typedef void(^XHLaunchAdClickBlock)();
  *
  *  @return 启动页广告
  */
-- (instancetype)initWithFrame:(CGRect)frame andDuration:(CGFloat)duration;
+- (instancetype)initWithFrame:(CGRect)frame andDuration:(NSInteger)duration;
 
 /**
  *  设置广告图片urlString

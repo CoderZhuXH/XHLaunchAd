@@ -23,27 +23,38 @@
 
 #import "XHLaunchAd.h"
 
-#define DefaultDuration 3.0;//默认停留时间
+#define DefaultDuration 3;//默认停留时间
 
 @interface XHLaunchAd()
 
 @property(nonatomic,strong)UIImageView *launchImgView;
 @property(nonatomic,strong)UIImageView *adImgView;
-@property(nonatomic,assign)CGFloat duration;
+@property(nonatomic,strong)UIButton *skipButton;
+@property(nonatomic,assign)NSInteger duration;
+@property(nonatomic,copy) dispatch_source_t timer;
 
 @end
 @implementation XHLaunchAd
 
-- (instancetype)initWithFrame:(CGRect)frame andDuration:(CGFloat)duration
+/**
+ *  初始化启动页广告
+ *
+ *  @param frame    广告frame
+ *  @param duration 广告停留时间
+ *
+ *  @return 启动页广告
+ */
+- (instancetype)initWithFrame:(CGRect)frame andDuration:(NSInteger)duration
 {
     self = [super initWithFrame:frame];
     if (self) {
-       
+        
         _adFrame = frame;
         _duration = duration;
         self.frame = [UIScreen mainScreen].bounds;
         [self addSubview:self.launchImgView];
         [self addSubview:self.adImgView];
+        [self addSubview:self.skipButton];
         [self animateStart];
         [self animateEnd];
     }
@@ -72,6 +83,28 @@
     }
     return _adImgView;
 }
+-(UIButton *)skipButton
+{
+    if(_skipButton == nil)
+    {
+        _skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _skipButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-70,30, 60, 30);
+        _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        _skipButton.layer.cornerRadius = 15;
+        _skipButton.layer.masksToBounds = YES;
+        NSInteger duration =DefaultDuration;
+        if(_duration) duration = _duration;
+        [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
+        _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
+        [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
+        [self dispath_tiemr];
+    }
+    return _skipButton;
+}
+-(void)skipAction{
+    
+    [self remove];
+}
 -(void)animateStart
 {
     CGFloat duration = DefaultDuration;
@@ -85,25 +118,48 @@
     } completion:^(BOOL finished) {
     }];
 }
+-(void)dispath_tiemr
+{
+    NSTimeInterval period = 1.0;//每秒执行
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
+    
+    __block NSInteger duration =DefaultDuration;
+    if(_duration) duration = _duration;
+    
+    dispatch_source_set_event_handler(_timer, ^{
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+             duration--;
+            [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
+        });
+    });
+    dispatch_resume(_timer);
+}
 -(void)animateEnd{
     
     CGFloat duration = DefaultDuration;
     if(_duration) duration = _duration;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-       
-        [UIView animateWithDuration:0.8 animations:^{
-            
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-            
-            self.transform=CGAffineTransformMakeScale(1.5, 1.5);
-            
-            self.alpha = 0;
-            
-        } completion:^(BOOL finished) {
-            
-            [self removeFromSuperview];
-        }];
+        
+        [self remove];
     });
+}
+-(void)remove{
+    
+    [UIView animateWithDuration:0.8 animations:^{
+        
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        
+        self.transform=CGAffineTransformMakeScale(1.5, 1.5);
+        
+        self.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        [self removeFromSuperview];
+    }];
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
@@ -115,7 +171,7 @@
 -(UIImage *)launchImage
 {
     CGSize viewSize = [UIScreen mainScreen].bounds.size;
-    NSString *viewOrientation = @"Portrait";//横屏请设置成 @"Landscape"
+    NSString *viewOrientation = @"Portrait";//横屏 @"Landscape"
     NSString *launchImageName = nil;
     NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
     for (NSDictionary* dict in imagesDict)
@@ -129,7 +185,7 @@
             return image;
         }
     }
-    NSLog(@"请添加启动图片!");
+    NSLog(@"请添加启动图片");
     return nil;
 }
 -(void)setAdFrame:(CGRect)adFrame
@@ -137,9 +193,14 @@
     _adFrame = adFrame;
     _adImgView.frame = adFrame;
 }
+-(void)setHideSkip:(BOOL)hideSkip
+{
+    _hideSkip = hideSkip;
+    _skipButton.hidden = hideSkip;
+}
 -(void)imgUrlString:(NSString *)imgUrlString completed:(XHWebImageCompletionBlock)completedBlock
 {
-    [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil completed:completedBlock];
+     [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:XHWebImageRefreshCached completed:completedBlock];
 }
 
 +(void)clearDiskCache

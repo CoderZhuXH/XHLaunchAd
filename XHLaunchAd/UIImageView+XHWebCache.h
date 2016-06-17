@@ -24,6 +24,26 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
+typedef NS_OPTIONS(NSUInteger, XHWebImageOptions) {
+    
+    /**
+     *  有缓存,读取缓存,不重新加载,没缓存先加载,并缓存
+     */
+    XHWebImageDefault = 1 << 0,
+    
+    /**
+     *  只加载,不缓存
+     */
+    XHWebImageOnlyLoad = 1 << 1,
+    
+    /**
+     *  先读缓存,再加载刷新图片和缓存
+     */
+    XHWebImageRefreshCached = 1 << 2
+    
+};
+
 typedef void(^XHWebImageCompletionBlock)(UIImage *image,NSURL *url);
 
 @interface XHWebImageDownloader : NSObject
@@ -40,7 +60,7 @@ typedef void(^XHWebImageCompletionBlock)(UIImage *image,NSURL *url);
 @interface UIImageView (XHWebCache)
 
 /**
- *  异步加载网络图片/带本地缓存
+ *  异步加载网络图片带本地缓存
  *
  *  @param url 图片url
  */
@@ -63,4 +83,13 @@ typedef void(^XHWebImageCompletionBlock)(UIImage *image,NSURL *url);
  */
 - (void)xh_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(XHWebImageCompletionBlock)completedBlock;
 
+/**
+ *  异步加载网络图片/带本地缓存
+ *
+ *  @param url            图片url
+ *  @param placeholder    默认图片
+ *  @param options        缓存机制
+ *  @param completedBlock 加载完成回调
+ */
+-(void)xh_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock;
 @end

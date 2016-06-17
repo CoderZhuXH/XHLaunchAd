@@ -38,13 +38,32 @@
 
 @implementation XHWebImageDownloader
 
-+(void)xh_downLoadImage_asyncWithURL:(NSURL *)url completed:(XHWebImageCompletionBlock)completedBlock;
++(void)xh_downLoadImage_asyncWithURL:(NSURL *)url options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
-    UIImage *image = [self xh_getCacheImageWithURL:url];
-    if(image&&completedBlock)
+    if(!options) options = XHWebImageDefault;
+    if(options&XHWebImageOnlyLoad)
     {
-        completedBlock(image,url);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            UIImage *image = [self xh_downLoadImageWithURL:url];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if(completedBlock)
+                {
+                    completedBlock(image,url);
+                }
+            });
+        });
+        
         return;
+    }
+    UIImage *image0 = [self xh_getCacheImageWithURL:url];
+    if(image0&&completedBlock)
+    {
+        completedBlock(image0,url);
+        
+        if(options&XHWebImageDefault) return;
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -56,12 +75,11 @@
             {
                 completedBlock(image,url);
             }
-            [self xh_saveImage:image imageURL:url];
         });
+        
+        [self xh_saveImage:image imageURL:url];
     });
 }
-
-#pragma mark-private
 +(UIImage *)xh_downLoadImageWithURL:(NSURL *)url{
     
     return [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
@@ -80,13 +98,13 @@
 
 +(void)xh_saveImage:(UIImage *)image imageURL:(NSURL *)url{
     
-    NSData *data = UIImagePNGRepresentation(image);
-    NSString *path = [NSString stringWithFormat:@"%@/%@",[self xh_cacheImagePath],[self xh_md5String:url.absoluteString]];
-    if (data) {
-        BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
-        
-        if (!isOk) DebugLog(@"cache file error for URL: %@", url);
-    }
+        NSData *data = UIImagePNGRepresentation(image);
+        NSString *path = [NSString stringWithFormat:@"%@/%@",[self xh_cacheImagePath],[self xh_md5String:url.absoluteString]];
+        if (data) {
+            BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
+            
+            if (!isOk) DebugLog(@"cache file error for URL: %@", url);
+        }
 }
 + (NSString *)xh_cacheImagePath{
     
@@ -163,18 +181,21 @@
 }
 - (void)xh_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(XHWebImageCompletionBlock)completedBlock
 {
+    [self xh_setImageWithURL:url placeholderImage:placeholder options:XHWebImageDefault completed:completedBlock];
+}
+-(void)xh_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
+{
     if(placeholder) self.image = placeholder;
-    
     if(url)
     {
         __weak __typeof(self)wself = self;
         
-        [XHWebImageDownloader xh_downLoadImage_asyncWithURL:url completed:^(UIImage *image, NSURL *url) {
+        [XHWebImageDownloader xh_downLoadImage_asyncWithURL:url options:options completed:^(UIImage *image, NSURL *url) {
             
             if(!wself) return;
             
             wself.image = image;
-            if(image&&url&&completedBlock)
+            if(image&&completedBlock)
             {
                 completedBlock(image,url);
             }

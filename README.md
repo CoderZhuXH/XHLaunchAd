@@ -1,8 +1,19 @@
 ﻿# XHLaunchAd
-* 几行代码实现启动页广告功能.
+#### 1.几行代码实现启动页广告功能.
+#### 2.无依赖其他第三方框架.不阻塞主控制器加载.
+
+##iOS开发进阶群(群号:537476189),欢迎入群交流,共同进步
+## 版本记录...持续更新...
+#### -下版计划
+*    增加对动态广告支持
+#### -2016.06.17  XHLaunchAd 1.1 更新
+*   1.增加倒计时/跳过按钮
+*   2.优化图片缓存机制
+#### -2016.06.13  XHLaunchAd 1.0 发布
+*   1.实现基本启动页广告功能
 
 ## 效果
-![image](http://b.hiphotos.baidu.com/image/pic/item/37d3d539b6003af3033cf25c3d2ac65c1038b603.jpg)
+![image](http://d.hiphotos.baidu.com/image/pic/item/cf1b9d16fdfaaf51b86c899d845494eef01f7a00.jpg)
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage
 *    1.设置方法:在Assets.xcassets中新建LaunchImage<br>
