@@ -173,7 +173,7 @@
 
 - (void)xh_setImageWithURL:(NSURL *)url
 {
-    [self xh_setImageWithURL:url placeholderImage:nil completed:nil];
+    [self xh_setImageWithURL:url placeholderImage:nil];
 }
 - (void)xh_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
 {
