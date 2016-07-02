@@ -54,17 +54,27 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     };
 ```
+#### 4.其他操作
+```objc
+/**
+ *  清除图片本地缓存
+ */
++(void)clearDiskCache;
+
+/**
+ *  获取缓存图片占用总大小(M)
+ */
++ (float)imagesCacheSize;
+```
 ##  安装
 ### 手动添加:<br>
 *   1.将 XHLaunchAd 文件夹添加到工程目录中<br>
 *   2.导入 XHLaunchAd.h
 
-## CocoaPods:<br>
+### CocoaPods:<br>
 *   1.在 Podfile 中添加 pod 'XHLaunchAd'<br>
 *   2.执行 pod install 或 pod update<br>
 *   3.导入 XHLaunchAd.h
-
-## 如果你发现你执行pod install后,导入的不是最新的,请删除Podfile.lock文件,在执行一次 pod install
 
 ##  系统要求
 *   该项目最低支持 iOS 7.0 和 Xcode 7.0
