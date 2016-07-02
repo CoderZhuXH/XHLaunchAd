@@ -33,7 +33,7 @@
 
 #### 3.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面代码
 ```objc
-    //1.初始化启动页广告(自动添加至视图)
+    //1.初始化启动页广告(初始化后,自动添加至视图,不用手动添加)
     XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height-150) andDuration:5];
     
     //2.设置启动页广告图片的url(必须)
