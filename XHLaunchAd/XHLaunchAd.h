@@ -58,9 +58,10 @@ typedef void(^XHLaunchAdClickBlock)();
  *  设置广告图片urlString
  *
  *  @param imgUrlString   图片urlString
+ *  @param options        缓存机制(默认:XHWebImageRefreshCached)
  *  @param completedBlock 异步加载图片完成回调
  */
--(void)imgUrlString:(NSString *)imgUrlString completed:(XHWebImageCompletionBlock)completedBlock;
+-(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock;
 
 /**
  *  清除图片本地缓存
@@ -68,8 +69,8 @@ typedef void(^XHLaunchAdClickBlock)();
 +(void)clearDiskCache;
 
 /**
- *  获取缓存图片占用总大小
+ *  获取缓存图片占用总大小(M)
  */
-+ (unsigned long long)imagesCacheSize;
++ (float)imagesCacheSize;
 
 @end

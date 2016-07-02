@@ -4,7 +4,7 @@
 //
 //  Created by xiaohui on 16/6/13.
 //  Copyright © 2016年 qiantou. All rights reserved.
-//
+//  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "AppDelegate.h"
 #import "ViewController.h"
@@ -22,18 +22,16 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    
     //设置window 根控制器
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     
-    
-    //1.初始化启动页广告
+    //1.初始化启动页广告(自动添加至视图)
     XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height-150) andDuration:5];
     
     //2.设置启动页广告图片的url(必须)
     NSString *imgUrlString =@"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg";
     
-    [launchAd imgUrlString:imgUrlString completed:^(UIImage *image, NSURL *url) {
+    [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
         //异步加载图片完成回调(若需根据图片实际尺寸,刷新广告frame,可在这里操作)
         //launchAd.adFrame = ...;
     }];
@@ -47,10 +45,7 @@
         NSString *url = @"https://www.baidu.com";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     };
- 
-    //3.添加至根控制器视图上
-    [self.window.rootViewController.view addSubview:launchAd];
-    
+
     [self.window makeKeyAndVisible];
     return YES;
 }

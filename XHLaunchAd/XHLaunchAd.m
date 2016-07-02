@@ -57,10 +57,10 @@
         [self addSubview:self.skipButton];
         [self animateStart];
         [self animateEnd];
+        [self addInWindow];
     }
     return self;
 }
-
 -(UIImageView *)launchImgView
 {
     if(_launchImgView==nil)
@@ -100,6 +100,17 @@
         [self dispath_tiemr];
     }
     return _skipButton;
+}
+-(void)addInWindow
+{
+    //监测DidFinished通知
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        //等DidFinished方法结束后,将其添加至window上(不然会检测是否有rootViewController)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[[UIApplication sharedApplication].delegate window] addSubview:self];
+        });
+    }];
 }
 -(void)skipAction{
     
@@ -198,9 +209,10 @@
     _hideSkip = hideSkip;
     _skipButton.hidden = hideSkip;
 }
--(void)imgUrlString:(NSString *)imgUrlString completed:(XHWebImageCompletionBlock)completedBlock
+-(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
-     [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:XHWebImageRefreshCached completed:completedBlock];
+    if(options==nil) options = XHWebImageRefreshCached;
+     [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:options completed:completedBlock];
 }
 
 +(void)clearDiskCache
@@ -214,7 +226,7 @@
     });
 }
 
-+ (unsigned long long)imagesCacheSize {
++ (float)imagesCacheSize {
     NSString *directoryPath = [XHWebImageDownloader xh_cacheImagePath];
     BOOL isDir = NO;
     unsigned long long total = 0;
@@ -237,7 +249,7 @@
         }
     }
     
-    return total;
+    return total/(1024.0*1024.0);
 }
 
 @end
