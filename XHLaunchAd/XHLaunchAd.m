@@ -211,7 +211,6 @@
 }
 -(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
-    if(options==nil) options = XHWebImageRefreshCached;
      [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:options completed:completedBlock];
 }
 
@@ -252,4 +251,12 @@
     return total/(1024.0*1024.0);
 }
 
+@end
+
+@implementation XHLaunchAd (XHLaunchAdDeprecated_v_1_1)
+
+-(void)imgUrlString:(NSString *)imgUrlString completed:(XHWebImageCompletionBlock)completedBlock
+{
+    [self imgUrlString:imgUrlString options:XHWebImageDefault completed:completedBlock];
+}
 @end

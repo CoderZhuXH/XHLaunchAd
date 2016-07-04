@@ -25,6 +25,9 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+XHWebCache.h"
 
+// 过期
+#define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
+
 typedef void(^XHLaunchAdClickBlock)();
 
 @interface XHLaunchAd : UIView
@@ -58,7 +61,7 @@ typedef void(^XHLaunchAdClickBlock)();
  *  设置广告图片urlString
  *
  *  @param imgUrlString   图片urlString
- *  @param options        缓存机制(默认:XHWebImageRefreshCached)
+ *  @param options        缓存机制(默认:XHWebImageDefault)
  *  @param completedBlock 异步加载图片完成回调
  */
 -(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock;
@@ -72,5 +75,14 @@ typedef void(^XHLaunchAdClickBlock)();
  *  获取缓存图片占用总大小(M)
  */
 + (float)imagesCacheSize;
+
+@end
+
+#pragma mark-过期
+@interface XHLaunchAd (XHLaunchAdDeprecated_v_1_1)
+/**
+ *  此方法已被-(void)imgUrlString:options:completed:代替
+ */
+-(void)imgUrlString:(NSString *)imgUrlString completed:(XHWebImageCompletionBlock)completedBlock XHLaunchAdDeprecated("此方法已被-(void)imgUrlString:options:completed:代替");
 
 @end
