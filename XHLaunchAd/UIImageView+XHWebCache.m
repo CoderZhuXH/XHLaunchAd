@@ -109,7 +109,6 @@
 + (NSString *)xh_cacheImagePath{
     
     NSString *path =[NSHomeDirectory() stringByAppendingPathComponent:@"Library/XHLaunchAdCache"];
-    //DebugLog(@"XHLaunchAdCachePath:%@",path);
     [self xh_checkDirectory:path];
     return path;
     
@@ -136,7 +135,7 @@
     if (error) {
         DebugLog(@"create cache directory failed, error = %@", error);
     } else {
-        
+        DebugLog(@"XHLaunchAdCachePath:%@",path);
         [self xh_addDoNotBackupAttribute:path];
     }
 }
