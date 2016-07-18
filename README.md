@@ -1,18 +1,16 @@
 ﻿# XHLaunchAd
 * 1.几行代码实现启动页广告功能.
-* 2.无依赖其他第三方框架.不阻塞主控制器加载.
+* 2.支持静态/动态广告
+* 3.无依赖其他第三方框架.不阻塞主控制器加载.
 
 ###技术交流群(群号:537476189).
 
 ### ....版本记录....持续更新....
 
-##### -下版计划
-*    增加对动态广告支持<br>
+##### -2016.07.18  Version 1.2(更新)
+*   1.增加对GIF动态广告的支持<br>
 
-##### -2016.07.07  Version 1.1.4(更新)
-*   1.优化<br>
-
-##### -2016.07.04  Version 1.1.3(更新)
+##### -2016.07.04/07  Version 1.1.3/1.1.4(更新)
 *   1.优化<br>
 
 ##### -2016.07.02  Version 1.1.2(更新)
@@ -42,7 +40,7 @@
     //1.初始化启动页广告(初始化后,自动添加至视图,不用手动添加)
     XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height-150) andDuration:5];
     
-    //2.设置启动页广告图片的url(必须)
+    //2.设置启动页广告图片的url(必须)-(支持jpg/png静态图,及gif动态图)
     NSString *imgUrlString =@"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg";
     
     [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {

@@ -28,10 +28,13 @@
     //1.初始化启动页广告(初始化后,自动添加至视图,不用手动添加)
     XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height-150) andDuration:5];
     
-    //2.设置启动页广告图片的url(必须)
-    NSString *imgUrlString =@"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg";
-    
-    [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+    //2.设置启动页广告图片的url(必须)---(支持jpg/png静态图,及gif动态图)
+    //静态图url
+    //NSString *imgUrlString =@"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg";
+    //动态图url
+    NSString *imgUrlString =@"http://s7.sinaimg.cn/middle/8246ad85tb55b187c2946&690";
+
+    [launchAd imgUrlString:imgUrlString options:XHWebImageOnlyLoad completed:^(UIImage *image, NSURL *url) {
         //异步加载图片完成回调(若需根据图片实际尺寸,刷新广告frame,可在这里操作)
         //launchAd.adFrame = ...;
     }];
@@ -45,7 +48,7 @@
         NSString *url = @"https://www.baidu.com";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     };
-
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

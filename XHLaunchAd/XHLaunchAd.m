@@ -107,10 +107,21 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         //等DidFinished方法结束后,将其添加至window上(不然会检测是否有rootViewController)
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+            [self removeLaunchAdInWindow];//确保window上只有一个LaunchAd
             [[[UIApplication sharedApplication].delegate window] addSubview:self];
         });
     }];
+}
+-(void)removeLaunchAdInWindow{
+    
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    for(UIView *view in window.subviews)
+    {
+        if([view isKindOfClass:[XHLaunchAd class]])
+        {
+            [view removeFromSuperview];
+        }
+    }
 }
 -(void)dealloc
 {
@@ -215,6 +226,7 @@
 }
 -(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
+    
      [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:options completed:completedBlock];
 }
 

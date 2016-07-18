@@ -23,6 +23,8 @@
 
 #import "UIImageView+XHWebCache.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <ImageIO/ImageIO.h>
+
 
 #ifdef DEBUG
 #define DebugLog(...) NSLog(__VA_ARGS__)
@@ -67,7 +69,7 @@
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        UIImage *image = [self xh_downLoadImageWithURL:url];
+        UIImage *image = [self xh_downLoadImageAndCacheWithURL:url];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -77,34 +79,46 @@
             }
         });
         
-        [self xh_saveImage:image imageURL:url];
     });
 }
+
 +(UIImage *)xh_downLoadImageWithURL:(NSURL *)url{
     
-    return [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+    if(url==nil) return nil;
+    
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    
+    return [UIImage xh_animatedGIFWithData:data];
+}
++(UIImage *)xh_downLoadImageAndCacheWithURL:(NSURL *)url
+{
+    if(url==nil) return nil;
+    
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    [self xh_saveImageData:data imageURL:url];
+    return [UIImage xh_animatedGIFWithData:data];
     
 }
 +(UIImage *)xh_getCacheImageWithURL:(NSURL *)url
 {
-    if(!url) return nil;
+    if(url==nil) return nil;
     
     NSString *directoryPath = [self xh_cacheImagePath];
     NSString *path = [NSString stringWithFormat:@"%@/%@",
                       directoryPath,[self xh_md5String:url.absoluteString]];
-    return [UIImage imageWithContentsOfFile:path];
     
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [UIImage xh_animatedGIFWithData:data];
 }
 
-+(void)xh_saveImage:(UIImage *)image imageURL:(NSURL *)url{
-    
-        NSData *data = UIImagePNGRepresentation(image);
-        NSString *path = [NSString stringWithFormat:@"%@/%@",[self xh_cacheImagePath],[self xh_md5String:url.absoluteString]];
-        if (data) {
-            BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
-            
-            if (!isOk) DebugLog(@"cache file error for URL: %@", url);
-        }
++(void)xh_saveImageData:(NSData *)data imageURL:(NSURL *)url{
+
+    NSString *path = [NSString stringWithFormat:@"%@/%@",[self xh_cacheImagePath],[self xh_md5String:url.absoluteString]];
+    if (data) {
+        BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
+        
+        if (!isOk) DebugLog(@"cache file error for URL: %@", url);
+    }
 }
 + (NSString *)xh_cacheImagePath{
     
@@ -139,9 +153,7 @@
         [self xh_addDoNotBackupAttribute:path];
     }
 }
-/**
- *  标记无需备份目录
- */
+
 + (void)xh_addDoNotBackupAttribute:(NSString *)path {
     NSURL *url = [NSURL fileURLWithPath:path];
     NSError *error = nil;
@@ -167,7 +179,79 @@
 }
 @end
 
-#pragma mark-XHwebCache
+#pragma mark-XHGIF
+@implementation UIImage(XHGIF)
+
++ (UIImage *)xh_animatedGIFWithData:(NSData *)data{
+    if (!data) {
+        return nil;
+    }
+    
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    
+    size_t count = CGImageSourceGetCount(source);
+    
+    UIImage *animatedImage;
+    
+    if (count <= 1) {
+        animatedImage = [[UIImage alloc] initWithData:data];
+    }
+    else {
+        NSMutableArray *images = [NSMutableArray array];
+        
+        NSTimeInterval duration = 0.0f;
+        
+        for (size_t i = 0; i < count; i++) {
+            CGImageRef image = CGImageSourceCreateImageAtIndex(source, i, NULL);
+            
+            duration += [self xh_frameDurationAtIndex:i source:source];
+            
+            [images addObject:[UIImage imageWithCGImage:image scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp]];
+            
+            CGImageRelease(image);
+        }
+        
+        if (!duration) {
+            duration = (1.0f / 10.0f) * count;
+        }
+        
+        animatedImage = [UIImage animatedImageWithImages:images duration:duration];
+    }
+    
+    CFRelease(source);
+    
+    return animatedImage;
+}
+
++ (float)xh_frameDurationAtIndex:(NSUInteger)index source:(CGImageSourceRef)source {
+    float frameDuration = 0.1f;
+    CFDictionaryRef cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil);
+    NSDictionary *frameProperties = (__bridge NSDictionary *)cfFrameProperties;
+    NSDictionary *gifProperties = frameProperties[(NSString *)kCGImagePropertyGIFDictionary];
+    
+    NSNumber *delayTimeUnclampedProp = gifProperties[(NSString *)kCGImagePropertyGIFUnclampedDelayTime];
+    if (delayTimeUnclampedProp) {
+        frameDuration = [delayTimeUnclampedProp floatValue];
+    }
+    else {
+        
+        NSNumber *delayTimeProp = gifProperties[(NSString *)kCGImagePropertyGIFDelayTime];
+        if (delayTimeProp) {
+            frameDuration = [delayTimeProp floatValue];
+        }
+    }
+    
+    if (frameDuration < 0.011f) {
+        frameDuration = 0.100f;
+    }
+    
+    CFRelease(cfFrameProperties);
+    return frameDuration;
+}
+
+@end
+
+#pragma mark-UIImageView (XHWebCache)
 @implementation UIImageView (XHWebCache)
 
 - (void)xh_setImageWithURL:(NSURL *)url

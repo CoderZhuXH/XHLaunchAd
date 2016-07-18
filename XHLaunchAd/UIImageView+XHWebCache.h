@@ -46,6 +46,7 @@ typedef NS_OPTIONS(NSUInteger, XHWebImageOptions) {
 
 typedef void(^XHWebImageCompletionBlock)(UIImage *image,NSURL *url);
 
+#pragma mark-XHWebImageDownloader
 @interface XHWebImageDownloader : NSObject
 
 /**
@@ -57,6 +58,21 @@ typedef void(^XHWebImageCompletionBlock)(UIImage *image,NSURL *url);
 
 @end
 
+#pragma mark-UIImage(XHGIF)
+@interface UIImage(XHGIF)
+
+/**
+ *  GIFData -> UIImage
+ *
+ *  @param data GIFData
+ *
+ *  @return GIFImage
+ */
++ (UIImage *)xh_animatedGIFWithData:(NSData *)data;
+
+@end
+
+#pragma mark-UIImageView(XHWebCache)
 @interface UIImageView (XHWebCache)
 
 /**
