@@ -25,10 +25,10 @@
 
 ## 效果
 ###静态广告
-![image](http://d.hiphotos.baidu.com/image/pic/item/bba1cd11728b47108ac544b9cbcec3fdfd0323d8.jpg)
+![image](http://d3.freep.cn/3tb_160718183525m26j569478.gif)
 
 ###动态广告
-![image](http://f.hiphotos.baidu.com/image/pic/item/b2de9c82d158ccbf79560c4f11d8bc3eb03541d8.jpg)
+![image](http://d3.freep.cn/3tb_1607181844524nvd569478.gif)
 
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage
