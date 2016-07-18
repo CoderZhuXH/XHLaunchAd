@@ -24,7 +24,12 @@
 ##### -2016.06.13  Version 1.0(发布)
 
 ## 效果
-![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/DEMO.gif?raw=true)
+###静态广告
+![image](http://f.hiphotos.baidu.com/image/pic/item/d788d43f8794a4c200779e0906f41bd5ad6e39bf.jpg)
+
+###动态广告
+![image](http://f.hiphotos.baidu.com/image/pic/item/0dd7912397dda144485f26c7bab7d0a20cf48675.jpg)
+
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage
 *    1.设置方法:在Assets.xcassets中新建LaunchImage<br>
