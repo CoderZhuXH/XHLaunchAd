@@ -34,7 +34,7 @@
     //动态图url
     NSString *imgUrlString =@"http://s7.sinaimg.cn/middle/8246ad85tb55b187c2946&690";
 
-    [launchAd imgUrlString:imgUrlString options:XHWebImageOnlyLoad completed:^(UIImage *image, NSURL *url) {
+    [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
         //异步加载图片完成回调(若需根据图片实际尺寸,刷新广告frame,可在这里操作)
         //launchAd.adFrame = ...;
     }];

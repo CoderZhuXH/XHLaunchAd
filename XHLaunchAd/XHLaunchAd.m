@@ -56,7 +56,7 @@
         [self addSubview:self.adImgView];
         [self addSubview:self.skipButton];
         [self animateStart];
-        [self animateEnd];
+        //[self animateEnd];
         [self addInWindow];
     }
     return self;
@@ -155,23 +155,24 @@
     if(_duration) duration = _duration;
     
     dispatch_source_set_event_handler(_timer, ^{
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-             duration--;
+            duration--;
             [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
+            if(duration==0) [self remove];
         });
     });
     dispatch_resume(_timer);
 }
--(void)animateEnd{
-    
-    CGFloat duration = DefaultDuration;
-    if(_duration) duration = _duration;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self remove];
-    });
-}
+//-(void)animateEnd{
+//    
+//    CGFloat duration = DefaultDuration;
+//    if(_duration) duration = _duration;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        
+//        [self remove];
+//    });
+//}
 -(void)remove{
     
     [UIView animateWithDuration:0.8 animations:^{
@@ -227,7 +228,7 @@
 -(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
     
-     [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:options completed:completedBlock];
+    [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:options completed:completedBlock];
 }
 
 +(void)clearDiskCache
