@@ -56,7 +56,6 @@
         [self addSubview:self.adImgView];
         [self addSubview:self.skipButton];
         [self animateStart];
-        //[self animateEnd];
         [self addInWindow];
     }
     return self;
@@ -164,15 +163,6 @@
     });
     dispatch_resume(_timer);
 }
-//-(void)animateEnd{
-//    
-//    CGFloat duration = DefaultDuration;
-//    if(_duration) duration = _duration;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        
-//        [self remove];
-//    });
-//}
 -(void)remove{
     
     [UIView animateWithDuration:0.8 animations:^{
