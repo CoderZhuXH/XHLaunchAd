@@ -29,7 +29,7 @@
 
 ## 效果
 ###静态广告/动态广告
-![image](http://d3.freep.cn/3tb_160718185058pj0i569478.gif) ![image](http://d2.freep.cn/3tb_160816162120wxou569478.gif) ![image](http://d3.freep.cn/3tb_1607181850570c8q569478.gif)
+![image](http://d3.freep.cn/3tb_160718185058pj0i569478.gif) ![image](http://g.hiphotos.baidu.com/image/pic/item/78310a55b319ebc4194105d58a26cffc1e171644.jpg) ![image](http://d3.freep.cn/3tb_1607181850570c8q569478.gif)
 
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage
