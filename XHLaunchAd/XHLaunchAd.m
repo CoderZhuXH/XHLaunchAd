@@ -77,6 +77,7 @@ static NSInteger const defaultDuration = 5;//默认停留时间
     if(_skipButton == nil)
     {
         _skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _skipButton.hidden = _hideSkip;
         _skipButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-70,30, 60, 30);
         _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         _skipButton.layer.cornerRadius = 15;
@@ -166,11 +167,6 @@ static NSInteger const defaultDuration = 5;//默认停留时间
 {
     _adFrame = adFrame;
     _adImgView.frame = adFrame;
-}
--(void)setHideSkip:(BOOL)hideSkip
-{
-    _hideSkip = hideSkip;
-    _skipButton.hidden = hideSkip;
 }
 
 -(void)imgUrlString:(NSString *)imgUrlString duration:(NSInteger)duration options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
