@@ -79,7 +79,7 @@
         //模拟获取广告url数据请求
         [self requestImageUrl:^(NSString *imgUrl,NSInteger duration) {
         
-            [launchAd imgUrlString:imgUrl duration:duration options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+            [launchAd imgUrlString:imgUrl duration:duration options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                         
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
                 //launchAd.adFrame = ...;
