@@ -10,6 +10,7 @@
 #import "UIImageView+XHWebCache.h"
 
 @interface ViewController ()
+
 @property (weak, nonatomic) IBOutlet UILabel *lab;
 
 @end
@@ -19,11 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"启动页广告";
-    
+    self.navigationItem.title = @"XHLaunchAdExample";
+
     self.lab.text = @"使用说明及注意事项见github:\n https://github.com/CoderZhuXH/XHLaunchAd";
-    
-    NSLog(@"启动广告,不阻塞 主控制器 加载");
     
     // Do any additional setup after loading the view from its nib.
 }

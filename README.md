@@ -1,11 +1,15 @@
 ﻿# XHLaunchAd
 * 1.几行代码实现启动页广告功能.
 * 2.支持静态/动态广告
-* 3.无依赖其他第三方框架.不阻塞主控制器加载.
+* 3.无依赖其他第三方框架.
 
 ###技术交流群(群号:537476189).
 
 ### ....版本记录....持续更新....
+##### -2016.08.16  Version 2.0(更新)
+*   1.修复显示广告前会闪下RootViewController的bug<br>
+*   2.架构重构,API重构,增强实用性
+*   3.抛弃1.2版本前接口,启用新接口,使用性更强,调用更方便.
 
 ##### -2016.07.18  Version 1.2(更新)
 *   1.增加对GIF动态广告的支持<br>
@@ -24,11 +28,8 @@
 ##### -2016.06.13  Version 1.0(发布)
 
 ## 效果
-###静态广告
-![image](http://d3.freep.cn/3tb_160718185058pj0i569478.gif)
-
-###动态广告
-![image](http://d3.freep.cn/3tb_1607181850570c8q569478.gif)
+###静态广告/动态广告
+![image](http://d3.freep.cn/3tb_160718185058pj0i569478.gif)![image](http://d2.freep.cn/3tb_160816162120wxou569478.gif)![image](http://d3.freep.cn/3tb_1607181850570c8q569478.gif)
 
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage
@@ -40,28 +41,31 @@
 *    1.如图<br>
      ![image](http://g.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6000c0f278be150352ac75cb7cc.jpg)
 
-#### 3.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面代码
+#### 3.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
 ```objc
-    //1.初始化启动页广告(初始化后,自动添加至视图,不用手动添加)
-    XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height-150) andDuration:5];
-    
-    //2.设置启动页广告图片的url(必须)-(支持jpg/png静态图,及gif动态图)
-    NSString *imgUrlString =@"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg";
-    
-    [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
-        //异步加载图片完成回调(若需根据图片实际尺寸,刷新广告frame,可在这里操作)
-        //launchAd.adFrame = ...;
+
+    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) hideSkip:NO setAdImage:^(XHLaunchAd *launchAd) {
+        
+        [launchAd imgUrlString:ImgUrlString duration:5 options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+            
+            //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
+            //launchAd.adFrame = ...;
+            
+        }];
+
+    } click:^{
+        
+        //广告点击事件
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.returnoc.com"]];
+        
+    } showFinish:^{
+        
+        //广告展示完成回调:
+        //设置window 根控制器
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+        
     }];
-    
-    //是否影藏'倒计时/跳过'按钮[默认显示](可选)
-    launchAd.hideSkip = NO;
-    
-    //广告点击事件(可选)
-    launchAd.clickBlock = ^()
-    {
-        NSString *url = @"https://www.baidu.com";
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-    };
+
 ```
 #### 4.其他操作
 ```objc

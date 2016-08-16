@@ -15,6 +15,9 @@
 		4B6CF23F1D0E904900F76B47 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B6CF2381D0E904900F76B47 /* ViewController.xib */; };
 		4B6CF2401D0E904900F76B47 /* UIImageView+XHWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CF23B1D0E904900F76B47 /* UIImageView+XHWebCache.m */; };
 		4B6CF2411D0E904900F76B47 /* XHLaunchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CF23D1D0E904900F76B47 /* XHLaunchAd.m */; };
+		4BB62AB01D62F6FB00F3128C /* XHWebImageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB62AAF1D62F6FB00F3128C /* XHWebImageDownload.m */; };
+		4BB62AB31D62F73000F3128C /* UIImage+XHGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB62AB21D62F73000F3128C /* UIImage+XHGIF.m */; };
+		4BB62AB61D62F8D600F3128C /* XHImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB62AB51D62F8D600F3128C /* XHImageCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,12 @@
 		4B6CF23B1D0E904900F76B47 /* UIImageView+XHWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XHWebCache.m"; sourceTree = "<group>"; };
 		4B6CF23C1D0E904900F76B47 /* XHLaunchAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAd.h; sourceTree = "<group>"; };
 		4B6CF23D1D0E904900F76B47 /* XHLaunchAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAd.m; sourceTree = "<group>"; };
+		4BB62AAE1D62F6FB00F3128C /* XHWebImageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHWebImageDownload.h; sourceTree = "<group>"; };
+		4BB62AAF1D62F6FB00F3128C /* XHWebImageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHWebImageDownload.m; sourceTree = "<group>"; };
+		4BB62AB11D62F73000F3128C /* UIImage+XHGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+XHGIF.h"; sourceTree = "<group>"; };
+		4BB62AB21D62F73000F3128C /* UIImage+XHGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XHGIF.m"; sourceTree = "<group>"; };
+		4BB62AB41D62F8D600F3128C /* XHImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHImageCache.h; sourceTree = "<group>"; };
+		4BB62AB51D62F8D600F3128C /* XHImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHImageCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +110,12 @@
 				4B6CF23D1D0E904900F76B47 /* XHLaunchAd.m */,
 				4B6CF23A1D0E904900F76B47 /* UIImageView+XHWebCache.h */,
 				4B6CF23B1D0E904900F76B47 /* UIImageView+XHWebCache.m */,
+				4BB62AAE1D62F6FB00F3128C /* XHWebImageDownload.h */,
+				4BB62AAF1D62F6FB00F3128C /* XHWebImageDownload.m */,
+				4BB62AB41D62F8D600F3128C /* XHImageCache.h */,
+				4BB62AB51D62F8D600F3128C /* XHImageCache.m */,
+				4BB62AB11D62F73000F3128C /* UIImage+XHGIF.h */,
+				4BB62AB21D62F73000F3128C /* UIImage+XHGIF.m */,
 			);
 			path = XHLaunchAd;
 			sourceTree = "<group>";
@@ -175,9 +190,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BB62AB61D62F8D600F3128C /* XHImageCache.m in Sources */,
 				4B6CF2401D0E904900F76B47 /* UIImageView+XHWebCache.m in Sources */,
 				4B6CF23E1D0E904900F76B47 /* ViewController.m in Sources */,
 				4B6CF2411D0E904900F76B47 /* XHLaunchAd.m in Sources */,
+				4BB62AB31D62F73000F3128C /* UIImage+XHGIF.m in Sources */,
+				4BB62AB01D62F6FB00F3128C /* XHWebImageDownload.m in Sources */,
 				4B6CF2291D0E902800F76B47 /* AppDelegate.m in Sources */,
 				4B6CF2261D0E902800F76B47 /* main.m in Sources */,
 			);
@@ -234,7 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -272,7 +290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

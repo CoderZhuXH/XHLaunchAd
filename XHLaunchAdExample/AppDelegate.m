@@ -10,47 +10,113 @@
 #import "ViewController.h"
 #import "XHLaunchAd.h"
 
+//静态广告
+#define ImgUrlString1 @"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg"
+//动态广告
+#define ImgUrlString2 @"http://i1.17173cdn.com/9ih5jd/YWxqaGBf/forum/images/2015/05/09/213417be9ziz2ancctivad.gif"
+
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    //设置window 根控制器
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+    /**
+     *  场景1:广告图片url地址已知
+     */
+    [self example1];
     
-    //1.初始化启动页广告(初始化后,自动添加至视图,不用手动添加)
-    XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height-150) andDuration:5];
     
-    //2.设置启动页广告图片的url(必须)---(支持jpg/png静态图,及gif动态图)
-    //静态图url
-    //NSString *imgUrlString =@"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg";
-    //动态图url
-    NSString *imgUrlString =@"http://s7.sinaimg.cn/middle/8246ad85tb55b187c2946&690";
+    /**
+     *  场景2.广告图片url地址未知,向服务器请求:
+     */
+    
+    //[self example2];
 
-    [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
-        //异步加载图片完成回调(若需根据图片实际尺寸,刷新广告frame,可在这里操作)
-        //launchAd.adFrame = ...;
-    }];
-    
-    //是否影藏'倒计时/跳过'按钮[默认显示](可选)
-    launchAd.hideSkip = NO;
-    
-    //广告点击事件(可选)
-    launchAd.clickBlock = ^()
-    {
-        NSString *url = @"https://www.baidu.com";
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-    };
     
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+#pragma mark-场景1:广告url地址已知
+-(void)example1
+{
+    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) hideSkip:NO setAdImage:^(XHLaunchAd *launchAd) {
+        
+        [launchAd imgUrlString:ImgUrlString2 duration:5 options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+            
+            //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
+            //launchAd.adFrame = ...;
+            
+        }];
+
+    } click:^{
+        
+        //广告点击事件
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.returnoc.com"]];
+        
+    } showFinish:^{
+        
+        //广告展示完成回调:
+        
+        //设置window 根控制器
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+        
+    }];
+}
+
+#pragma mark-场景2.广告url地址未知,向服务器请求
+-(void)example2
+{
+
+    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) hideSkip:NO setAdImage:^(XHLaunchAd *launchAd) {
+        
+        //模拟获取广告url数据请求
+        [self requestImageUrl:^(NSString *imgUrl,NSInteger duration) {
+        
+            [launchAd imgUrlString:imgUrl duration:duration options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+                        
+                //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
+                //launchAd.adFrame = ...;
+                        
+            }];
+                
+        }];
+        
+    } click:^{
+        
+        //广告点击事件:
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.returnoc.com"]];
+        
+    } showFinish:^{
+        
+        //广告展示完成回调:
+        
+        //设置window 根控制器
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+        
+    }];
+}
+
+/**
+ *  模拟:向服务器请求广告Url地址、停留时间
+ *
+ *  @param imgUrl 回调url地址,及停留时间
+ */
+-(void)requestImageUrl:(void(^)(NSString *imgUrl,NSInteger duration))imgUrl{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if(imgUrl)
+        {
+            imgUrl(ImgUrlString1,5);
+        }
+    });
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

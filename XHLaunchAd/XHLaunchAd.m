@@ -1,29 +1,15 @@
 //
 //  XHLaunchAd.m
-
-//  Copyright (c) 2016 XHLaunchAd (https://github.com/CoderZhuXH/XHLaunchAd)
-
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
+//  XHLaunchAdExample
 //
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+//  Created by xiaohui on 16/6/13.
+//  Copyright © 2016年 qiantou. All rights reserved.
+//  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAd.h"
+#import "XHImageCache.h"
 
-#define DefaultDuration 3;//默认停留时间
+static NSInteger const defaultDuration = 5;//默认停留时间
 
 @interface XHLaunchAd()
 
@@ -31,34 +17,39 @@
 @property(nonatomic,strong)UIImageView *adImgView;
 @property(nonatomic,strong)UIButton *skipButton;
 @property(nonatomic,assign)NSInteger duration;
-@property(nonatomic,copy) dispatch_source_t timer;
+@property(nonatomic,copy)dispatch_source_t timer;
+@property(nonatomic,copy)showFinishBlock showFinishBlock;
+@property(nonatomic,copy)clickBlock clickBlock;
+@property(nonatomic,assign)BOOL hideSkip;
 
 @end
 @implementation XHLaunchAd
 
-/**
- *  初始化启动页广告
- *
- *  @param frame    广告frame
- *  @param duration 广告停留时间
- *
- *  @return 启动页广告
- */
-- (instancetype)initWithFrame:(CGRect)frame andDuration:(NSInteger)duration
++(void)showWithAdFrame:(CGRect)frame hideSkip:(BOOL)hide setAdImage:(setAdImageBlock)setAdImage click:(clickBlock)click showFinish:(showFinishBlock)showFinish
 {
-    self = [super initWithFrame:frame];
+    XHLaunchAd *AdVC = [[XHLaunchAd alloc] initWithFrame:frame click:(clickBlock)click showFinish:showFinish];
+    AdVC.hideSkip = hide;
+    [[UIApplication sharedApplication].delegate window].rootViewController = AdVC;
+    if(setAdImage) setAdImage(AdVC);
+}
+- (instancetype)initWithFrame:(CGRect)frame click:(clickBlock)click showFinish:(void(^)())showFinish
+{
+    self = [super init];
     if (self) {
         
         _adFrame = frame;
-        _duration = duration;
-        self.frame = [UIScreen mainScreen].bounds;
-        [self addSubview:self.launchImgView];
-        [self addSubview:self.adImgView];
-        [self addSubview:self.skipButton];
-        [self animateStart];
-        [self addInWindow];
+        _duration = defaultDuration;
+        _showFinishBlock = [showFinish copy];
+        _clickBlock = [click copy];
+        [self.view addSubview:self.launchImgView];
     }
     return self;
+}
+-(void)setupAdImgViewAndSkipButton
+{
+    [self.view addSubview:self.adImgView];
+    [self.view addSubview:self.skipButton];
+    [self animateStart];
 }
 -(UIImageView *)launchImgView
 {
@@ -76,7 +67,6 @@
         _adImgView = [[UIImageView alloc] initWithFrame:_adFrame];
         _adImgView.userInteractionEnabled = YES;
         _adImgView.alpha = 0.2;
-        
         UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
         [_adImgView addGestureRecognizer:tap];
     }
@@ -91,8 +81,7 @@
         _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         _skipButton.layer.cornerRadius = 15;
         _skipButton.layer.masksToBounds = YES;
-        NSInteger duration =DefaultDuration;
-        if(_duration) duration = _duration;
+        NSInteger duration = _duration;
         [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
         _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
@@ -100,40 +89,10 @@
     }
     return _skipButton;
 }
--(void)addInWindow
-{
-    //监测DidFinished通知
-    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-        //等DidFinished方法结束后,将其添加至window上(不然会检测是否有rootViewController)
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self removeLaunchAdInWindow];//确保window上只有一个LaunchAd
-            [[[UIApplication sharedApplication].delegate window] addSubview:self];
-        });
-    }];
-}
--(void)removeLaunchAdInWindow{
-    
-    UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    for(UIView *view in window.subviews)
-    {
-        if([view isKindOfClass:[XHLaunchAd class]])
-        {
-            [view removeFromSuperview];
-        }
-    }
-}
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
--(void)skipAction{
-    
-    [self remove];
-}
+
 -(void)animateStart
 {
-    CGFloat duration = DefaultDuration;
-    if(_duration) duration = _duration;
+    CGFloat duration = _duration;
     duration= duration/4.0;
     if(duration>1.0) duration=1.0;
     [UIView animateWithDuration:duration animations:^{
@@ -150,40 +109,39 @@
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     
-    __block NSInteger duration =DefaultDuration;
-    if(_duration) duration = _duration;
-    
+    __block NSInteger duration =_duration;
     dispatch_source_set_event_handler(_timer, ^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            duration--;
             [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
-            if(duration==0) [self remove];
+            if(duration==0)
+            {
+                [self remove];
+                dispatch_source_cancel(_timer);
+            }
+            duration--;
+
         });
     });
     dispatch_resume(_timer);
 }
 -(void)remove{
     
-    [UIView animateWithDuration:0.8 animations:^{
-        
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        
-        self.transform=CGAffineTransformMakeScale(1.5, 1.5);
-        
-        self.alpha = 0;
-        
-    } completion:^(BOOL finished) {
-        
-        [self removeFromSuperview];
-    }];
+    [UIView transitionWithView:[[UIApplication sharedApplication].delegate window] duration:0.5 options: UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        BOOL oldState=[UIView areAnimationsEnabled];
+        [UIView setAnimationsEnabled:NO];
+        if(_showFinishBlock)  _showFinishBlock();
+        [UIView setAnimationsEnabled:oldState];
+    }completion:NULL];
+    
+}
+-(void)skipAction{
+    
+    [self remove];
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
-    if(self.clickBlock)
-    {
-        self.clickBlock();
-    }
+    if(_clickBlock) _clickBlock();
 }
 -(UIImage *)launchImage
 {
@@ -194,7 +152,6 @@
     for (NSDictionary* dict in imagesDict)
     {
         CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
-        
         if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
         {
             launchImageName = dict[@"UILaunchImageName"];
@@ -215,25 +172,27 @@
     _hideSkip = hideSkip;
     _skipButton.hidden = hideSkip;
 }
--(void)imgUrlString:(NSString *)imgUrlString options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
+
+-(void)imgUrlString:(NSString *)imgUrlString duration:(NSInteger)duration options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
-    
+    if(duration) _duration = duration;
+    [self setupAdImgViewAndSkipButton];
     [_adImgView xh_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:nil options:options completed:completedBlock];
 }
-
 +(void)clearDiskCache
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *path = [XHWebImageDownloader xh_cacheImagePath];
+        NSString *path = [XHImageCache xh_cacheImagePath];
         [fileManager removeItemAtPath:path error:nil];
-        [XHWebImageDownloader xh_checkDirectory:[XHWebImageDownloader xh_cacheImagePath]];
+        [XHImageCache xh_checkDirectory:[XHImageCache xh_cacheImagePath]];
+        
     });
 }
 
-+ (float)imagesCacheSize {
-    NSString *directoryPath = [XHWebImageDownloader xh_cacheImagePath];
++(float)imagesCacheSize {
+    NSString *directoryPath = [XHImageCache xh_cacheImagePath];
     BOOL isDir = NO;
     unsigned long long total = 0;
     
@@ -254,16 +213,6 @@
             }
         }
     }
-    
     return total/(1024.0*1024.0);
-}
-
-@end
-
-@implementation XHLaunchAd (XHLaunchAdDeprecated_v_1_1)
-
--(void)imgUrlString:(NSString *)imgUrlString completed:(XHWebImageCompletionBlock)completedBlock
-{
-    [self imgUrlString:imgUrlString options:XHWebImageDefault completed:completedBlock];
 }
 @end
