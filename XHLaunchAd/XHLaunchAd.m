@@ -211,4 +211,10 @@ static NSInteger const defaultDuration = 5;//默认停留时间
     }
     return total/(1024.0*1024.0);
 }
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+    NSLog(@"__________内存");
+}
+
 @end

@@ -11,9 +11,9 @@
 #import "XHLaunchAd.h"
 
 //静态广告
-#define ImgUrlString1 @"http://img.taopic.com/uploads/allimg/120906/219077-120Z616330677.jpg"
+#define ImgUrlString1 @"http://d3.freep.cn/3tb_160817150320fsa7569478.jpeg"
 //动态广告
-#define ImgUrlString2 @"http://i1.17173cdn.com/9ih5jd/YWxqaGBf/forum/images/2015/05/09/213417be9ziz2ancctivad.gif"
+#define ImgUrlString2 @"http://d3.freep.cn/3tb_160817175437ddi6569478.gif"
 
 @interface AppDelegate ()
 

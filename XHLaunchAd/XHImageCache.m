@@ -29,7 +29,7 @@
     NSString *path = [NSString stringWithFormat:@"%@/%@",[self xh_cacheImagePath],[self xh_md5String:url.absoluteString]];
     if (data) {
         BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
-        
+
         if (!isOk) NSLog(@"cache file error for URL: %@", url);
     }
 }
