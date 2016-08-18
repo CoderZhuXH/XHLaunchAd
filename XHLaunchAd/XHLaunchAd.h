@@ -10,6 +10,15 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+XHWebCache.h"
 
+typedef NS_ENUM(NSInteger,SkipType) {
+    
+    SkipTypeNone      = 0,//无
+    SkipTypeTime      = 1,//跳过
+    SkipTypeText      = 2,//倒计时
+    SkipTypeTimeText  = 3,//倒计时+跳过
+    
+};
+
 @class XHLaunchAd;
 
 typedef void(^clickBlock)();
@@ -26,23 +35,23 @@ typedef void(^showFinishBlock)();
 /**
  *  显示启动广告
  *
- *  @param frame        广告frame
- *  @param hide         是否影藏倒计时按钮(默认:NO)
- *  @param setAdImage   设置AdImage回调
- *  @param click        广告点击事件回调
- *  @param showFinish   广告显示完成回调
+ *  @param frame      广告frame
+ *  @param setAdImage 设置AdImage回调
+ *  @param showFinish 广告显示完成回调
  */
-+(void)showWithAdFrame:(CGRect)frame hideSkip:(BOOL)hide setAdImage:(setAdImageBlock)setAdImage click:(clickBlock)click showFinish:(showFinishBlock)showFinish;
++(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish;
 
 /**
- *  设置广告url图片
+ *  设置广告数据
  *
- *  @param imgUrlString   图片url
+ *  @param imageUrl       图片url
  *  @param duration       广告停留时间
+ *  @param skipType       跳过按钮类型
  *  @param options        图片缓存机制
  *  @param completedBlock 异步加载完图片回调
+ *  @param click          广告点击事件回调
  */
--(void)imgUrlString:(NSString *)imgUrlString duration:(NSInteger)duration options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock;
+-(void)setImageUrl:(NSString*)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click;
 
 /**
  *  清除图片本地缓存

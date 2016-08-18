@@ -27,94 +27,60 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     /**
-     *  场景1:广告图片url地址已知
+     *  启动页广告
      */
-    [self example1];
+    [self example];
     
-    
-    /**
-     *  场景2.广告图片url地址未知,向服务器请求:
-     */
-    
-    //[self example2];
-
     
     [self.window makeKeyAndVisible];
     return YES;
 }
-
-#pragma mark-场景1:广告url地址已知
--(void)example1
+/**
+ *  启动页广告
+ */
+-(void)example
 {
-    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) hideSkip:NO setAdImage:^(XHLaunchAd *launchAd) {
+    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
         
-        [launchAd imgUrlString:ImgUrlString2 duration:5 options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
-            
-            //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
-            //launchAd.adFrame = ...;
-            
-        }];
+        //获取广告数据
+        [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
 
-    } click:^{
-        
-        //广告点击事件
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.returnoc.com"]];
-        
-    } showFinish:^{
-        
-        //广告展示完成回调:
-        
-        //设置window 根控制器
-        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
-        
-    }];
-}
-
-#pragma mark-场景2.广告url地址未知,向服务器请求
--(void)example2
-{
-
-    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) hideSkip:NO setAdImage:^(XHLaunchAd *launchAd) {
-        
-        //模拟获取广告url数据请求
-        [self requestImageUrl:^(NSString *imgUrl,NSInteger duration) {
-        
-            [launchAd imgUrlString:imgUrl duration:duration options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
-                        
+            //设置广告数据
+            [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
+                
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
                 //launchAd.adFrame = ...;
-                        
-            }];
                 
+            } click:^{
+                
+                //广告点击事件
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
+                
+            }];
+         
         }];
-        
-    } click:^{
-        
-        //广告点击事件:
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.returnoc.com"]];
-        
+ 
     } showFinish:^{
         
         //广告展示完成回调:
-        
-        //设置window 根控制器
+        //设置window根控制器
         self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
         
     }];
 }
 
 /**
- *  模拟:向服务器请求广告Url地址、停留时间
+ *  模拟:向服务器请求广告数据
  *
- *  @param imgUrl 回调url地址,及停留时间
+ *  @param imageData 回调imageUrl,及停留时间,跳转链接
  */
--(void)requestImageUrl:(void(^)(NSString *imgUrl,NSInteger duration))imgUrl{
-
+-(void)requestImageData:(void(^)(NSString *imgUrl,NSInteger duration,NSString *openUrl))imageData{
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        if(imgUrl)
+        if(imageData)
         {
-            imgUrl(ImgUrlString1,5);
+            imageData(ImgUrlString2,6,@"http://www.returnoc.com");
         }
     });
 }

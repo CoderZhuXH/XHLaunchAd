@@ -5,69 +5,53 @@
 
 ###技术交流群(群号:537476189).
 
-### ....版本记录....持续更新....
-##### -2016.08.16  Version 2.0(更新)
-*   1.修复显示广告前会闪下RootViewController的bug<br>
-*   2.架构重构,API重构,增强实用性
-*   3.抛弃1.2版本前接口,启用新接口,使用性更强,调用更方便.
-
-##### -2016.07.18  Version 1.2(更新)
-*   1.增加对GIF动态广告的支持<br>
-
-##### -2016.07.04/07  Version 1.1.3/1.1.4(更新)
-*   1.优化<br>
-
-##### -2016.07.02  Version 1.1.2(更新)
-*   1.初始化修改(初始化后自动添加到视图)<br>
-*   2.设置广告图片URLString时,增加设置缓存机制选项<br>
-
-##### -2016.06.17  Version 1.1(更新)
-*   1.增加倒计时/跳过按钮<br>
-*   2.优化图片缓存机制<br>
-
-##### -2016.06.13  Version 1.0(发布)
+### 更新记录:
+*    2016.08.18 -- v2.1   -->API微调,增加设置跳过按钮类型选项<br>
+*    2016.08.16 -- v2.0   -->1.修复显示广告前RootViewController闪现bug; 2.API重构,增强实用性<br>
+*    2016.07.18 -- v1.2   -->增加对GIF动态广告的支持<br>
+*    2016.07.07 -- v1.1.4 -->优化<br>
+*    2016.07.02 -- v1.1.2 -->增加设置缓存机制选项<br>
+*    2016.06.17 -- v1.1   -->增加倒计时/跳过按钮<br>
+*    2016.06.13 -- v1.0
 
 ## 效果
 ###静态广告/动态广告
 ![image](http://d3.freep.cn/3tb_160817175652bd5i569478.gif) ![image](http://d2.freep.cn/3tb_160817175653qt2h569478.gif)
 
 ## 使用方法
-#### 1.设置项目启动页为LaunchImage
-*    1.设置方法:在Assets.xcassets中新建LaunchImage<br>
-     2.在项目`TARGETS->General->App Icons and Launch Images`中设置 `Launch Images Source` 为LaunchImage,并将`Launch Screen File` 设为空(如图)<br>
-     ![image](http://g.hiphotos.baidu.com/image/pic/item/5bafa40f4bfbfbed65801e4370f0f736afc31f34.jpg)
-
-#### 2.在LaunchImage 添加相应启动图片<br>
-*    1.如图<br>
-     ![image](http://g.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6000c0f278be150352ac75cb7cc.jpg)
-
-#### 3.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
+#### 1.设置项目启动页为LaunchImage,怎么设置? 请google、baidu、或 [戳这里>>>](http://www.returnoc.com)
+#### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
 ```objc
 
-    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) hideSkip:NO setAdImage:^(XHLaunchAd *launchAd) {
-        
-        [launchAd imgUrlString:ImgUrlString duration:5 options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+    [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
             
-            //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
-            //launchAd.adFrame = ...;
-            
-        }];
-
-    } click:^{
-        
-        //广告点击事件
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.returnoc.com"]];
-        
+            //广告图片地址
+            NSString *imgUrl = @"http://d3.freep.cn/3tb_160817150320fsa7569478.jpeg";
+            //广告停留时间
+            NSInteger duration = 6;
+            //广告点击跳转链接
+            NSString *openUrl = @"http://www.returnoc.com";
+            //设置广告数据
+            [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
+                
+                //异步加载图片完成回调,若需根据图片尺寸,刷新广告frame,可在这里操作
+                //launchAd.adFrame = ...;
+                
+            } click:^{
+                
+                //广告点击事件
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
+                
+            }];
     } showFinish:^{
         
-        //广告展示完成回调:
-        //设置window 根控制器
+        //广告展示完成回调,设置window根控制器
         self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
         
     }];
 
 ```
-#### 4.其他操作
+#### 3.其他操作
 ```objc
 /**
  *  清除图片本地缓存
@@ -80,16 +64,16 @@
 + (float)imagesCacheSize;
 ```
 ##  安装
-### 手动添加:<br>
+### 1.手动添加:<br>
 *   1.将 XHLaunchAd 文件夹添加到工程目录中<br>
 *   2.导入 XHLaunchAd.h
 
-### CocoaPods:<br>
+### 2.CocoaPods:<br>
 *   1.在 Podfile 中添加 pod 'XHLaunchAd'<br>
 *   2.执行 pod install 或 pod update<br>
 *   3.导入 XHLaunchAd.h
 
-### Tips
+### 3.Tips
 *   如果你发现你执行pod install后,导入的不是最新版本,请删除Podfile.lock文件,在执行一次 pod install
 
 ##  系统要求
