@@ -8,6 +8,7 @@
 
 #import "XHLaunchAd.h"
 #import "XHImageCache.h"
+#import "UIButton+XHEnlarged.h"
 
 //未设置广告数据,默认停留时间
 static NSInteger const defaultDuration = 5;
@@ -134,6 +135,7 @@ static NSInteger const defaultDuration = 5;
         _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         _skipButton.layer.cornerRadius = 15;
         _skipButton.layer.masksToBounds = YES;
+        [_skipButton setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];//扩大点击区域
         _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
         if(!_duration) _duration = defaultDuration;
@@ -235,7 +237,11 @@ static NSInteger const defaultDuration = 5;
 
 -(void)skipAction{
     
-    [self remove];
+    if(_skipType != SkipTypeTime)
+    {
+        if (_timer) dispatch_source_cancel(_timer);
+        [self remove];
+    }
 }
 
 -(void)tapAction:(UITapGestureRecognizer *)tap

@@ -13,8 +13,8 @@
 typedef NS_ENUM(NSInteger,SkipType) {
     
     SkipTypeNone      = 0,//无
-    SkipTypeTime      = 1,//跳过
-    SkipTypeText      = 2,//倒计时
+    SkipTypeTime      = 1,//倒计时
+    SkipTypeText      = 2,//跳过
     SkipTypeTimeText  = 3,//倒计时+跳过
     
 };
