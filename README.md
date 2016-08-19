@@ -17,7 +17,7 @@
 
 ## 效果
 ###静态广告/动态广告
-![image](http://d3.freep.cn/3tb_160817175652bd5i569478.gif) ![image](http://d2.freep.cn/3tb_160817175653qt2h569478.gif)
+![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot02.gif)
 
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage,怎么设置? 请google、baidu、或 [戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImage-set.md)
