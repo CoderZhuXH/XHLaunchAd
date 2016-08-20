@@ -1,7 +1,9 @@
 ﻿# XHLaunchAd
-* 1.几行代码实现启动页广告功能.
-* 2.支持静态/动态广告
-* 3.无依赖其他第三方框架.
+* 1.几行代码接入启动页广告.
+* 2.支持全屏/半屏广告.
+* 3.支持静态/动态广告.
+* 4.支持广告点击.
+* 5.无依赖其他第三方框架.
 
 ###技术交流群(群号:537476189).
 
@@ -18,12 +20,39 @@
 ## 效果
 ###静态广告/动态广告
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot02.gif)
-
+##API
+*    一共提供两个API
+*    1.初始化方法
+```objc
+/**
+ *  显示启动广告
+ *
+ *  @param frame      广告frame
+ *  @param setAdImage 设置AdImage回调
+ *  @param showFinish 广告显示完成回调
+ */
++(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish;
+```
+*    2.数据源方法
+```objc
+/**
+ *  设置广告数据
+ *
+ *  @param imageUrl       图片url
+ *  @param duration       广告停留时间
+ *  @param skipType       跳过按钮类型
+ *  @param options        图片缓存机制
+ *  @param completedBlock 异步加载完图片回调
+ *  @param click          广告点击事件回调
+ */
+-(void)setImageUrl:(NSString*)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click;
+```
 ## 使用方法
 #### 1.设置项目启动页为LaunchImage,怎么设置? 请google、baidu、或 [戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImage-set.md)
 #### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
 ```objc
-
+    
+    //1.显示启动广告
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
             
             //广告图片地址
@@ -32,7 +61,8 @@
             NSInteger duration = 6;
             //广告点击跳转链接
             NSString *openUrl = @"http://www.returnoc.com";
-            //设置广告数据
+
+            //2.设置广告数据
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调,若需根据图片尺寸,刷新广告frame,可在这里操作
@@ -47,7 +77,7 @@
     } showFinish:^{
         
         //广告展示完成回调,设置window根控制器
-        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[UIViewController alloc] init]];
         
     }];
 
