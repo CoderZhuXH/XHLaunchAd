@@ -11,9 +11,9 @@
 #import "XHLaunchAd.h"
 
 //静态广告
-#define ImgUrlString1 @"http://d3.freep.cn/3tb_160817150320fsa7569478.jpeg"
+#define ImgUrlString1 @"http://d.hiphotos.baidu.com/image/pic/item/14ce36d3d539b60071473204e150352ac75cb7f3.jpg"
 //动态广告
-#define ImgUrlString2 @"http://d3.freep.cn/3tb_160817175437ddi6569478.gif"
+#define ImgUrlString2 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
 
 @interface AppDelegate ()
 
@@ -40,12 +40,13 @@
  */
 -(void)example
 {
+    //1.显示启动页广告
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
         
         //获取广告数据
         [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
 
-            //设置广告数据
+            //2.设置广告数据
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)

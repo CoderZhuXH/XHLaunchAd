@@ -74,6 +74,7 @@
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
                 
             }];
+            
     } showFinish:^{
         
         //广告展示完成回调,设置window根控制器
