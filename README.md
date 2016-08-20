@@ -56,7 +56,7 @@
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
             
             //广告图片地址
-            NSString *imgUrl = @"http://d3.freep.cn/3tb_160817150320fsa7569478.jpeg";
+            NSString *imgUrl = @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg";
             //广告停留时间
             NSInteger duration = 6;
             //广告点击跳转链接
