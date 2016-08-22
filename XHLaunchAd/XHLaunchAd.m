@@ -10,8 +10,11 @@
 #import "XHImageCache.h"
 #import "UIButton+XHEnlarged.h"
 
-//未设置广告数据,默认停留时间
-static NSInteger const defaultDuration = 5;
+/**
+ *  未检测到广告数据,启动页默认停留时间
+ */
+static NSInteger const noDataDefaultDuration = 3;
+
 
 @interface XHLaunchAd()
 
@@ -19,11 +22,12 @@ static NSInteger const defaultDuration = 5;
 @property(nonatomic,strong)UIImageView *adImgView;
 @property(nonatomic,strong)UIButton *skipButton;
 @property(nonatomic,assign)NSInteger duration;
-@property(nonatomic,copy)dispatch_source_t defaultTimer;
+@property(nonatomic,copy)dispatch_source_t noDataTimer;
 @property(nonatomic,copy)dispatch_source_t timer;
 @property(nonatomic,copy)showFinishBlock showFinishBlock;
 @property(nonatomic,copy)clickBlock clickBlock;
 @property(nonatomic,assign)SkipType skipType;
+@property(nonatomic,assign)BOOL isShowFinish;
 
 @end
 @implementation XHLaunchAd
@@ -37,6 +41,7 @@ static NSInteger const defaultDuration = 5;
 
 -(void)setImageUrl:(NSString *)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click
 {
+    if(_isShowFinish) return;
     _duration = duration;
     _skipType = skipType;
     _clickBlock = [click copy];
@@ -89,10 +94,10 @@ static NSInteger const defaultDuration = 5;
     if (self) {
         
         _adFrame = frame;
-        _duration = defaultDuration;
+        _noDataDuration = noDataDefaultDuration;
         _showFinishBlock = [showFinish copy];
         [self.view addSubview:self.launchImgView];
-        [self startDetaultDispath_tiemr];
+        [self startNoDataDispath_tiemr];
     }
     return self;
 }
@@ -138,7 +143,7 @@ static NSInteger const defaultDuration = 5;
         [_skipButton setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];//扩大点击区域
         _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
-        if(!_duration) _duration = defaultDuration;
+        if(!_duration) _duration = 5;//停留时间为nil 默认5s
         if(!_skipType) _skipType = SkipTypeTimeText;
         [self skipButtonTitleWithDuration:_duration];
         [self startDispath_tiemr];
@@ -188,31 +193,32 @@ static NSInteger const defaultDuration = 5;
     }];
 }
 
--(void)startDetaultDispath_tiemr
+-(void)startNoDataDispath_tiemr
 {
     NSTimeInterval period = 1.0;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    _defaultTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(_defaultTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
+    _noDataTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(_noDataTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     
-    __block NSInteger duration = defaultDuration;
-    dispatch_source_set_event_handler(_defaultTimer, ^{
+    __block NSInteger duration = _noDataDuration;
+    dispatch_source_set_event_handler(_noDataTimer, ^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(duration==0)
             {
-                dispatch_source_cancel(_defaultTimer);
+                dispatch_source_cancel(_noDataTimer);
+                
                 [self remove];
             }
             duration--;
         });
     });
-    dispatch_resume(_defaultTimer);
+    dispatch_resume(_noDataTimer);
 }
 
 -(void)startDispath_tiemr
 {
-    dispatch_source_cancel(_defaultTimer);
+    if(_noDataTimer) dispatch_source_cancel(_noDataTimer);
     
     NSTimeInterval period = 1.0;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -227,6 +233,7 @@ static NSInteger const defaultDuration = 5;
             if(duration==0)
             {
                 dispatch_source_cancel(_timer);
+                
                 [self remove];
             }
             duration--;
@@ -274,12 +281,19 @@ static NSInteger const defaultDuration = 5;
     _adFrame = adFrame;
     _adImgView.frame = adFrame;
 }
-
+-(void)setNoDataDuration:(NSInteger)noDataDuration
+{
+    if(noDataDuration<1) noDataDuration=1;
+    _noDataDuration = noDataDuration;
+    dispatch_source_cancel(_noDataTimer);
+    [self startNoDataDispath_tiemr];
+}
 -(void)remove{
     
     [UIView transitionWithView:[[UIApplication sharedApplication].delegate window] duration:0.5 options: UIViewAnimationOptionTransitionCrossDissolve animations:^{
         BOOL oldState=[UIView areAnimationsEnabled];
         [UIView setAnimationsEnabled:NO];
+        _isShowFinish = YES;
         if(_showFinishBlock)  _showFinishBlock();
         [UIView setAnimationsEnabled:oldState];
     }completion:NULL];

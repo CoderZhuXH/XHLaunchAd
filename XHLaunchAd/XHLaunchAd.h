@@ -28,6 +28,12 @@ typedef void(^showFinishBlock)();
 @interface XHLaunchAd : UIViewController
 
 /**
+ *  未检测到广告数据,启动页停留时间(默认3s)(最小1s)
+ *  请在向服务器请求广告数据前,设置此属性
+ */
+@property (nonatomic, assign) NSInteger noDataDuration;
+
+/**
  *  广告frame
  */
 @property (nonatomic, assign) CGRect adFrame;

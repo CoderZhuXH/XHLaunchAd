@@ -8,6 +8,7 @@
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
+*    2016.08.22 -- v2.1.2   -->增加未检测到广告数据,设置启动页停留时间属性<br>  
 *    2016.08.19 -- v2.1.1   -->跳过按钮bug修复<br>
 *    2016.08.18 -- v2.1.0   -->API微调,增加设置跳过按钮类型选项<br>
 *    2016.08.16 -- v2.0   -->1.修复显示广告前RootViewController闪现bug; 2.API重构,增强实用性<br>
@@ -55,6 +56,9 @@
     //1.显示启动广告
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
             
+            //未检测到广告数据,启动页停留时间,默认3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
+            //launchAd.noDataDuration = 4;
+
             //广告图片地址
             NSString *imgUrl = @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg";
             //广告停留时间

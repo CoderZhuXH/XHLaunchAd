@@ -17,6 +17,10 @@
 
 @implementation ViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"进入首页");
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -40,13 +40,20 @@
  */
 -(void)example
 {
-    //1.显示启动页广告
+    /**
+     *  1.显示启动页广告
+     */
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
+        
+        //未检测到广告数据,启动页停留时间,默认3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
+        //launchAd.noDataDuration = 4;
         
         //获取广告数据
         [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {
-
-            //2.设置广告数据
+            
+            /**
+             *  2.设置广告数据
+             */
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
