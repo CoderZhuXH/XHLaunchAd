@@ -70,8 +70,7 @@
  
     } showFinish:^{
         
-        //广告展示完成回调:
-        //设置window根控制器
+        //广告展示完成回调,设置window根控制器
         self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
         
     }];

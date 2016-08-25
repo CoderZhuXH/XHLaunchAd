@@ -15,7 +15,6 @@
  */
 static NSInteger const noDataDefaultDuration = 3;
 
-
 @interface XHLaunchAd()
 
 @property(nonatomic,strong)UIImageView *launchImgView;
@@ -35,27 +34,6 @@ static NSInteger const noDataDefaultDuration = 3;
 +(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish
 {
     XHLaunchAd *AdVC = [[XHLaunchAd alloc] initWithFrame:frame showFinish:showFinish];
-
-    if ( ![AdVC launchImage]) {
-        //修复使用 sb/xib 做launch
-        NSString *UILaunchStoryboardName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchStoryboardName"];
-        
-        if( 1 ){
-            //sb
-            
-            UIStoryboard *sb = [UIStoryboard storyboardWithName:UILaunchStoryboardName bundle:nil];
-            UIViewController*sbVC = [sb instantiateInitialViewController];
-            [AdVC.view addSubview:sbVC.view];
-            
-        }else{
-            //xib
-            UIViewController*sbVC = [[UIViewController alloc] initWithNibName:UILaunchStoryboardName bundle:nil];
-            [AdVC.view addSubview:sbVC.view];
-            
-        }
-        
-    }
-    
     [[UIApplication sharedApplication].delegate window].rootViewController = AdVC;
     if(setAdImage) setAdImage(AdVC);
 }
@@ -134,7 +112,7 @@ static NSInteger const noDataDefaultDuration = 3;
     if(_launchImgView==nil)
     {
         _launchImgView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _launchImgView.image = [self launchImage];
+        _launchImgView.image = [self getLaunchImage];
     }
     return _launchImgView;
 }
@@ -277,10 +255,20 @@ static NSInteger const noDataDefaultDuration = 3;
     if(_clickBlock) _clickBlock();
 }
 
+
+-(UIImage *)getLaunchImage
+{
+    UIImage *launchImage = [self launchImage];
+    
+    if(launchImage) return launchImage;
+    
+    return [self storyboardLaunchImage];
+}
+
 -(UIImage *)launchImage
 {
     CGSize viewSize = [UIScreen mainScreen].bounds.size;
-    NSString *viewOrientation = @"Portrait";//横屏@"Landscape"
+    NSString *viewOrientation = @"Portrait";//@"Landscape"
     NSString *launchImageName = nil;
     NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
     for (NSDictionary* dict in imagesDict)
@@ -293,10 +281,29 @@ static NSInteger const noDataDefaultDuration = 3;
             return image;
         }
     }
-    NSLog(@"未添加启动图片");
     return nil;
 }
-
+-(UIImage *)storyboardLaunchImage
+{
+    NSString *UILaunchStoryboardName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchStoryboardName"];
+    UIViewController *LaunchScreenSb = [[UIStoryboard storyboardWithName:UILaunchStoryboardName bundle:nil] instantiateInitialViewController];
+    if(LaunchScreenSb)
+    {
+        UIView * launchView = LaunchScreenSb.view;
+         launchView.frame = [UIScreen mainScreen].bounds;
+        return [self imageFromView:launchView];
+    }
+    return  nil;
+}
+-(UIImage*)imageFromView:(UIView*)view{
+    CGSize size = view.bounds.size;
+    //参数1:表示区域大小 参数2:如果需要显示半透明效果,需要传NO,否则传YES 参数3:屏幕密度
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 -(void)setAdFrame:(CGRect)adFrame
 {
     _adFrame = adFrame;
