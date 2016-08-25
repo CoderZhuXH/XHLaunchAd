@@ -124,7 +124,7 @@
 *   3.导入 XHLaunchAd.h
 
 ### 3.Tips
-*   1.如果发现pod search XHLaunchAd 搜索出来的不是最新版本，需要在终端执行cd desktop退回到desktop，然后执行pod setup命令更新本地spec缓存（需要几分钟），然后再搜索就可以了
+*   1.如果发现pod search XHLaunchAd 搜索出来的不是最新版本，需要在终端执行cd ~/desktop退回到desktop，然后执行pod setup命令更新本地spec缓存（需要几分钟），然后再搜索就可以了
 *   2.如果你发现你执行pod install后,导入的不是最新版本,请删除Podfile.lock文件,在执行一次 pod install
 
 ##  系统要求
