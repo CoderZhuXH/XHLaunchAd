@@ -152,7 +152,7 @@ static NSInteger const noDataDefaultDuration = 3;
 }
 
 -(void)skipButtonTitleWithDuration:(NSInteger)duration{
-
+    
     switch (_skipType) {
         case SkipTypeNone:
             
