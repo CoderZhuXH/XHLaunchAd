@@ -1,13 +1,17 @@
 ﻿# XHLaunchAd
-* 1.几行代码接入启动页广告.
-* 2.支持全屏/半屏广告.
-* 3.支持静态/动态广告.
-* 4.支持广告点击.
-* 5.无依赖其他第三方框架.
+* 几行代码接入启动页广告.
+* 1.支持全屏/半屏广告.
+* 2.支持静态/动态广告.
+* 3.支持广告点击事件
+* 4.自带图片下载,缓存功能.
+* 5.支持设置未检测到广告数据,启动页停留时间
+* 6.无依赖其他第三方框架.
+* 7.支持启动页为LaunchImage或者LaunchScreen.storyboard
 
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
+*    2016.08.25 -- v2.1.3   -->增加半屏广告对LaunchScreen.storyboard的支持<br>
 *    2016.08.22 -- v2.1.2   -->增加未检测到广告数据,设置启动页停留时间属性<br>
 *    2016.08.19 -- v2.1.1   -->跳过按钮bug修复<br>
 *    2016.08.18 -- v2.1.0   -->API微调,增加设置跳过按钮类型选项<br>
@@ -49,8 +53,7 @@
 -(void)setImageUrl:(NSString*)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click;
 ```
 ## 使用方法
-#### 1.设置项目启动页为LaunchImage,怎么设置? 请google、baidu、或 [戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImage-set.md)
-#### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
+#### 在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
 ```objc
     
     //1.显示启动广告
@@ -89,6 +92,17 @@
 ```
 #### 3.其他操作
 ```objc
+
+/**
+ *  设置未检测到广告数据,启动页停留时间(默认3s)(最小1s)
+ */
+@property (nonatomic, assign) NSInteger noDataDuration;
+
+/**
+ *  重置广告frame
+ */
+@property (nonatomic, assign) CGRect adFrame;
+
 /**
  *  清除图片本地缓存
  */
@@ -112,6 +126,9 @@
 ### 3.Tips
 *   1.如果发现pod search XHLaunchAd 搜索出来的不是最新版本，需要在终端执行cd desktop退回到desktop，然后执行pod setup命令更新本地spec缓存（需要几分钟），然后再搜索就可以了
 *   2.如果你发现你执行pod install后,导入的不是最新版本,请删除Podfile.lock文件,在执行一次 pod install
+
+### 注意:
+*   1.如果你发现你的启动页不能正常显示,请clean并删除APP,运行再试!
 
 ##  系统要求
 *   该项目最低支持 iOS 7.0 和 Xcode 7.0
