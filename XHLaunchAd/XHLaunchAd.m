@@ -35,6 +35,27 @@ static NSInteger const noDataDefaultDuration = 3;
 +(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish
 {
     XHLaunchAd *AdVC = [[XHLaunchAd alloc] initWithFrame:frame showFinish:showFinish];
+
+    if ( ![AdVC launchImage]) {
+        //修复使用 sb/xib 做launch
+        NSString *UILaunchStoryboardName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchStoryboardName"];
+        
+        if( 1 ){
+            //sb
+            
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:UILaunchStoryboardName bundle:nil];
+            UIViewController*sbVC = [sb instantiateInitialViewController];
+            [AdVC.view addSubview:sbVC.view];
+            
+        }else{
+            //xib
+            UIViewController*sbVC = [[UIViewController alloc] initWithNibName:UILaunchStoryboardName bundle:nil];
+            [AdVC.view addSubview:sbVC.view];
+            
+        }
+        
+    }
+    
     [[UIApplication sharedApplication].delegate window].rootViewController = AdVC;
     if(setAdImage) setAdImage(AdVC);
 }
