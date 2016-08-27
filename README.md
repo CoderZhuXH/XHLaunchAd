@@ -1,6 +1,4 @@
-﻿# XHLaunchAd
-
-![image](http://f.hiphotos.baidu.com/image/pic/item/3b292df5e0fe99254955c0ed3ca85edf8db17136.jpg)
+﻿![](Logo/header.png)
 
 * 几行代码接入启动页广告.
 * 1.支持全屏/半屏广告.
