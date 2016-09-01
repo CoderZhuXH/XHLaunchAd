@@ -15,6 +15,7 @@
 //动态广告
 #define ImgUrlString2 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
 
+
 @interface AppDelegate ()
 
 @end
@@ -46,7 +47,7 @@
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
         
         //未检测到广告数据,启动页停留时间,默认3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
-        //launchAd.noDataDuration = 4;
+        launchAd.noDataDuration = 4;
         
         //获取广告数据
         [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {

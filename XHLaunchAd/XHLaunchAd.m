@@ -41,6 +41,7 @@ static NSInteger const noDataDefaultDuration = 3;
 -(void)setImageUrl:(NSString *)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click
 {
     if(_isShowFinish) return;
+    if([self imageUrlError:imageUrl]) return;
     _duration = duration;
     _skipType = skipType;
     _clickBlock = [click copy];
@@ -99,6 +100,16 @@ static NSInteger const noDataDefaultDuration = 3;
         [self startNoDataDispath_tiemr];
     }
     return self;
+}
+-(BOOL)imageUrlError:(NSString *)imageUrl
+{
+    if(imageUrl==nil || imageUrl.length==0 || ![imageUrl hasPrefix:@"http"])
+    {
+        NSLog(@"图片地址为nil,或者不合法!");
+        return YES;
+    }
+    
+    return  NO;
 }
 -(void)setupAdImgViewAndSkipButton
 {
