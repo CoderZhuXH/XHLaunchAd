@@ -20,10 +20,12 @@
 #import "UIImageView+XHWebCache.h"
 
 typedef NS_ENUM(NSInteger,SkipType) {
+    
     SkipTypeNone      = 1,//无
     SkipTypeTime      = 2,//倒计时
     SkipTypeText      = 3,//跳过
     SkipTypeTimeText  = 4,//倒计时+跳过
+    
 };
 
 @class XHLaunchAd;
