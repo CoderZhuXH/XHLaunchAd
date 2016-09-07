@@ -1,7 +1,5 @@
 ![](Logo/header.png)
 
-==============
-
 ###几行代码接入启动页广告
 
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://github.com/CoderZhuXH/XHLaunchAd)
