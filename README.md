@@ -25,6 +25,7 @@
 
 ### 更新记录:
 
+*    2016.09.07 -- v2.1.5   -->修复跳过按钮类型设为None无效问题br>
 *    2016.09.01 -- v2.1.4   -->广告url传nil或不合法时,按无数据处理<br>
 *    2016.08.25 -- v2.1.3   -->增加半屏广告对LaunchScreen.storyboard的支持<br>
 *    2016.08.22 -- v2.1.2   -->增加未检测到广告数据,设置启动页停留时间属性<br>
@@ -59,7 +60,7 @@
  *  设置广告数据
  *
  *  @param imageUrl       图片url
- *  @param duration       广告停留时间
+ *  @param duration       广告停留时间(小于等于0s,默认按5s处理)
  *  @param skipType       跳过按钮类型
  *  @param options        图片缓存机制
  *  @param completedBlock 异步加载完图片回调

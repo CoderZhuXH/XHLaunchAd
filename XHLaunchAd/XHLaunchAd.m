@@ -150,11 +150,11 @@ static NSInteger const noDataDefaultDuration = 3;
         _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         _skipButton.layer.cornerRadius = 15;
         _skipButton.layer.masksToBounds = YES;
-        [_skipButton setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];//扩大点击区域
+        [_skipButton setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];
         _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
-        if(!_duration) _duration = 5;//停留时间为nil 默认5s
-        if(!_skipType) _skipType = SkipTypeTimeText;
+        if(!_duration||_duration<=0) _duration = 5;//停留时间传nil或<=0,默认5s
+        if(!_skipType) _skipType = SkipTypeTimeText;//类型传nil,默认TimeText
         [self skipButtonTitleWithDuration:_duration];
         [self startDispath_tiemr];
     }

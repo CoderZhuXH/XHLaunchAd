@@ -46,8 +46,8 @@
      */
     [XHLaunchAd showWithAdFrame:CGRectMake(0, 0,self.window.bounds.size.width, self.window.bounds.size.height-150) setAdImage:^(XHLaunchAd *launchAd) {
         
-        //未检测到广告数据,启动页停留时间,默认3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
-        launchAd.noDataDuration = 4;
+        //未检测到广告数据,启动页停留时间,不设置默认为3,(设置4即表示:启动页显示了4s,还未检测到广告数据,就自动进入window根控制器)
+        //launchAd.noDataDuration = 4;
         
         //获取广告数据
         [self requestImageData:^(NSString *imgUrl, NSInteger duration, NSString *openUrl) {

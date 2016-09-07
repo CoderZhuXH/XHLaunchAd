@@ -20,12 +20,10 @@
 #import "UIImageView+XHWebCache.h"
 
 typedef NS_ENUM(NSInteger,SkipType) {
-    
-    SkipTypeNone      = 0,//无
-    SkipTypeTime      = 1,//倒计时
-    SkipTypeText      = 2,//跳过
-    SkipTypeTimeText  = 3,//倒计时+跳过
-    
+    SkipTypeNone      = 1,//无
+    SkipTypeTime      = 2,//倒计时
+    SkipTypeText      = 3,//跳过
+    SkipTypeTimeText  = 4,//倒计时+跳过
 };
 
 @class XHLaunchAd;
@@ -60,7 +58,7 @@ typedef void(^showFinishBlock)();
  *  设置广告数据
  *
  *  @param imageUrl       图片url
- *  @param duration       广告停留时间
+ *  @param duration       广告停留时间(小于等于0s,默认按5s处理)
  *  @param skipType       跳过按钮类型
  *  @param options        图片缓存机制
  *  @param completedBlock 异步加载完图片回调
