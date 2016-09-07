@@ -1,6 +1,19 @@
-﻿![](Logo/header.png)
+![](Logo/header.png)
 
-* 几行代码接入启动页广告.
+==============
+
+###几行代码接入启动页广告
+
+[![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://github.com/CoderZhuXH/XHLaunchAd)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/CoderZhuXH/XHLaunchAd)
+[![Version Status](https://img.shields.io/cocoapods/v/XHLaunchAd.svg?style=flat)](http://cocoadocs.org/docsets/XHLaunchAd)
+[![Support](https://img.shields.io/badge/support-iOS%207%2B-brightgreen.svg)](https://github.com/CoderZhuXH/XHLaunchAd)
+[![Pod Platform](https://img.shields.io/cocoapods/p/XHLaunchAd.svg?style=flat)](http://cocoadocs.org/docsets/XHLaunchAd/)
+
+==============
+
+###特性:
+
 * 1.支持全屏/半屏广告.
 * 2.支持静态/动态广告.
 * 3.支持广告点击事件
