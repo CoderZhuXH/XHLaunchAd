@@ -73,11 +73,7 @@
                 //2.在webview中打开
                 WebViewController *VC = [[WebViewController alloc] init];
                 VC.URLString = openUrl;
-                [weakLaunchAd.navigationController pushViewController:VC animated:YES];
-                
-                //3.你也可以 presentViewController 到详情界面
-                //[weakLaunchAd presentViewController...];
-                
+                [weakLaunchAd presentViewController:VC animated:YES completion:nil];
                 
             }];
             

@@ -34,8 +34,7 @@ static NSInteger const noDataDefaultDuration = 3;
 +(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish
 {
     XHLaunchAd *AdVC = [[XHLaunchAd alloc] initWithFrame:frame showFinish:showFinish];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:AdVC];
-    [[UIApplication sharedApplication].delegate window].rootViewController = nav;
+    [[UIApplication sharedApplication].delegate window].rootViewController = AdVC;
     if(setAdImage) setAdImage(AdVC);
 }
 
@@ -106,7 +105,6 @@ static NSInteger const noDataDefaultDuration = 3;
 {
     if(_skipButtonTimer)  dispatch_resume(_skipButtonTimer);
     self.isClick = NO;
-    self.navigationController.navigationBarHidden = YES;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -114,7 +112,6 @@ static NSInteger const noDataDefaultDuration = 3;
     {
         dispatch_suspend(_skipButtonTimer);
     }
-    self.navigationController.navigationBarHidden = NO;
 }
 -(void)dealloc
 {

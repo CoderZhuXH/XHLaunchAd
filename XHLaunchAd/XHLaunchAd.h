@@ -7,13 +7,13 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 //  特性:
-//  1.支持全屏/半屏广告
-//  2.支持静态/动态广告
-//  3.支持广告点击事件
-//  4.自带图片下载,缓存功能
-//  5.支持设置未检测到广告数据,启动页停留时间
-//  6.无依赖其他第三方框架
-//  7.支持启动页为LaunchImage或者LaunchScreen.storyboard
+//  1.支持全屏/半屏广告.
+//  2.支持静态/动态广告.
+//  3.兼容iPhone和iPad.
+//  4.支持广告点击事件
+//  5.自带图片下载,缓存功能.
+//  6.支持设置未检测到广告数据,启动页停留时间
+//  7.无依赖其他第三方框架.
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

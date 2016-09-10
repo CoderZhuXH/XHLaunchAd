@@ -29,6 +29,11 @@
     [self.myWebView loadRequest:request];
 
 }
+- (IBAction)closeAction:(id)sender {
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
