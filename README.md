@@ -101,10 +101,7 @@
                 //2.在webview中打开
                 WebViewController *VC = [[WebViewController alloc] init];
                 VC.URLString = openUrl;
-                [weakLaunchAd.navigationController pushViewController:VC animated:YES];
-                
-                //3.你也可以 presentViewController 到详情界面
-                //[weakLaunchAd presentViewController...];
+                [weakLaunchAd presentViewController:VC animated:YES completion:nil];
                 
             }];
             
@@ -149,7 +146,7 @@
 *   2.执行 pod install 或 pod update<br>
 *   3.导入 XHLaunchAd.h
 
-## 3.Tips
+##  Tips
 *   1.如果发现pod search XHLaunchAd 搜索出来的不是最新版本，需要在终端执行cd ~/desktop退回到desktop，然后执行pod setup命令更新本地spec缓存（需要几分钟），然后再搜索就可以了
 *   2.如果你发现你执行pod install后,导入的不是最新版本,请删除Podfile.lock文件,在执行一次 pod install
 *   3.如果在使用过程中遇到BUG，希望你能Issues我，谢谢（或者尝试下载最新的代码看看BUG修复没有）
