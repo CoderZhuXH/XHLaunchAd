@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "XHLaunchAd.h"
+#import "WebViewController.h"
 
 //静态广告
 #define ImgUrlString1 @"http://d.hiphotos.baidu.com/image/pic/item/14ce36d3d539b60071473204e150352ac75cb7f3.jpg"
@@ -55,20 +56,33 @@
             /**
              *  2.设置广告数据
              */
+            
+            WEAKLAUNCHAD;//定义一个weakLaunchAd
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
-                //launchAd.adFrame = ...;
+                //weakLaunchAd.adFrame = ...;
                 
             } click:^{
                 
                 //广告点击事件
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
+                
+                //1.用浏览器打开
+                //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
+                
+                //2.在webview中打开
+                WebViewController *VC = [[WebViewController alloc] init];
+                VC.URLString = openUrl;
+                [weakLaunchAd.navigationController pushViewController:VC animated:YES];
+                
+                //3.你也可以 presentViewController 到详情界面
+                //[weakLaunchAd presentViewController...];
+                
                 
             }];
-         
+            
         }];
- 
+        
     } showFinish:^{
         
         //广告展示完成回调,设置window根控制器
@@ -88,7 +102,7 @@
         
         if(imageData)
         {
-            imageData(ImgUrlString2,6,@"http://www.returnoc.com");
+            imageData(ImgUrlString2,5,@"http://www.returnoc.com");
         }
     });
 }

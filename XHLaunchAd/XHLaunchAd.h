@@ -19,6 +19,14 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+XHWebCache.h"
 
+/**
+ *  定义一个weakLaunchAd
+ */
+#define WEAKLAUNCHAD  __weak __typeof(launchAd) weakLaunchAd = launchAd;
+
+/**
+ *  倒计时类型
+ */
 typedef NS_ENUM(NSInteger,SkipType) {
     
     SkipTypeNone      = 1,//无
@@ -43,7 +51,7 @@ typedef void(^showFinishBlock)();
 @property (nonatomic, assign) NSInteger noDataDuration;
 
 /**
- *  广告frame
+ *  重置广告frame
  */
 @property (nonatomic, assign) CGRect adFrame;
 

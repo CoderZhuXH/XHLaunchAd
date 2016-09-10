@@ -15,19 +15,18 @@
 
 * 1.支持全屏/半屏广告.
 * 2.支持静态/动态广告.
-* 3.支持广告点击事件
-* 4.自带图片下载,缓存功能.
-* 5.支持设置未检测到广告数据,启动页停留时间
-* 6.无依赖其他第三方框架.
-* 7.支持启动页为LaunchImage或者LaunchScreen.storyboard
+* 3.兼容iPhone和iPad.
+* 4.支持广告点击事件
+* 5.自带图片下载,缓存功能.
+* 6.支持设置未检测到广告数据,启动页停留时间
+* 7.无依赖其他第三方框架.
 
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
-
-*    2016.09.07 -- v2.1.5   -->修复跳过按钮类型设为None无效问题br>
+*	 2106.09.10 -- v2.1.6  -->1.增加点击事件在应用内跳转到Webview 2.增加对iPad适配
+*    2016.09.07 -- v2.1.5   -->修复跳过按钮类型设为None无效问题
 *    2016.09.01 -- v2.1.4   -->广告url传nil或不合法时,按无数据处理<br>
-*    2016.08.25 -- v2.1.3   -->增加半屏广告对LaunchScreen.storyboard的支持<br>
 *    2016.08.22 -- v2.1.2   -->增加未检测到广告数据,设置启动页停留时间属性<br>
 *    2016.08.19 -- v2.1.1   -->跳过按钮bug修复<br>
 *    2016.08.18 -- v2.1.0   -->API微调,增加设置跳过按钮类型选项<br>
@@ -69,7 +68,9 @@
 -(void)setImageUrl:(NSString*)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click;
 ```
 ## 使用方法
-#### 在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
+
+#### 1.需设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或![戳这里>>>]()
+#### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
 ```objc
     
     //1.显示启动广告
@@ -86,15 +87,24 @@
             NSString *openUrl = @"http://www.returnoc.com";
 
             //2.设置广告数据
+            WEAKLAUNCHAD;//定义一个weakLaunchAd
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
-                //异步加载图片完成回调,若需根据图片尺寸,刷新广告frame,可在这里操作
-                //launchAd.adFrame = ...;
+                //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)
+                //weakLaunchAd.adFrame = ...;
                 
             } click:^{
                 
-                //广告点击事件
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
+                //1.用浏览器打开
+                //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
+                
+                //2.在webview中打开
+                WebViewController *VC = [[WebViewController alloc] init];
+                VC.URLString = openUrl;
+                [weakLaunchAd.navigationController pushViewController:VC animated:YES];
+                
+                //3.你也可以 presentViewController 到详情界面
+                //[weakLaunchAd presentViewController...];
                 
             }];
             

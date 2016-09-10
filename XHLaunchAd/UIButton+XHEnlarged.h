@@ -11,13 +11,13 @@
 @interface UIButton (XHEnlarged)
 
 /**
- *  扩大button点击区域(4边扩大相同值)
+ *  扩大button点击区域,4边设置相同值
  */
 @property (nonatomic, assign) CGFloat enlargedEdge;
 
 /**
- *  扩大button点击区域(4边分别设置)
+ *  扩大button点击区域,4边分别设置
  */
- -(void)setEnlargedEdgeWithTop:(CGFloat)top left:(CGFloat)left bottom:(CGFloat)bottom right:(CGFloat)right;
+-(void)xh_setEnlargedEdgeWithTop:(CGFloat)top left:(CGFloat)left bottom:(CGFloat)bottom right:(CGFloat)right;
 
 @end

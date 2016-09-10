@@ -1,39 +1,37 @@
 //
-//  ViewController.m
+//  WebViewController.m
 //  XHLaunchAdExample
 //
-//  Created by xiaohui on 16/6/11.
+//  Created by xiaohui on 16/9/8.
 //  Copyright © 2016年 qiantou. All rights reserved.
-//  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
+//
 
-#import "ViewController.h"
-#import "UIImageView+XHWebCache.h"
+#import "WebViewController.h"
 
+@interface WebViewController ()
 
-@interface ViewController ()
-
-@property (weak, nonatomic) IBOutlet UILabel *lab;
+@property (weak, nonatomic) IBOutlet UIWebView *myWebView;
 
 @end
 
-@implementation ViewController
+@implementation WebViewController
 
--(void)viewWillAppear:(BOOL)animated
-{
-    NSLog(@"进入首页");
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = @"XHLaunchAdExample";
-    self.lab.text = @"使用说明及注意事项见github:\n https://github.com/CoderZhuXH/XHLaunchAd";
+    self.navigationItem.title = @"详情";
+    [self setupWebView];
     
     // Do any additional setup after loading the view from its nib.
+}
+-(void)setupWebView{
+
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.URLString]];
+    [self.myWebView loadRequest:request];
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
     // Dispose of any resources that can be recreated.
 }
 

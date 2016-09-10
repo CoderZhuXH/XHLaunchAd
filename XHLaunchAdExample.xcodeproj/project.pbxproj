@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B5C5C291D8118A700C18148 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C5C271D8118A700C18148 /* WebViewController.m */; };
+		4B5C5C2A1D8118A700C18148 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B5C5C281D8118A700C18148 /* WebViewController.xib */; };
 		4B6CF2261D0E902800F76B47 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CF2251D0E902800F76B47 /* main.m */; };
 		4B6CF2291D0E902800F76B47 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CF2281D0E902800F76B47 /* AppDelegate.m */; };
 		4B6CF22B1D0E902800F76B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B6CF22A1D0E902800F76B47 /* Assets.xcassets */; };
@@ -22,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B5C5C261D8118A700C18148 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		4B5C5C271D8118A700C18148 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		4B5C5C281D8118A700C18148 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 		4B6CF2211D0E902800F76B47 /* XHLaunchAdExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XHLaunchAdExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6CF2251D0E902800F76B47 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B6CF2271D0E902800F76B47 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,6 +107,9 @@
 				4B6CF2361D0E904900F76B47 /* ViewController.h */,
 				4B6CF2371D0E904900F76B47 /* ViewController.m */,
 				4B6CF2381D0E904900F76B47 /* ViewController.xib */,
+				4B5C5C261D8118A700C18148 /* WebViewController.h */,
+				4B5C5C271D8118A700C18148 /* WebViewController.m */,
+				4B5C5C281D8118A700C18148 /* WebViewController.xib */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -185,6 +193,7 @@
 				4BF7C69A1D6EE13000F1E5BE /* LaunchScreen.storyboard in Resources */,
 				4B6CF22B1D0E902800F76B47 /* Assets.xcassets in Resources */,
 				4B6CF23F1D0E904900F76B47 /* ViewController.xib in Resources */,
+				4B5C5C2A1D8118A700C18148 /* WebViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BB62AB61D62F8D600F3128C /* XHImageCache.m in Sources */,
+				4B5C5C291D8118A700C18148 /* WebViewController.m in Sources */,
 				4B6CF2401D0E904900F76B47 /* UIImageView+XHWebCache.m in Sources */,
 				4B6CF23E1D0E904900F76B47 /* ViewController.m in Sources */,
 				4B6CF2411D0E904900F76B47 /* XHLaunchAd.m in Sources */,
@@ -312,6 +322,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = qiantou.XHLaunchAdExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -324,6 +335,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = qiantou.XHLaunchAdExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -22,19 +22,20 @@ static NSInteger const noDataDefaultDuration = 3;
 @property(nonatomic,strong)UIButton *skipButton;
 @property(nonatomic,assign)NSInteger duration;
 @property(nonatomic,copy)dispatch_source_t noDataTimer;
-@property(nonatomic,copy)dispatch_source_t timer;
+@property(nonatomic,copy)dispatch_source_t skipButtonTimer;
 @property(nonatomic,copy)showFinishBlock showFinishBlock;
 @property(nonatomic,copy)clickBlock clickBlock;
 @property(nonatomic,assign)SkipType skipType;
 @property(nonatomic,assign)BOOL isShowFinish;
-
+@property(nonatomic,assign)BOOL isClick;
 @end
 @implementation XHLaunchAd
 
 +(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish
 {
     XHLaunchAd *AdVC = [[XHLaunchAd alloc] initWithFrame:frame showFinish:showFinish];
-    [[UIApplication sharedApplication].delegate window].rootViewController = AdVC;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:AdVC];
+    [[UIApplication sharedApplication].delegate window].rootViewController = nav;
     if(setAdImage) setAdImage(AdVC);
 }
 
@@ -101,11 +102,29 @@ static NSInteger const noDataDefaultDuration = 3;
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    if(_skipButtonTimer)  dispatch_resume(_skipButtonTimer);
+    self.isClick = NO;
+    self.navigationController.navigationBarHidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if(_skipButtonTimer&&_duration>0&&self.isClick)
+    {
+        dispatch_suspend(_skipButtonTimer);
+    }
+    self.navigationController.navigationBarHidden = NO;
+}
+-(void)dealloc
+{
+    //NSLog(@"广告视图销毁");
+}
 -(BOOL)imageUrlError:(NSString *)imageUrl
 {
     if(imageUrl==nil || imageUrl.length==0 || ![imageUrl hasPrefix:@"http"])
     {
-        NSLog(@"图片地址为nil,或者不合法!");
+        NSLog(@"图片URL地址为nil,或者有误!");
         return YES;
     }
     
@@ -150,13 +169,13 @@ static NSInteger const noDataDefaultDuration = 3;
         _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         _skipButton.layer.cornerRadius = 15;
         _skipButton.layer.masksToBounds = YES;
-        [_skipButton setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];
+        [_skipButton xh_setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];
         _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
         if(!_duration||_duration<=0) _duration = 5;//停留时间传nil或<=0,默认5s
         if(!_skipType) _skipType = SkipTypeTimeText;//类型传nil,默认TimeText
         [self skipButtonTitleWithDuration:_duration];
-        [self startDispath_tiemr];
+        [self startSkipButtonTimer];
     }
     return _skipButton;
 }
@@ -185,6 +204,7 @@ static NSInteger const noDataDefaultDuration = 3;
             [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
             
             break;
+
         default:
             break;
     }
@@ -226,94 +246,82 @@ static NSInteger const noDataDefaultDuration = 3;
     dispatch_resume(_noDataTimer);
 }
 
--(void)startDispath_tiemr
+-(void)startSkipButtonTimer
 {
     if(_noDataTimer) dispatch_source_cancel(_noDataTimer);
     
     NSTimeInterval period = 1.0;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
+    _skipButtonTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(_skipButtonTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     
-    __block NSInteger duration =_duration;
-    dispatch_source_set_event_handler(_timer, ^{
+    dispatch_source_set_event_handler(_skipButtonTimer, ^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self skipButtonTitleWithDuration:duration];
-            if(duration==0)
+            [self skipButtonTitleWithDuration:_duration];
+            if(_duration==0)
             {
-                dispatch_source_cancel(_timer);
+                dispatch_source_cancel(_skipButtonTimer);
                 
                 [self remove];
             }
-            duration--;
+            _duration--;
         });
     });
-    dispatch_resume(_timer);
+    dispatch_resume(_skipButtonTimer);
 }
-
 -(void)skipAction{
     
     if(_skipType != SkipTypeTime)
     {
-        if (_timer) dispatch_source_cancel(_timer);
+        if (_skipButtonTimer) dispatch_source_cancel(_skipButtonTimer);
         [self remove];
     }
 }
 
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
-    if(_clickBlock) _clickBlock();
+    if(_duration>0)
+    {
+        self.isClick = YES;
+        if(_clickBlock) _clickBlock();
+    }
 }
-
 
 -(UIImage *)getLaunchImage
 {
-    UIImage *launchImage = [self launchImage];
-    
-    if(launchImage) return launchImage;
-    
-    return [self storyboardLaunchImage];
+    UIImage *imageP = [self launchImageWithType:@"Portrait"];
+    if(imageP) return imageP;
+    UIImage *imageL = [self launchImageWithType:@"Landscape"];
+    if(imageL) return imageL;
+    NSLog(@"获取LaunchImage失败!请检查是否添加启动图,或者规格是否有误.");
+    return nil;
 }
-
--(UIImage *)launchImage
+-(UIImage *)launchImageWithType:(NSString *)type
 {
     CGSize viewSize = [UIScreen mainScreen].bounds.size;
-    NSString *viewOrientation = @"Portrait";//@"Landscape"
+    NSString *viewOrientation = type;
     NSString *launchImageName = nil;
     NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
     for (NSDictionary* dict in imagesDict)
     {
         CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
-        if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
+        
+        if([viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
         {
-            launchImageName = dict[@"UILaunchImageName"];
-            UIImage *image = [UIImage imageNamed:launchImageName];
-            return image;
+            if([dict[@"UILaunchImageOrientation"] isEqualToString:@"Landscape"])
+            {
+                imageSize = CGSizeMake(imageSize.height, imageSize.width);
+            }
+            if(CGSizeEqualToSize(imageSize, viewSize))
+            {
+                launchImageName = dict[@"UILaunchImageName"];
+                UIImage *image = [UIImage imageNamed:launchImageName];
+                return image;
+            }
         }
     }
     return nil;
-}
--(UIImage *)storyboardLaunchImage
-{
-    NSString *UILaunchStoryboardName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchStoryboardName"];
-    UIViewController *LaunchScreenSb = [[UIStoryboard storyboardWithName:UILaunchStoryboardName bundle:nil] instantiateInitialViewController];
-    if(LaunchScreenSb)
-    {
-        UIView * launchView = LaunchScreenSb.view;
-         launchView.frame = [UIScreen mainScreen].bounds;
-        return [self imageFromView:launchView];
-    }
-    return  nil;
-}
--(UIImage*)imageFromView:(UIView*)view{
-    CGSize size = view.bounds.size;
-    //参数1:表示区域大小 参数2:如果需要显示半透明效果,需要传NO,否则传YES 参数3:屏幕密度
-    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
 }
 -(void)setAdFrame:(CGRect)adFrame
 {
@@ -328,15 +336,14 @@ static NSInteger const noDataDefaultDuration = 3;
     [self startNoDataDispath_tiemr];
 }
 -(void)remove{
-    
-    [UIView transitionWithView:[[UIApplication sharedApplication].delegate window] duration:0.5 options: UIViewAnimationOptionTransitionCrossDissolve animations:^{
+
+    [UIView transitionWithView:[[UIApplication sharedApplication].delegate window] duration:0.3 options: UIViewAnimationOptionTransitionCrossDissolve animations:^{
         BOOL oldState=[UIView areAnimationsEnabled];
         [UIView setAnimationsEnabled:NO];
         _isShowFinish = YES;
         if(_showFinishBlock)  _showFinishBlock();
         [UIView setAnimationsEnabled:oldState];
     }completion:NULL];
-    
-}
 
+}
 @end
