@@ -24,7 +24,7 @@
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
-*	 2106.09.10 -- v2.1.6  -->1.增加点击事件在应用内跳转到Webview 2.增加对iPad适配
+*	 2106.09.10 -- v2.1.6  -->适配iPad,增加应用内跳转到广告详情
 *    2016.09.07 -- v2.1.5   -->修复跳过按钮类型设为None无效问题
 *    2016.09.01 -- v2.1.4   -->广告url传nil或不合法时,按无数据处理<br>
 *    2016.08.22 -- v2.1.2   -->增加未检测到广告数据,设置启动页停留时间属性<br>
@@ -69,7 +69,7 @@
 ```
 ## 使用方法
 
-#### 1.需设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或![戳这里>>>]()
+#### 1.需设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
 #### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中调用下面方法
 ```objc
     
