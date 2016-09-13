@@ -57,7 +57,8 @@
              *  2.设置广告数据
              */
             
-            WEAKLAUNCHAD;//定义一个weakLaunchAd
+            //定义一个weakLaunchAd
+            __weak __typeof(launchAd) weakLaunchAd = launchAd;
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)

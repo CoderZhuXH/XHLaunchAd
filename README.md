@@ -24,6 +24,7 @@
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
+*    2106.09.13 -- v2.1.8  -->修复在Swift中使用异常.
 *	 2106.09.10 -- v2.1.7  -->适配iPad,增加应用内跳转到广告详情,优化
 *    2016.09.07 -- v2.1.5   -->修复跳过按钮类型设为None无效问题
 *    2016.09.01 -- v2.1.4   -->广告url传nil或不合法时,按无数据处理<br>
@@ -87,7 +88,8 @@
             NSString *openUrl = @"http://www.returnoc.com";
 
             //2.设置广告数据
-            WEAKLAUNCHAD;//定义一个weakLaunchAd
+            /定义一个weakLaunchAd
+            __weak __typeof(launchAd) weakLaunchAd = launchAd;
             [launchAd setImageUrl:imgUrl duration:duration skipType:SkipTypeTimeText options:XHWebImageDefault completed:^(UIImage *image, NSURL *url) {
                 
                 //异步加载图片完成回调(若需根据图片尺寸,刷新广告frame,可在这里操作)

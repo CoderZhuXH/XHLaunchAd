@@ -103,7 +103,10 @@ static NSInteger const noDataDefaultDuration = 3;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    if(_skipButtonTimer)  dispatch_resume(_skipButtonTimer);
+    if(_skipButtonTimer&&_duration>0&&self.isClick)
+    {
+      dispatch_resume(_skipButtonTimer);
+    }
     self.isClick = NO;
 }
 -(void)viewWillDisappear:(BOOL)animated
