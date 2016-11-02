@@ -23,6 +23,8 @@
 
 ###技术交流群(群号:537476189).
 
+###Swift中用法,请参考:https://github.com/CoderZhuXH/XHLaunchAdSwiftExample
+
 ### 更新记录:
 *    2106.09.13 -- v2.1.8  -->修复在Swift中使用异常.
 *	 2106.09.10 -- v2.1.7  -->适配iPad,增加应用内跳转到广告详情,优化
