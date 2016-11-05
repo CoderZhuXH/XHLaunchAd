@@ -42,6 +42,17 @@ static NSInteger const noDataDefaultDuration = 3;
 {
     if(_isShowFinish) return;
     if([self imageUrlError:imageUrl]) return;
+    if(options&XHWebImageCacheInBackground)
+    {
+        UIImage *cacheImage = [XHImageCache xh_getCacheImageWithURL:[NSURL URLWithString:imageUrl]];
+        if(cacheImage==nil)
+        {
+            if(_noDataTimer) dispatch_source_cancel(_noDataTimer);
+            [[UIImageView new] xh_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil options:options completed:nil];
+            [self remove];
+            return;
+        }
+    }
     _duration = duration;
     _skipType = skipType;
     _clickBlock = [click copy];

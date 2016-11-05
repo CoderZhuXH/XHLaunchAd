@@ -14,45 +14,85 @@
 +(void)xh_downLoadImage_asyncWithURL:(NSURL *)url options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
     if(!options) options = XHWebImageDefault;
+    
     if(options&XHWebImageOnlyLoad)
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            UIImage *image = [self xh_downLoadImageWithURL:url];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if(completedBlock)
-                {
-                    completedBlock(image,url);
-                }
-            });
-        });
-        
-        return;
+        [self xh_asyncDownLoadImageWithURL:url completed:completedBlock];
     }
-    UIImage *image0 = [XHImageCache xh_getCacheImageWithURL:url];
-    if(image0&&completedBlock)
+    else if (options&XHWebImageRefreshCached)
     {
-        completedBlock(image0,url);
         
-        if(options&XHWebImageDefault) return;
+        UIImage *cacheImage = [XHImageCache xh_getCacheImageWithURL:url];
+        if(cacheImage)
+        {
+            if(completedBlock) completedBlock(cacheImage,url);
+        }
+        
+        [self xh_asyncDownLoadImageAndCacheWithURL:url completed:completedBlock];
+        
     }
+    else if (options&XHWebImageCacheInBackground)
+    {
+        
+        UIImage *cacheImage = [XHImageCache xh_getCacheImageWithURL:url];
+        if(cacheImage)
+        {
+            if(completedBlock) completedBlock(cacheImage,url);
+        }
+        else
+        {
+            [self xh_asyncDownLoadImageAndCacheWithURL:url completed:nil];
+        }
+    }
+    else//default
+    {
+        
+        UIImage *cacheImage = [XHImageCache xh_getCacheImageWithURL:url];
+        if(cacheImage)
+        {
+            if(completedBlock) completedBlock(cacheImage,url);
+        }
+        else
+        {
+            [self xh_asyncDownLoadImageAndCacheWithURL:url completed:completedBlock];
+        }
+        
+    }
+    
+}
+
++(void)xh_asyncDownLoadImageAndCacheWithURL:(NSURL *)url completed:(XHWebImageCompletionBlock)completedBlock
+{
+    if(url==nil) return;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         UIImage *image = [self xh_downLoadImageAndCacheWithURL:url];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            if(completedBlock)
-            {
-                completedBlock(image,url);
-            }
+            if(completedBlock) completedBlock(image,url);
+            
         });
         
     });
 }
-
++(void)xh_asyncDownLoadImageWithURL:(NSURL *)url completed:(XHWebImageCompletionBlock)completedBlock
+{
+    if(url==nil) return;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        UIImage *image = [self xh_downLoadImageWithURL:url];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if(completedBlock)  completedBlock(image,url);
+            
+        });
+        
+    });
+}
 +(UIImage *)xh_downLoadImageWithURL:(NSURL *)url{
     
     if(url==nil) return nil;

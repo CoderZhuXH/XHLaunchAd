@@ -24,7 +24,12 @@ typedef NS_OPTIONS(NSUInteger, XHWebImageOptions) {
     /**
      *  先读缓存,再加载刷新图片和缓存
      */
-    XHWebImageRefreshCached = 1 << 2
+    XHWebImageRefreshCached = 1 << 2 ,
+    
+    /**
+     *  后台缓存本次不显示,缓存OK后下次再显示
+     */
+    XHWebImageCacheInBackground = 1 << 3
     
 };
 
