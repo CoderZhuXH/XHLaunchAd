@@ -8,7 +8,7 @@
 
 #import "XHLaunchAd.h"
 #import "XHImageCache.h"
-#import "UIButton+XHEnlarged.h"
+
 
 /**
  *  未检测到广告数据,启动页默认停留时间
@@ -19,7 +19,7 @@ static NSInteger const noDataDefaultDuration = 3;
 
 @property(nonatomic,strong)UIImageView *launchImgView;
 @property(nonatomic,strong)UIImageView *adImgView;
-@property(nonatomic,strong)UIButton *skipButton;
+@property(nonatomic,strong)XHSkipButton *skipButton;
 @property(nonatomic,assign)NSInteger duration;
 @property(nonatomic,copy)dispatch_source_t noDataTimer;
 @property(nonatomic,copy)dispatch_source_t skipButtonTimer;
@@ -171,56 +171,21 @@ static NSInteger const noDataDefaultDuration = 3;
     return _adImgView;
 }
 
--(UIButton *)skipButton
+-(XHSkipButton *)skipButton
 {
     if(_skipButton == nil)
     {
-        _skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _skipButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-70,30, 60, 30);
-        _skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-        _skipButton.layer.cornerRadius = 15;
-        _skipButton.layer.masksToBounds = YES;
-        [_skipButton xh_setEnlargedEdgeWithTop:10 left:5 bottom:10 right:5];
-        _skipButton.titleLabel.font = [UIFont systemFontOfSize:13.5];
+        _skipButton = [[XHSkipButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-70,25, 70, 40)];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
+        _skipButton.leftRightSpace = 5;
+        _skipButton.topBottomSpace = 5;
         if(!_duration||_duration<=0) _duration = 5;//停留时间传nil或<=0,默认5s
         if(!_skipType) _skipType = SkipTypeTimeText;//类型传nil,默认TimeText
-        [self skipButtonTitleWithDuration:_duration];
+        [_skipButton xh_stateWithskipType:_skipType andDuration:_duration];
         [self startSkipButtonTimer];
     }
     return _skipButton;
 }
-
--(void)skipButtonTitleWithDuration:(NSInteger)duration{
-    
-    switch (_skipType) {
-        case SkipTypeNone:
-            
-            _skipButton.hidden = YES;
-            
-            break;
-        case SkipTypeTime:
-            
-            [_skipButton setTitle:[NSString stringWithFormat:@"%ld S",duration] forState:UIControlStateNormal];
-            
-            break;
-        case SkipTypeText:
-            
-            [_skipButton setTitle:@"跳过" forState:UIControlStateNormal];
-            
-            break;
-            
-        case SkipTypeTimeText:
-            
-            [_skipButton setTitle:[NSString stringWithFormat:@"%ld 跳过",duration] forState:UIControlStateNormal];
-            
-            break;
-
-        default:
-            break;
-    }
-}
-
 -(void)animateStart
 {
     CGFloat duration = _duration;
@@ -269,7 +234,7 @@ static NSInteger const noDataDefaultDuration = 3;
     dispatch_source_set_event_handler(_skipButtonTimer, ^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self skipButtonTitleWithDuration:_duration];
+            [_skipButton xh_stateWithskipType:_skipType andDuration:_duration];
             if(_duration==0)
             {
                 dispatch_source_cancel(_skipButtonTimer);

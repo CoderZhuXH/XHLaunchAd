@@ -18,23 +18,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIImageView+XHWebCache.h"
-
-/**
- *  定义一个weakLaunchAd
- */
-#define WEAKLAUNCHAD  __weak __typeof(launchAd) weakLaunchAd = launchAd;
-
-/**
- *  倒计时类型
- */
-typedef NS_ENUM(NSInteger,SkipType) {
-    
-    SkipTypeNone      = 1,//无
-    SkipTypeTime      = 2,//倒计时
-    SkipTypeText      = 3,//跳过
-    SkipTypeTimeText  = 4,//倒计时+跳过
-    
-};
+#import "XHSkipButton.h"
 
 @class XHLaunchAd;
 
