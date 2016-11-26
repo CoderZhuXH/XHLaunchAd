@@ -8,7 +8,7 @@
 
 #import "XHWebImageDownload.h"
 #import "XHImageCache.h"
-#import "UIImage+XHGIF.h"
+#import "UIImage+XHLaunchAdGIF.h"
 
 @implementation XHWebImageDownload
 +(void)xh_downLoadImage_asyncWithURL:(NSURL *)url options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock

@@ -18,7 +18,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIImageView+XHWebCache.h"
-#import "XHSkipButton.h"
+#import "XHLaunchAdSkipButton.h"
 
 @class XHLaunchAd;
 

@@ -7,7 +7,7 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 
-#import "UIImage+XHGIF.h"
+#import "UIImage+XHLaunchAdGIF.h"
 #import <ImageIO/ImageIO.h>
 
 @implementation UIImage (XHGIF)

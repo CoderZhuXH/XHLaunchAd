@@ -1,14 +1,14 @@
 //
-//  XHSkipButton.m
+//  XHLaunchAdSkipButton.m
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 2016/11/9.
 //  Copyright © 2016年 CoderZhuXH. All rights reserved.
 //
 
-#import "XHSkipButton.h"
+#import "XHLaunchAdSkipButton.h"
 
-@implementation XHSkipButton
+@implementation XHLaunchAdSkipButton
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

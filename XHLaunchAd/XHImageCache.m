@@ -8,7 +8,7 @@
 
 #import "XHImageCache.h"
 #import <CommonCrypto/CommonDigest.h>
-#import "UIImage+XHGIF.h"
+#import "UIImage+XHLaunchAdGIF.h"
 
 @implementation XHImageCache
 

@@ -1,5 +1,5 @@
 //
-//  XHSkipButton.h
+//  XHLaunchAdSkipButton.h
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 2016/11/9.
@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger,SkipType) {
     
 };
 
-@interface XHSkipButton : UIButton
+@interface XHLaunchAdSkipButton : UIButton
 
 @property(nonatomic,strong)UILabel *timeLab;
 @property(nonatomic,assign)CGFloat leftRightSpace;

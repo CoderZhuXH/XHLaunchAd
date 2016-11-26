@@ -25,20 +25,19 @@
 -(void)xh_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock
 {
     if(placeholder) self.image = placeholder;
-    if(url)
-    {
-        __weak __typeof(self)wself = self;
+    
+    if(!url) return;
+    
+    __weak __typeof(self)wself = self;
+    
+    [XHWebImageDownload xh_downLoadImage_asyncWithURL:url options:options completed:^(UIImage *image, NSURL *url) {
         
-        [XHWebImageDownload xh_downLoadImage_asyncWithURL:url options:options completed:^(UIImage *image, NSURL *url) {
-            
-            if(!wself) return;
-            
-            wself.image = image;
-            if(image&&completedBlock)
-            {
-                completedBlock(image,url);
-            }
-        }];
-    }
+        if(!wself) return;
+        
+        wself.image = image;
+        
+        if(image&&completedBlock) completedBlock(image,url);
+        
+    }];
 }
 @end

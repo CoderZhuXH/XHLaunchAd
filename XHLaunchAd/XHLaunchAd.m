@@ -8,7 +8,7 @@
 
 #import "XHLaunchAd.h"
 #import "XHImageCache.h"
-
+#import "XHLaunchImage.h"
 
 /**
  *  未检测到广告数据,启动页默认停留时间
@@ -19,7 +19,7 @@ static NSInteger const noDataDefaultDuration = 3;
 
 @property(nonatomic,strong)UIImageView *launchImgView;
 @property(nonatomic,strong)UIImageView *adImgView;
-@property(nonatomic,strong)XHSkipButton *skipButton;
+@property(nonatomic,strong)XHLaunchAdSkipButton *skipButton;
 @property(nonatomic,assign)NSInteger duration;
 @property(nonatomic,copy)dispatch_source_t noDataTimer;
 @property(nonatomic,copy)dispatch_source_t skipButtonTimer;
@@ -153,7 +153,7 @@ static NSInteger const noDataDefaultDuration = 3;
     if(_launchImgView==nil)
     {
         _launchImgView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _launchImgView.image = [self getLaunchImage];
+        _launchImgView.image = [XHLaunchImage launchImage];
     }
     return _launchImgView;
 }
@@ -171,11 +171,11 @@ static NSInteger const noDataDefaultDuration = 3;
     return _adImgView;
 }
 
--(XHSkipButton *)skipButton
+-(XHLaunchAdSkipButton *)skipButton
 {
     if(_skipButton == nil)
     {
-        _skipButton = [[XHSkipButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-70,25, 70, 40)];
+        _skipButton = [[XHLaunchAdSkipButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-70,25, 70, 40)];
         [_skipButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
         _skipButton.leftRightSpace = 5;
         _skipButton.topBottomSpace = 5;
@@ -265,41 +265,6 @@ static NSInteger const noDataDefaultDuration = 3;
     }
 }
 
--(UIImage *)getLaunchImage
-{
-    UIImage *imageP = [self launchImageWithType:@"Portrait"];
-    if(imageP) return imageP;
-    UIImage *imageL = [self launchImageWithType:@"Landscape"];
-    if(imageL) return imageL;
-    NSLog(@"获取LaunchImage失败!请检查是否添加启动图,或者规格是否有误.");
-    return nil;
-}
--(UIImage *)launchImageWithType:(NSString *)type
-{
-    CGSize viewSize = [UIScreen mainScreen].bounds.size;
-    NSString *viewOrientation = type;
-    NSString *launchImageName = nil;
-    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
-    for (NSDictionary* dict in imagesDict)
-    {
-        CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
-        
-        if([viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
-        {
-            if([dict[@"UILaunchImageOrientation"] isEqualToString:@"Landscape"])
-            {
-                imageSize = CGSizeMake(imageSize.height, imageSize.width);
-            }
-            if(CGSizeEqualToSize(imageSize, viewSize))
-            {
-                launchImageName = dict[@"UILaunchImageName"];
-                UIImage *image = [UIImage imageNamed:launchImageName];
-                return image;
-            }
-        }
-    }
-    return nil;
-}
 -(void)setAdFrame:(CGRect)adFrame
 {
     _adFrame = adFrame;
