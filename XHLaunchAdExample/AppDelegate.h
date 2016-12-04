@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  XHLaunchAdExample
 //
-//  Created by xiaohui on 16/6/13.
+//  Created by zhuxiaohui on 16/6/13.
 //  Copyright © 2016年 CoderZhuXH. All rights reserved.
 //
 

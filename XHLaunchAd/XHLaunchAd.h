@@ -2,73 +2,166 @@
 //  XHLaunchAd.h
 //  XHLaunchAdExample
 //
-//  Created by xiaohui on 16/6/13.
+//  Created by zhuxiaohui on 2016/6/13.
 //  Copyright © 2016年 CoderZhuXH. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  特性:
-//  1.支持全屏/半屏广告.
-//  2.支持静态/动态广告.
-//  3.兼容iPhone和iPad.
-//  4.支持广告点击事件
-//  5.自带图片下载,缓存功能.
-//  6.支持设置未检测到广告数据,启动页停留时间
-//  7.无依赖其他第三方框架.
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "UIImageView+XHWebCache.h"
-#import "XHLaunchAdSkipButton.h"
+#import "XHLaunchAdConfiguratuon.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class XHLaunchAd;
 
-typedef void(^clickBlock)();
-typedef void(^setAdImageBlock)(XHLaunchAd*launchAd);
-typedef void(^showFinishBlock)();
+@protocol XHLaunchAdDelegate <NSObject>
 
-@interface XHLaunchAd : UIViewController
+@optional
 
 /**
- *  未检测到广告数据,启动页停留时间(默认3s)(最小1s)
- *  请在向服务器请求广告数据前,设置此属性
- */
-@property (nonatomic, assign) NSInteger noDataDuration;
-
-/**
- *  重置广告frame
- */
-@property (nonatomic, assign) CGRect adFrame;
-
-/**
- *  显示启动广告
+ *  广告点击
  *
- *  @param frame      广告frame
- *  @param setAdImage 设置AdImage回调
- *  @param showFinish 广告显示完成回调
+ *  @param launchAd      launchAd
+ *  @param openURLString  打开页面地址
  */
-+(void)showWithAdFrame:(CGRect)frame setAdImage:(setAdImageBlock)setAdImage showFinish:(showFinishBlock)showFinish;
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
 
 /**
- *  设置广告数据
+ *  图片本地读取/或下载完成回调
  *
- *  @param imageUrl       图片url
- *  @param duration       广告停留时间(小于等于0s,默认按5s处理)
- *  @param skipType       跳过按钮类型
- *  @param options        图片缓存机制
- *  @param completedBlock 异步加载完图片回调
- *  @param click          广告点击事件回调
+ *  @param launchAd  XHLaunchAd
+ *  @param imageSize image
  */
--(void)setImageUrl:(NSString*)imageUrl duration:(NSInteger)duration skipType:(SkipType)skipType options:(XHWebImageOptions)options completed:(XHWebImageCompletionBlock)completedBlock click:(clickBlock)click;
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image;
 
 /**
- *  清除图片本地缓存
+ *  video本地读取/或下载完成回调
+ *
+ *  @param launchAd XHLaunchAd
+ *  @param pathURL  本地保存路径
+ */
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadFinish:(NSURL *)pathURL;
+
+/**
+ 视频下载进度回调
+
+ @param launchAd XHLaunchAd
+ @param progress 下载进度
+ @param total    总大小
+ @param current  当前已下载大小
+ */
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadProgress:(float)progress total:(unsigned long long)total current:(unsigned long long)current;
+
+/**
+ *  广告显示完成
+ */
+-(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
+
+/**
+ *  倒计时回调
+ *
+ *  @param launchAd XHLaunchAd
+ *  @param duration 倒计时时间
+ */
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd customSkipView:(UIView *)customSkipView duration:(NSInteger)duration;
+
+
+/**
+ 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理
+
+ @param launchAd          XHLaunchAd
+ @param launchAdImageView launchAdImageView
+ @param url               图片url
+ */
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd launchAdImageView:(UIImageView *)launchAdImageView URL:(NSURL *)url;
+
+@end
+
+
+@interface XHLaunchAd : NSObject
+
+@property(nonatomic,assign) id<XHLaunchAdDelegate> delegate;
+
+/**
+ *  设置等待数据源时间(default 3)
+ *
+ *  @param waitDataDuration waitDataDuration
+ */
++(void)setWaitDataDuration:(NSInteger )waitDataDuration;
+
+/**
+ *  图片开屏广告数据配置
+ *
+ *  @param imageAdconfiguration 数据配置
+ *
+ *  @return XHLaunchAd
+ */
++(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguratuon *)imageAdconfiguration;
+
+/**
+ *  图片开屏广告数据配置
+ *
+ *  @param imageAdconfiguration 数据配置
+ *  @param delegate             delegate
+ *
+ *  @return XHLaunchAd
+ */
++(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguratuon *)imageAdconfiguration delegate:(nullable id)delegate;
+/**
+ *  视频开屏广告数据配置
+ *
+ *  @param videoAdconfiguration 数据配置
+ *
+ *  @return XHLaunchAd
+ */
++(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguratuon *)videoAdconfiguration;
+
+/**
+ *  视频开屏广告数据配置
+ *
+ *  @param videoAdconfiguration 数据配置
+ *  @param delegate             delegate
+ *
+ *  @return XHLaunchAd
+ */
++(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguratuon *)videoAdconfiguration delegate:(nullable id)delegate;
+
+#pragma mark - 如果你需要提前下载并缓存广告图片或视频 请调用下面方法
+/**
+ *  批量下载并缓存image(异步)
+ *
+ *  @param urlArray image URL Array
+ */
++(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
+
+/**
+ *  批量下载并缓存视频(异步)
+ *
+ *  @param urlArray 视频URL Array
+ */
++(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
+#pragma mark - skipAction
+/**
+ *  跳过按钮事件
+ */
++(void)skipAction;
+
+#pragma mark - 缓存清除及大小
+/**
+ *  清除XHLaunch本地缓存
  */
 +(void)clearDiskCache;
 
 /**
- *  获取缓存图片占用总大小(M)
+ *  获取XHLaunch本地缓存大小(M)
  */
-+(float)imagesCacheSize;
++(float)diskCacheSize;
+
+/**
+ *  缓存路径
+ */
++(NSString *)xhLaunchAdCachePath;
 
 @end
 
+NS_ASSUME_NONNULL_END

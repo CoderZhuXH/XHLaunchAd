@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController">
             <connections>
-                <outlet property="lab" destination="p3A-yL-2sg" id="NSD-9G-eT8"/>
+                <outlet property="lab" destination="hcz-tM-LoB" id="MfI-HN-fOv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,25 +17,20 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3A-yL-2sg">
-                    <rect key="frame" x="0.0" y="254" width="320" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="a92-4x-726"/>
-                    </constraints>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="说明:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcz-tM-LoB">
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="p3A-yL-2sg" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="2uf-Oe-cb0"/>
-                <constraint firstItem="p3A-yL-2sg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="A6m-4D-I99"/>
-                <constraint firstAttribute="trailing" secondItem="p3A-yL-2sg" secondAttribute="trailing" id="o7y-1c-uhS"/>
-                <constraint firstItem="p3A-yL-2sg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yhe-ny-RAS"/>
+                <constraint firstAttribute="trailing" secondItem="hcz-tM-LoB" secondAttribute="trailing" constant="50" id="D4m-t4-OpN"/>
+                <constraint firstAttribute="bottom" secondItem="hcz-tM-LoB" secondAttribute="bottom" constant="15" id="QeF-7P-UBg"/>
+                <constraint firstItem="hcz-tM-LoB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="afe-yP-18Q"/>
+                <constraint firstItem="hcz-tM-LoB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="gXi-It-OeI"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="253" y="414"/>
+            <point key="canvasLocation" x="74" y="60"/>
         </view>
     </objects>
 </document>

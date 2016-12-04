@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebViewController">
@@ -17,38 +18,34 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fv-OZ-VyL">
-                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" red="0.28958413004875183" green="0.31462949514389038" blue="0.32950475811958313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="Sx4-qY-6gz"/>
                     </connections>
                 </webView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SXb-Fu-nay">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwc-5L-6Oo">
-                            <rect key="frame" x="0.0" y="20" width="55" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="55" id="MsG-zj-R0m"/>
                             </constraints>
                             <state key="normal" title="关闭">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="5V2-dr-GsA"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="详情" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WpX-z3-RM7">
-                            <rect key="frame" x="110" y="20" width="100" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="100" id="Siu-rx-atY"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="iwc-5L-6Oo" firstAttribute="leading" secondItem="SXb-Fu-nay" secondAttribute="leading" id="6Gk-QB-hbO"/>
                         <constraint firstItem="iwc-5L-6Oo" firstAttribute="top" secondItem="SXb-Fu-nay" secondAttribute="top" constant="20" id="6ub-Il-MdC"/>
@@ -60,7 +57,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="8fv-OZ-VyL" secondAttribute="bottom" id="A7N-yV-B0X"/>
                 <constraint firstItem="8fv-OZ-VyL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="C57-EF-0gU"/>
@@ -71,13 +68,12 @@
                 <constraint firstItem="8fv-OZ-VyL" firstAttribute="top" secondItem="SXb-Fu-nay" secondAttribute="bottom" id="pnR-Ob-2kP"/>
                 <constraint firstItem="8fv-OZ-VyL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yr7-nv-4JR"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="C57-EF-0gU"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="376" y="220"/>
+            <point key="canvasLocation" x="274" y="96"/>
         </view>
     </objects>
 </document>
