@@ -44,7 +44,7 @@
 *	2016.06.13 -- v1.0
 
 ## 效果
-###静态广告/动态广告
+###静态/动态广告-图片/视频广告
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot00.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot02.gif)
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot04.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot05.gif)  ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot06.gif)
 ##API
@@ -129,10 +129,11 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
     
 ```
-#### xxxx>> 注意 <<xxxx:若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里配置广告.
+##注意:
+####若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里,配置广告,如下:
 ```objc
 
-//1.若广告数据来源于数据请求,因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
+//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
 //2.设为3即表示,启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
 
 	 //设置数据等待时间
@@ -141,7 +142,7 @@
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
         
-      //在此处利用服务器返回的广告数据配置图片/视频广告各项参数
+      //在此处利用服务器返回的广告数据,按上面示例配置图片/视频广告各项参数
       XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon ...  
       
      //显示开屏广告
