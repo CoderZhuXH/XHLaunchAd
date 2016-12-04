@@ -114,16 +114,7 @@ static NSInteger defaultWaitDataDuration = 3;
     self = [super init];
     if (self) {
         
-        //应用启动, 首次开屏广告
-//        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-        
-            [self setupLaunchAd];
-            
-        //}];
-        //        ///进入后台
-        //        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-        //            //[self request];
-        //        }];
+        [self setupLaunchAd];
         //后台启动,二次开屏广告
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             
@@ -152,14 +143,9 @@ static NSInteger defaultWaitDataDuration = 3;
     window.rootViewController.view.backgroundColor = [UIColor clearColor];
     window.rootViewController.view.userInteractionEnabled = NO;
     
-    //设置为最顶层，防止 AlertView 等弹窗的覆盖
     window.windowLevel = UIWindowLevelStatusBar + 1;
-    
-    //默认为YES，当你设置为NO时，这个Window就会显示了
     window.hidden = NO;
     window.alpha = 1;
-    
-    //防止释放，显示完后  要手动设置为 nil
     self.window = window;
     
     //添加launchImage
