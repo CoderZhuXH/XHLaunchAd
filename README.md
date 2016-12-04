@@ -84,6 +84,8 @@
     imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
     //广告显示完成动画
     imageAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+    //跳过按钮类型
+    imageAdconfiguratuon.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     imageAdconfiguratuon.showEnterForeground = NO;
     //显示开屏广告
@@ -123,6 +125,8 @@
     videoAdconfiguratuon.customSkipView = [self customSkipView];
     //广告显示完成动画
     videoAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+     //跳过按钮类型
+    videoAdconfiguratuon.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     videoAdconfiguratuon.showEnterForeground = NO;
     //显示开屏广告

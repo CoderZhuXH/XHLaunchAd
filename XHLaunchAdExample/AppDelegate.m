@@ -124,7 +124,7 @@
         //跳过按钮类型
         imageAdconfiguratuon.skipButtonType = SkipTypeTimeText;
         //后台返回时,是否显示广告
-        imageAdconfiguratuon.showEnterForeground = YES;
+        imageAdconfiguratuon.showEnterForeground = NO;
         //显示开屏广告
         [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
         
