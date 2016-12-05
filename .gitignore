@@ -1,5 +1,3 @@
-# Mac OS X
-.DS_Store
 
 # Xcode
 #
@@ -31,3 +29,5 @@ DerivedData
 #
 Pods/
 Podfile.lock
+
+.DS_Store
