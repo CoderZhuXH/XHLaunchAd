@@ -18,13 +18,6 @@
 }
 -(NSString *)xh_videoName
 {
-//    NSString *name = [[self componentsSeparatedByString:@"/"] lastObject];
-//    if([name xh_containsSubString:@"."])
-//    {
-//        NSString * extensionName = [[name componentsSeparatedByString:@"."] lastObject];
-//        NSString *md5Name = [self.xh_md5String stringByAppendingString:extensionName];
-//        return md5Name;
-//    }
     return [self.xh_md5String stringByAppendingString:@".mp4"];
 }
 -(NSString *)xh_md5String
