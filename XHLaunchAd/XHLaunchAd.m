@@ -192,6 +192,17 @@ static NSInteger defaultWaitDataDuration = 3;
                         [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
                     }
                 }];
+                
+                if(configuration.imageOption == XHLaunchAdImageCacheInBackground)
+                {
+                    //缓存中未有
+                    if(![XHLaunchAdCache checkImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString]])
+                    {
+                        [self remove];//完成显示
+                         return;
+                    }
+                        
+                }
             }
         }
         else

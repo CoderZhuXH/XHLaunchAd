@@ -65,8 +65,9 @@
         {
         
             [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
-                
-                [XHLaunchAdCache saveImageData:data imageURL:url];
+                    
+                    [XHLaunchAdCache async_saveImageData:data imageURL:url];
+              
                 
             }];
         }
@@ -92,7 +93,8 @@
                
                 if(!error && location)
                 {
-                    [XHLaunchAdCache saveVideoAtLocation:location URL:url];
+                
+                    [XHLaunchAdCache async_saveVideoAtLocation:location URL:url];
                 }
                 
             }];

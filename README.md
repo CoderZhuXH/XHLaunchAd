@@ -145,9 +145,11 @@
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
         
-      //在此处利用服务器返回的广告数据,按上面示例配置图片/视频广告各项参数
-      XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon ...  
-      
+      //在此处利用服务器返回的广告数据,按上面示例添加开屏广告代码
+      XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon ... 
+
+     //配置相关参数.... 
+
      //显示开屏广告
      [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
               
@@ -163,7 +165,6 @@
  */
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
 {
-    NSLog(@"广告点击");
     if(openURLString)
     {
     	 //跳转到广告详情页面

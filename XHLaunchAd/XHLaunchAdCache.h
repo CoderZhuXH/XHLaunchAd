@@ -30,7 +30,15 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  *  @param data imageData
  *  @param url  图片url
  */
-+(void)saveImageData:(NSData *)data imageURL:(NSURL *)url;
++(BOOL)saveImageData:(NSData *)data imageURL:(NSURL *)url;
+
+/**
+ *  缓存图片 - 异步
+ *
+ *  @param data imageData
+ *  @param url  图片url
+ */
++(void)async_saveImageData:(NSData *)data imageURL:(NSURL *)url;
 
 /**
  *  检查是否已缓存在该图片
@@ -68,6 +76,14 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  @return 视频保存路劲
  */
 +(nullable NSURL *)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url;
+
+/**
+ 保存视频到缓存目录 - 异步
+
+ @param location 视频路径
+ @param url      视频url
+ */
++(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url;
 
 /**
  *  缓存路径

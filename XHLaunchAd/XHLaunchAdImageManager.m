@@ -56,8 +56,7 @@
         [_downloader downloadImageWithURL:url progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
             
             if(completedBlock) completedBlock(image,error,url);
-            
-            [XHLaunchAdCache saveImageData:data imageURL:url];
+            [XHLaunchAdCache async_saveImageData:data imageURL:url];
             
         }];
         
@@ -73,7 +72,8 @@
         {
             [_downloader downloadImageWithURL:url progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
                 
-                [XHLaunchAdCache saveImageData:data imageURL:url];
+                [XHLaunchAdCache async_saveImageData:data imageURL:url];
+                
             }];
         }
         
@@ -91,11 +91,7 @@
                 
                 if(completedBlock) completedBlock(image,error,url);
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                   
-                     [XHLaunchAdCache saveImageData:data imageURL:url];
-                });
-               
+                [XHLaunchAdCache async_saveImageData:data imageURL:url];
                 
             }];
         }

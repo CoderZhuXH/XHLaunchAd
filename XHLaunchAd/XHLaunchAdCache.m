@@ -19,14 +19,25 @@
     return [UIImage xh_imageWithData:data];
 }
 
-+(void)saveImageData:(NSData *)data imageURL:(NSURL *)url{
++(BOOL)saveImageData:(NSData *)data imageURL:(NSURL *)url{
     
     NSString *path = [NSString stringWithFormat:@"%@/%@",[self xhLaunchAdCachePath],url.absoluteString.xh_md5String];
     if (data) {
         BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
 
         if (!isOk) NSLog(@"cache file error for URL: %@", url);
+        
+        return isOk;
     }
+    return NO;
+}
++(void)async_saveImageData:(NSData *)data imageURL:(NSURL *)url
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [self saveImageData:data imageURL:url];
+    });
+
 }
 +(nullable NSURL *)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url
 {
@@ -43,6 +54,15 @@
         
         return nil;
     }
+}
++(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url
+{
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [self saveVideoAtLocation:location URL:url];
+    });
+
 }
 +(nullable NSURL *)getCacheVideoWithURL:(NSURL *)url
 {

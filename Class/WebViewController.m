@@ -8,8 +8,8 @@
 //  广告详情页
 
 #import "WebViewController.h"
-
-@interface WebViewController ()
+#import "UIView+MBProgressHUD.h"
+@interface WebViewController ()<UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *myWebView;
 
@@ -20,20 +20,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"详情";
-    [self setupWebView];
-    
-    // Do any additional setup after loading the view from its nib.
-}
--(void)setupWebView{
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.URLString]];
     [self.myWebView loadRequest:request];
 
 }
+
 - (IBAction)closeAction:(id)sender {
 
     [self dismissViewControllerAnimated:YES completion:nil];
 
+}
+-(void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.view showHUD];
+}
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.view hideHUD];
 }
 
 - (void)didReceiveMemoryWarning {
