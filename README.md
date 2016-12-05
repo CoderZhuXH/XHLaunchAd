@@ -27,7 +27,7 @@
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
-*	2016.12.03 - v3.0.0 -->1.增加mp4视频广告,2.增加自定义跳过按钮,3.增加更多接口及属性,4.增强自定义性,5.可使用三方框架加载网络图片,6.bug fix,7.优化缓存等等...
+*	2016.12.03 - v3.0.0 -->1.增加mp4视频广告,2.增加自定义跳过按钮,3.增加更多接口及属性,4.增强自定义性,5.可使用三方框架加载网络图片,6.可设置广告显示完成动画.7.bug fix,8.优化缓存等等...
 *	2016.11.05 -- v2.2.0  -->增加一种缓存方案:先缓存,下次显示.<br>
 *	2016.09.13 -- v2.1.8  -->修复在Swift中使用异常.<br>
 *	2016.09.10 -- v2.1.7  -->适配iPad,增加应用内跳转到广告详情,优化.<br>
@@ -51,11 +51,11 @@
 
 ## 使用方法
 
-#### 1.需设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
-#### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
+### 1.需设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
+### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
 
-####3.1 图片开屏广告
-#####3.1.1 - 使用默认配置快速初始化
+###3.1 图片开屏广告
+####- 3.1.1 - 使用默认配置快速初始化
 ```objc
 //1.使用默认配置初始化
     XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon defaultConfiguratuon];
@@ -63,10 +63,10 @@
     imageAdconfiguratuon.imageNameOrURLString = @"image0.jpg";
     ////广告点击打开链接
     imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
-    //显示开屏广告
+    //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
 ```
-#####3.1.2 - 自定义配置初始化
+####- 3.1.2 - 自定义配置初始化
 ```objc
 //2.自定义配置初始化
     XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon new];
@@ -76,7 +76,7 @@
     imageAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-150);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguratuon.imageNameOrURLString = @"image0.jpg";
-    //网络图片缓存机制
+    //网络图片缓存机制(只对网络图片有效)
     imageAdconfiguratuon.imageOption = XHLaunchAdImageRefreshCached;
     //图片填充模式
     imageAdconfiguratuon.contentMode = UIViewContentModeScaleToFill;
@@ -88,12 +88,12 @@
     imageAdconfiguratuon.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     imageAdconfiguratuon.showEnterForeground = NO;
-    //显示开屏广告
+    //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self]; 
     
 ```
-####4.1视频开屏广告
-#####4.1.1 - 使用默认配置快速初始化
+###4.1视频开屏广告
+####- 4.1.1 - 使用默认配置快速初始化
 ```objc
 
 //1.使用默认配置初始化
@@ -102,11 +102,11 @@
     videoAdconfiguratuon.videoNameOrURLString = @"video0.mp4";
     ////广告点击打开链接
     videoAdconfiguratuon.openURLString = @"http://www.returnoc.com";
-    //显示开屏广告
+    //显示视频开屏广告
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
 ```
 
-#####4.1.2 - 自定义配置初始化
+####- 4.1.2 - 自定义配置初始化
 ```objc   
 //2.自定义配置
     XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon new];
@@ -122,14 +122,13 @@
     videoAdconfiguratuon.scalingMode = MPMovieScalingModeAspectFill;
     //广告点击打开链接
     videoAdconfiguratuon.openURLString =  @"http://www.returnoc.com";
-    videoAdconfiguratuon.customSkipView = [self customSkipView];
     //广告显示完成动画
     videoAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
      //跳过按钮类型
     videoAdconfiguratuon.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     videoAdconfiguratuon.showEnterForeground = NO;
-    //显示开屏广告
+    //显示视频开屏广告
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
     
 ```
@@ -157,7 +156,7 @@
     
    
 ```
-#### 5.点击事件
+### 5.点击事件
 ```objc
 /**
  *  广告点击事件 回调
@@ -176,7 +175,7 @@
 }
 
 ```
-#### 6.自定义跳过按钮
+### 6.自定义跳过按钮
 ```objc
 //1.XHLaunchImageAdConfiguratuon 和XHLaunchVideoAdConfiguratuon 均有一个configuratuon.customSkipView 属性
 //2.自定义一个skipView 赋值给configuratuon.customSkipView属性 便可替换默认跳过按钮 如下:
@@ -214,7 +213,7 @@ configuratuon.customSkipView = [self customSkipView];
     [button setTitle:[NSString stringWithFormat:@"自定义%lds",duration] forState:UIControlStateNormal];
 }
 ```
-#### 7.预缓存接口(如果你需要提前下载并缓存广告图片或视频 请调用下面方法)
+### 7.预缓存接口(如果你需要提前下载并缓存广告图片或视频 请调用下面方法)
 ```objc
 /**
  *  批量下载并缓存image(异步)
@@ -230,7 +229,7 @@ configuratuon.customSkipView = [self customSkipView];
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 ```
-#### 8.其他代理方法
+### 8.其他代理方法
 ```objc
 /**
  *  图片下载完成/或本地图片读取完成 回调
@@ -284,7 +283,7 @@ configuratuon.customSkipView = [self customSkipView];
 
 ```
 
-#### 9.其他操作
+### 9.其他操作
 ```objc
 
 /**
