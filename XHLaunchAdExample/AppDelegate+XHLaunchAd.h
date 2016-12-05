@@ -2,9 +2,9 @@
 //  AppDelegate+XHLaunchAd.h
 //  XHLaunchAdExample
 //
-//  Created by xiaohui on 16/12/5.
+//  Created by zhuxiaohui on 16/11/30.
 //  Copyright © 2016年 CoderZhuXH. All rights reserved.
-//
+//  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "AppDelegate.h"
 
