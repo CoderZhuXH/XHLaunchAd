@@ -1,6 +1,6 @@
 ![](Logo/header.png)
 
-###开屏广告解决方案---支持静态/动态图片广告,mp4视频广告
+###开屏广告解决方案---支持静态/动态图片广告/mp4视频广告
 
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://github.com/CoderZhuXH/XHLaunchAd)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/CoderZhuXH/XHLaunchAd)
@@ -20,14 +20,16 @@
 * 5.兼容iPhone和iPad.
 * 6.支持广告点击事件.
 * 7.支持自定义跳过按钮.
-* 8.支持设置设置数据等待时间.
+* 8.支持设置数据等待时间.
 * 9.自带图片/视频下载,缓存功能.
-* 10.无依赖其他第三方框架.
+* 10.支持预缓存图片及视频.
+* 11.支持设置完成动画.
+* 12.无依赖其他第三方库等等...
 
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
-*	2016.12.03 - v3.0.0 -->1.增加mp4视频广告,2.增加自定义跳过按钮,3.增加更多接口及属性,4.增强自定义性,5.可使用三方框架加载网络图片,6.可设置广告显示完成动画.7.bug fix,8.优化缓存等等...
+*	2016.12.03 -- v3.0.0 -->1.增加mp4视频开屏广告2.增加对本地资源支持3.增加预缓存接口4.增加更多属性及接口,具有更强的自定义性5.可设置显示完成动画类型6.可自定义跳过按钮7.拥有更优雅的接入接口8.优化缓存机制,bug fix等等...
 *	2016.11.05 -- v2.2.0  -->增加一种缓存方案:先缓存,下次显示.<br>
 *	2016.09.13 -- v2.1.8  -->修复在Swift中使用异常.<br>
 *	2016.09.10 -- v2.1.7  -->适配iPad,增加应用内跳转到广告详情,优化.<br>
@@ -47,26 +49,25 @@
 ###静态/动态广告-图片/视频广告
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot00.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot02.gif)
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot04.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot05.gif)  ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot06.gif)
-##API
 
 ## 使用方法
 
-### 1.需设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
+### 1.设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
 ### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
 
-###3.1 图片开屏广告
-####- 3.1.1 - 使用默认配置快速初始化
+###-2.1 添加图片开屏广告
+####-- 2.1.1 使用默认配置快速初始化
 ```objc
 //1.使用默认配置初始化
     XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon defaultConfiguratuon];
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguratuon.imageNameOrURLString = @"image0.jpg";
-    ////广告点击打开链接
+    //广告点击打开链接
     imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
     //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
 ```
-####- 3.1.2 - 自定义配置初始化
+####-- 2.1.2自定义配置初始化
 ```objc
 //2.自定义配置初始化
     XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon new];
@@ -92,21 +93,21 @@
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self]; 
     
 ```
-###4.1视频开屏广告
-####- 4.1.1 - 使用默认配置快速初始化
+###-2.2添加视频开屏广告
+####--2.2.1 使用默认配置快速初始化
 ```objc
 
 //1.使用默认配置初始化
     XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon defaultConfiguratuon];
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguratuon.videoNameOrURLString = @"video0.mp4";
-    ////广告点击打开链接
+    //广告点击打开链接
     videoAdconfiguratuon.openURLString = @"http://www.returnoc.com";
     //显示视频开屏广告
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
 ```
 
-####- 4.1.2 - 自定义配置初始化
+####--2.2.2 自定义配置初始化
 ```objc   
 //2.自定义配置
     XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon new];
@@ -132,8 +133,9 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
     
 ```
-##注意:
-####若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里,配置广告,如下:
+<font color=#E6232A size= 5 face="黑体">注意:</font><br>
+<font color=#E6232A size= 3 face="黑体">若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里配置广告,如下:</font><br>
+
 ```objc
 
 //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
@@ -158,7 +160,7 @@
     
    
 ```
-### 5.点击事件
+### 3.点击事件
 ```objc
 /**
  *  广告点击事件 回调
@@ -176,7 +178,7 @@
 }
 
 ```
-### 6.自定义跳过按钮
+### 4.自定义跳过按钮
 ```objc
 //1.XHLaunchImageAdConfiguratuon 和XHLaunchVideoAdConfiguratuon 均有一个configuratuon.customSkipView 属性
 //2.自定义一个skipView 赋值给configuratuon.customSkipView属性 便可替换默认跳过按钮 如下:
@@ -202,7 +204,7 @@ configuratuon.customSkipView = [self customSkipView];
 }
 
 /**
- *  倒计时回调
+ *  代理方法 - 倒计时回调
  *
  *  @param launchAd XHLaunchAd
  *  @param duration 倒计时时间
@@ -214,7 +216,7 @@ configuratuon.customSkipView = [self customSkipView];
     [button setTitle:[NSString stringWithFormat:@"自定义%lds",duration] forState:UIControlStateNormal];
 }
 ```
-### 7.预缓存接口(如果你需要提前下载并缓存广告图片或视频 请调用下面方法)
+### 5.预缓存接口(如果你需要提前下载并缓存广告图片或视频 请调用下面方法)
 ```objc
 /**
  *  批量下载并缓存image(异步)
@@ -230,7 +232,7 @@ configuratuon.customSkipView = [self customSkipView];
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 ```
-### 8.其他代理方法
+### 6.其他代理方法
 ```objc
 /**
  *  图片下载完成/或本地图片读取完成 回调
@@ -284,7 +286,7 @@ configuratuon.customSkipView = [self customSkipView];
 
 ```
 
-### 9.其他操作
+### 7.其他操作
 ```objc
 
 /**
@@ -313,7 +315,7 @@ configuratuon.customSkipView = [self customSkipView];
 *   2.执行 pod install 或 pod update<br>
 *   3.导入 XHLaunchAd.h
 
-##  Tips
+###	3.Tips
 *   1.如果发现pod search XHLaunchAd 搜索出来的不是最新版本，需要在终端执行cd ~/desktop退回到desktop，然后执行pod setup命令更新本地spec缓存（需要几分钟），然后再搜索就可以了
 *   2.如果你发现你执行pod install后,导入的不是最新版本,请删除Podfile.lock文件,在执行一次 pod install
 *   3.如果在使用过程中遇到BUG，希望你能Issues我，谢谢（或者尝试下载最新的代码看看BUG修复没有）
