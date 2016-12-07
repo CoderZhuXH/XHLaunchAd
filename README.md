@@ -133,8 +133,8 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
     
 ```
-<font color=#E6232A size= 5 face="黑体">注意:</font><br>
-<font color=#E6232A size= 3 face="黑体">若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里配置广告,如下:</font><br>
+###注意:
+>若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里配置广告,如下:
 
 ```objc
 
