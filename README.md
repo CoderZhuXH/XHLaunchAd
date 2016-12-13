@@ -59,38 +59,38 @@
 ####-- 2.1.1 使用默认配置快速初始化
 ```objc
 //1.使用默认配置初始化
-    XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon defaultConfiguratuon];
+    XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-    imageAdconfiguratuon.imageNameOrURLString = @"image0.jpg";
+    imageAdconfiguration.imageNameOrURLString = @"image0.jpg";
     //广告点击打开链接
-    imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
     //显示图片开屏广告
-    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
+    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 ```
 ####-- 2.1.2自定义配置初始化
 ```objc
 //2.自定义配置初始化
-    XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon new];
+    XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
     //广告停留时间
-    imageAdconfiguratuon.duration = 5;
+    imageAdconfiguration.duration = 5;
     //广告frame
-    imageAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-150);
+    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-150);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-    imageAdconfiguratuon.imageNameOrURLString = @"image0.jpg";
+    imageAdconfiguration.imageNameOrURLString = @"image0.jpg";
     //网络图片缓存机制(只对网络图片有效)
-    imageAdconfiguratuon.imageOption = XHLaunchAdImageRefreshCached;
+    imageAdconfiguration.imageOption = XHLaunchAdImageRefreshCached;
     //图片填充模式
-    imageAdconfiguratuon.contentMode = UIViewContentModeScaleToFill;
+    imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
-    imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
     //广告显示完成动画
-    imageAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+    imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //跳过按钮类型
-    imageAdconfiguratuon.skipButtonType = SkipTypeTimeText;
+    imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
-    imageAdconfiguratuon.showEnterForeground = NO;
+    imageAdconfiguration.showEnterForeground = NO;
     //显示图片开屏广告
-    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self]; 
+    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self]; 
     
 ```
 ###-2.2添加视频开屏广告
@@ -98,39 +98,39 @@
 ```objc
 
 //1.使用默认配置初始化
-    XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon defaultConfiguratuon];
+    XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];
     //广告视频URLString/或本地视频名(请带上后缀)
-    videoAdconfiguratuon.videoNameOrURLString = @"video0.mp4";
+    videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
     //广告点击打开链接
-    videoAdconfiguratuon.openURLString = @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString = @"http://www.returnoc.com";
     //显示视频开屏广告
-    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
+    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 ```
 
 ####--2.2.2 自定义配置初始化
 ```objc   
 //2.自定义配置
-    XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon new];
+    XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
     //广告停留时间
-    videoAdconfiguratuon.duration = 5;
+    videoAdconfiguration.duration = 5;
     //广告frame
-    videoAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
-    videoAdconfiguratuon.videoNameOrURLString = @"video1.mp4";
+    videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
     //URL
-    //videoAdconfiguratuon.videoNameOrURLString = videoURL;
+    //videoAdconfiguration.videoNameOrURLString = videoURL;
     //视频填充模式
-    videoAdconfiguratuon.scalingMode = MPMovieScalingModeAspectFill;
+    videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
     //广告点击打开链接
-    videoAdconfiguratuon.openURLString =  @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString =  @"http://www.returnoc.com";
     //广告显示完成动画
-    videoAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+    videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
      //跳过按钮类型
-    videoAdconfiguratuon.skipButtonType = SkipTypeTimeText;
+    videoAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
-    videoAdconfiguratuon.showEnterForeground = NO;
+    videoAdconfiguration.showEnterForeground = NO;
     //显示视频开屏广告
-    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
+    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
     
 ```
 ###注意:
@@ -148,12 +148,12 @@
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
         
       //在此处利用服务器返回的广告数据,按上面示例添加开屏广告代码
-      XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon ... 
+      XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration ... 
 
      //配置相关参数.... 
 
      //显示开屏广告
-     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
+     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
               
     } failure:^(NSError *error) {
     }];   
@@ -180,9 +180,9 @@
 ```
 ### 4.自定义跳过按钮
 ```objc
-//1.XHLaunchImageAdConfiguratuon 和XHLaunchVideoAdConfiguratuon 均有一个configuratuon.customSkipView 属性
-//2.自定义一个skipView 赋值给configuratuon.customSkipView属性 便可替换默认跳过按钮 如下:
-configuratuon.customSkipView = [self customSkipView];
+//1.XHLaunchImageAdConfiguration 和XHLaunchVideoAdConfiguration 均有一个configuration.customSkipView 属性
+//2.自定义一个skipView 赋值给configuration.customSkipView属性 便可替换默认跳过按钮 如下:
+configuration.customSkipView = [self customSkipView];
 
 -(UIView *)customSkipView
 {
