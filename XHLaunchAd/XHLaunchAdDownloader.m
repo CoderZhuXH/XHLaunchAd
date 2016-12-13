@@ -60,8 +60,7 @@
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        UIImage *image = [XHLaunchAdCache getCacheImageWithURL:url];
-        if(!image)
+        if(![XHLaunchAdCache checkImageWithURL:url])//尚未缓存
         {
         
             [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {

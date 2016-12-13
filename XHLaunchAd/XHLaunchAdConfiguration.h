@@ -1,5 +1,5 @@
 //
-//  XHLaunchAdConfiguratuon.h
+//  XHLaunchAdConfiguration.h
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 2016/6/28.
@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 };
 
 #pragma mark - 公共属性
-@interface XHLaunchAdConfiguratuon : NSObject
+@interface XHLaunchAdConfiguration : NSObject
 
 /**
  *  停留时间(default 5)
@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @end
 
 #pragma mark - 图片广告相关
-@interface XHLaunchImageAdConfiguratuon : XHLaunchAdConfiguratuon
+@interface XHLaunchImageAdConfiguration : XHLaunchAdConfiguration
 
 /**
  *  图片广告缩放模式(default UIViewContentModeScaleToFill)
@@ -93,13 +93,13 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property(nonatomic,assign)XHLaunchAdImageOptions imageOption;
 
 
-+(XHLaunchImageAdConfiguratuon *)defaultConfiguratuon;
++(XHLaunchImageAdConfiguration *)defaultConfiguration;
 
 
 @end
 
 #pragma mark - 视频广告相关
-@interface XHLaunchVideoAdConfiguratuon : XHLaunchAdConfiguratuon
+@interface XHLaunchVideoAdConfiguration : XHLaunchAdConfiguration
 
 /**
  *  video本地名或网络链接URL string
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
  */
 @property(nonatomic,assign)MPMovieScalingMode scalingMode;
 
-+(XHLaunchVideoAdConfiguratuon *)defaultConfiguratuon;
++(XHLaunchVideoAdConfiguration *)defaultConfiguration;
 
 @end
 

@@ -2,7 +2,7 @@
 //  XHLaunchAdDownload.m
 //  XHLaunchAdExample
 //
-//  Created by zhuxiaohui on 16/12/3.
+//  Created by zhuxiaohui on 2016/6/26.
 //  Copyright © 2016年 CoderZhuXH. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 

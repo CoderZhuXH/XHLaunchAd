@@ -45,7 +45,7 @@
     [self example02_imageAd_localData];
     
     
-    //3.******视频开屏广告 - 网络数据(首次不显示,视频缓存ok后,下次显示)******
+    //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示)******
     //[self example03_videoAd_networkData];
     
     
@@ -58,8 +58,8 @@
     
     
     //6.******使用默认配置快速初始化,请看下面两个示例******
-    //[self example06_imageAd_defaultConfiguratuon];
-    //[self example07_videoAd_defaultConfiguratuon];
+    //[self example06_imageAd_defaultConfiguration];
+    //[self example07_videoAd_defaultConfiguration];
     
     
     //7.******如果你想提前缓存图片/视频请调下面这两个接口*****
@@ -81,27 +81,27 @@
         //广告数据转模型
         LaunchAdModel *model = [[LaunchAdModel alloc] initWithDict:response[@"data"]];
         //配置广告数据
-        XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon new];
+        XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
         //广告停留时间
-        imageAdconfiguratuon.duration = model.duration;
+        imageAdconfiguration.duration = model.duration;
         //广告frame
-        imageAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
+        imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
         //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-        imageAdconfiguratuon.imageNameOrURLString = model.content;
+        imageAdconfiguration.imageNameOrURLString = model.content;
         //缓存机制(仅对网络图片有效)
-        imageAdconfiguratuon.imageOption = XHLaunchAdImageDefault;
+        imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
         //图片填充模式
-        imageAdconfiguratuon.contentMode = UIViewContentModeScaleToFill;
+        imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
         //广告点击打开链接
-        imageAdconfiguratuon.openURLString = model.openUrl;
+        imageAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
-        imageAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+        imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
         //跳过按钮类型
-        imageAdconfiguratuon.skipButtonType = SkipTypeTimeText;
+        imageAdconfiguration.skipButtonType = SkipTypeTimeText;
         //后台返回时,是否显示广告
-        imageAdconfiguratuon.showEnterForeground = NO;
+        imageAdconfiguration.showEnterForeground = NO;
         //显示开屏广告
-        [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
+        [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
         
     } failure:^(NSError *error) {
     }];
@@ -112,27 +112,27 @@
 -(void)example02_imageAd_localData
 {
     //配置广告数据
-    XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon new];
+    XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
     //广告停留时间
-    imageAdconfiguratuon.duration = 5;
+    imageAdconfiguration.duration = 5;
     //广告frame
-    imageAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
+    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-    imageAdconfiguratuon.imageNameOrURLString = @"image2.jpg";
+    imageAdconfiguration.imageNameOrURLString = @"image2.jpg";
     //缓存机制(仅对网络图片有效)
-    imageAdconfiguratuon.imageOption = XHLaunchAdImageRefreshCached;
+    imageAdconfiguration.imageOption = XHLaunchAdImageRefreshCached;
     //图片填充模式
-    imageAdconfiguratuon.contentMode = UIViewContentModeScaleToFill;
+    imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
-    imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
     //广告显示完成动画
-    imageAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+    imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //跳过按钮类型
-    imageAdconfiguratuon.skipButtonType = SkipTypeTimeText;
+    imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
-    imageAdconfiguratuon.showEnterForeground = NO;
+    imageAdconfiguration.showEnterForeground = NO;
     //显示开屏广告
-    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
+    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
     
 }
 
@@ -152,26 +152,26 @@
         LaunchAdModel *model = [[LaunchAdModel alloc] initWithDict:response[@"data"]];
         
         //配置广告数据
-        XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon new];
+        XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
         //广告停留时间
-        videoAdconfiguratuon.duration = model.duration;
+        videoAdconfiguration.duration = model.duration;
         //广告frame
-        videoAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
+        videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
         //广告视频URLString/或本地视频名(请带上后缀)
         //注意:视频广告只支持先缓存,下次显示
-        videoAdconfiguratuon.videoNameOrURLString = model.content;
+        videoAdconfiguration.videoNameOrURLString = model.content;
         //视频缩放模式
-        videoAdconfiguratuon.scalingMode = MPMovieScalingModeAspectFill;
+        videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
         //广告点击打开链接
-        videoAdconfiguratuon.openURLString = model.openUrl;
+        videoAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
-        videoAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+        videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
         //后台返回时,是否显示广告
-        videoAdconfiguratuon.showEnterForeground = NO;
+        videoAdconfiguration.showEnterForeground = NO;
         //跳过按钮类型
-        videoAdconfiguratuon.skipButtonType = SkipTypeTimeText;
+        videoAdconfiguration.skipButtonType = SkipTypeTimeText;
         
-        [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
+        [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
         
     } failure:^(NSError *error) {
     }];
@@ -182,61 +182,61 @@
 -(void)example04_videoAd_localData
 {
     //配置广告数据
-    XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon new];
+    XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
     //广告停留时间
-    videoAdconfiguratuon.duration = 5;
+    videoAdconfiguration.duration = 5;
     //广告frame
-    videoAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
-    videoAdconfiguratuon.videoNameOrURLString = @"video1.mp4";
+    videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
     //视频填充模式
-    videoAdconfiguratuon.scalingMode = MPMovieScalingModeAspectFill;
+    videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
     //广告点击打开链接
-    videoAdconfiguratuon.openURLString =  @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString =  @"http://www.returnoc.com";
     //跳过按钮类型
-    videoAdconfiguratuon.skipButtonType = SkipTypeTimeText;
+    videoAdconfiguration.skipButtonType = SkipTypeTimeText;
     //广告显示完成动画
-    videoAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+    videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //后台返回时,是否显示广告
-    videoAdconfiguratuon.showEnterForeground = NO;
+    videoAdconfiguration.showEnterForeground = NO;
     //显示开屏广告
-    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
+    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
     
 }
 #pragma mark - 自定义跳过按钮-示例
 -(void)example05_customSkipButton
 {
     //注意:
-    //1.自定义跳过按钮很简单,configuratuon有一个customSkipView属性.
-    //2.自定义一个跳过的view 赋值给configuratuon.customSkipView属性便可替换默认跳过按钮,如下:
+    //1.自定义跳过按钮很简单,configuration有一个customSkipView属性.
+    //2.自定义一个跳过的view 赋值给configuration.customSkipView属性便可替换默认跳过按钮,如下:
     
     //配置广告数据
-    XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon new];
+    XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
     //广告停留时间
-    imageAdconfiguratuon.duration = 5;
+    imageAdconfiguration.duration = 5;
     //广告frame
-    imageAdconfiguratuon.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
+    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-    imageAdconfiguratuon.imageNameOrURLString = @"image11.gif";
+    imageAdconfiguration.imageNameOrURLString = @"image11.gif";
     //缓存机制(仅对网络图片有效)
-    imageAdconfiguratuon.imageOption = XHLaunchAdImageRefreshCached;
+    imageAdconfiguration.imageOption = XHLaunchAdImageRefreshCached;
     //图片填充模式
-    imageAdconfiguratuon.contentMode = UIViewContentModeScaleToFill;
+    imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
-    imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
     //广告显示完成动画
-    imageAdconfiguratuon.showFinishAnimate =ShowFinishAnimateFadein;
+    imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //后台返回时,是否显示广告
-    imageAdconfiguratuon.showEnterForeground = NO;
+    imageAdconfiguration.showEnterForeground = NO;
     
     
     //start********************自定义跳过按钮**************************
-    imageAdconfiguratuon.customSkipView = [self customSkipView];
+    imageAdconfiguration.customSkipView = [self customSkipView];
     //********************自定义跳过按钮*****************************end
     
     
     //显示开屏广告
-    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
+    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
     
     
 }
@@ -244,28 +244,28 @@
 /**
  *  图片
  */
--(void)example06_imageAd_defaultConfiguratuon
+-(void)example06_imageAd_defaultConfiguration
 {
     //使用默认配置
-    XHLaunchImageAdConfiguratuon *imageAdconfiguratuon = [XHLaunchImageAdConfiguratuon defaultConfiguratuon];
+    XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
      //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-    imageAdconfiguratuon.imageNameOrURLString = imageURL3;
+    imageAdconfiguration.imageNameOrURLString = imageURL3;
     //广告点击打开链接
-    imageAdconfiguratuon.openURLString = @"http://www.returnoc.com";
-    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguratuon delegate:self];
+    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
+    [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 }
 /**
  *  视频
  */
--(void)example07_videoAd_defaultConfiguratuon
+-(void)example07_videoAd_defaultConfiguration
 {
     //使用默认配置
-    XHLaunchVideoAdConfiguratuon *videoAdconfiguratuon = [XHLaunchVideoAdConfiguratuon defaultConfiguratuon];
+    XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];
     //广告视频URLString/或本地视频名(请带上后缀)
-    videoAdconfiguratuon.videoNameOrURLString = @"video0.mp4";
+    videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
     ////广告点击打开链接
-    videoAdconfiguratuon.openURLString = @"http://www.returnoc.com";
-    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguratuon delegate:self];
+    videoAdconfiguration.openURLString = @"http://www.returnoc.com";
+    [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 }
 #pragma mark - customSkipView
 //自定义跳过按钮

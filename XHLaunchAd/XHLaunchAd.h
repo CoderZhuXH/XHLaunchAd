@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "XHLaunchAdConfiguratuon.h"
+#import "XHLaunchAdConfiguration.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return XHLaunchAd
  */
-+(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguratuon *)imageAdconfiguration;
++(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration;
 
 /**
  *  图片开屏广告数据配置
@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return XHLaunchAd
  */
-+(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguratuon *)imageAdconfiguration delegate:(nullable id)delegate;
++(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration delegate:(nullable id)delegate;
 /**
  *  视频开屏广告数据配置
  *
@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return XHLaunchAd
  */
-+(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguratuon *)videoAdconfiguration;
++(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdconfiguration;
 
 /**
  *  视频开屏广告数据配置
@@ -124,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return XHLaunchAd
  */
-+(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguratuon *)videoAdconfiguration delegate:(nullable id)delegate;
++(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdconfiguration delegate:(nullable id)delegate;
 
 #pragma mark - 如果你需要提前下载并缓存广告图片或视频 请调用下面方法
 /**
