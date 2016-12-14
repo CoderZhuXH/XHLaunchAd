@@ -60,7 +60,7 @@
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if(![XHLaunchAdCache checkImageWithURL:url])//尚未缓存
+        if(![XHLaunchAdCache checkImageInCacheWithURL:url])//尚未缓存
         {
         
             [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
@@ -86,7 +86,7 @@
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if(![XHLaunchAdCache checkVideoWithURL:url])//尚未缓存
+        if(![XHLaunchAdCache checkVideoInCacheWithURL:url])//尚未缓存
         {
             [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
                

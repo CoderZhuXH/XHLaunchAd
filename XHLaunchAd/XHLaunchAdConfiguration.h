@@ -68,9 +68,14 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property(nonatomic,copy)NSString *openURLString;
 
 /**
- *  自定义跳过按钮
+ *  自定义跳过按钮(若定义此视图,将会自定替换系统跳过按钮)
  */
 @property(nonatomic,strong) UIView *customSkipView;
+
+/**
+ *  子视图(若定义此属性,这些视图将会被自动添加在广告视图上)
+ */
+@property(nonatomic,copy,nullable) NSArray<UIView *> *subViews;
 
 @end
 

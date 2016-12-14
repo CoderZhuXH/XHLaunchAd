@@ -47,7 +47,7 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  *
  *  @return BOOL
  */
-+(BOOL)checkImageWithURL:(NSURL *)url;
++(BOOL)checkImageInCacheWithURL:(NSURL *)url;
 
 /**
  *  检查是否已缓存该视频
@@ -56,7 +56,7 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  *
  *  @return BOOL
  */
-+(BOOL)checkVideoWithURL:(NSURL *)url;
++(BOOL)checkVideoInCacheWithURL:(NSURL *)url;
 
 /**
  *  获取缓存视频路径

@@ -82,6 +82,15 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [[XHLaunchAd shareLaunchAd] adSkipButtonClick];
 }
++(BOOL)checkImageInCacheWithURL:(NSURL *)url
+{
+    return [XHLaunchAdCache checkImageInCacheWithURL:url];
+}
+
++(BOOL)checkVideoInCacheWithURL:(NSURL *)url
+{
+    return [XHLaunchAdCache checkVideoInCacheWithURL:url];
+}
 +(void)clearDiskCache
 {
     [XHLaunchAdCache clearDiskCache];
@@ -196,7 +205,7 @@ static NSInteger defaultWaitDataDuration = 3;
                 if(configuration.imageOption == XHLaunchAdImageCacheInBackground)
                 {
                     //缓存中未有
-                    if(![XHLaunchAdCache checkImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString]])
+                    if(![XHLaunchAdCache checkImageInCacheWithURL:[NSURL URLWithString:configuration.imageNameOrURLString]])
                     {
                         [self remove];//完成显示
                          return;
@@ -228,6 +237,9 @@ static NSInteger defaultWaitDataDuration = 3;
         //skipButton
         [self addSkipButtonForConfiguration:configuration];
         
+        //customView
+        if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
+
         //点击
         __weak __typeof(self) weakSelf = self;
         self.adView.adClick = ^()
@@ -330,6 +342,9 @@ static NSInteger defaultWaitDataDuration = 3;
         //skipButton
         [self addSkipButtonForConfiguration:configuration];
         
+        //customView
+        if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
+        
         //点击
         __weak __typeof(self) weakSelf = self;
         self.adVideoView.adClick = ^()
@@ -340,7 +355,14 @@ static NSInteger defaultWaitDataDuration = 3;
     }
     
 }
-
+#pragma mark - add subViews
+-(void)addSubViews:(NSArray *)subViews
+{
+    [subViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+        
+        [self.window addSubview:view];
+    }];
+}
 #pragma mark - set
 -(void)setImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdConfiguration
 {

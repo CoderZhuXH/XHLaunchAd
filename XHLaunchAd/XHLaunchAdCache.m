@@ -92,11 +92,11 @@
     if(url==nil) return nil;
     return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:url.absoluteString.xh_videoName];
 }
-+(BOOL)checkImageWithURL:(NSURL *)url
++(BOOL)checkImageInCacheWithURL:(NSURL *)url
 {
     return [[NSFileManager defaultManager] fileExistsAtPath:[self imagePathWithURL:url]];
 }
-+(BOOL)checkVideoWithURL:(NSURL *)url
++(BOOL)checkVideoInCacheWithURL:(NSURL *)url
 {
     return [[NSFileManager defaultManager] fileExistsAtPath:[self videoPathWithURL:url]];
 }

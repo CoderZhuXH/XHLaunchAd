@@ -100,6 +100,14 @@
         imageAdconfiguration.skipButtonType = SkipTypeTimeText;
         //后台返回时,是否显示广告
         imageAdconfiguration.showEnterForeground = NO;
+        
+        //图片已缓存 - 显示一个 "已预载" 视图 (可选)
+        if([XHLaunchAd checkImageInCacheWithURL:[NSURL URLWithString:model.content]])
+        {
+            //设置要添加的自定义视图(可选)
+            imageAdconfiguration.subViews = [self launchAdSubViews_alreadyView];
+        
+        }
         //显示开屏广告
         [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
         
@@ -131,6 +139,8 @@
     imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     imageAdconfiguration.showEnterForeground = NO;
+    //设置要添加的子视图(可选)
+    //imageAdconfiguration.subViews = [self launchAdSubViews];
     //显示开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
     
@@ -170,6 +180,13 @@
         videoAdconfiguration.showEnterForeground = NO;
         //跳过按钮类型
         videoAdconfiguration.skipButtonType = SkipTypeTimeText;
+        //视频已缓存 - 显示一个 "已预载" 视图 (可选)
+        if([XHLaunchAd checkVideoInCacheWithURL:[NSURL URLWithString:model.content]])
+        {
+            //设置要添加的自定义视图(可选)
+            videoAdconfiguration.subViews = [self launchAdSubViews_alreadyView];
+            
+        }
         
         [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
         
@@ -199,6 +216,8 @@
     videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //后台返回时,是否显示广告
     videoAdconfiguration.showEnterForeground = NO;
+    //设置要添加的子视图(可选)
+    //videoAdconfiguration.subViews = [self launchAdSubViews];
     //显示开屏广告
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
     
@@ -229,6 +248,8 @@
     //后台返回时,是否显示广告
     imageAdconfiguration.showEnterForeground = NO;
     
+    //设置要添加的子视图(可选)
+    imageAdconfiguration.subViews = [self launchAdSubViews];
     
     //start********************自定义跳过按钮**************************
     imageAdconfiguration.customSkipView = [self customSkipView];
@@ -266,6 +287,33 @@
     ////广告点击打开链接
     videoAdconfiguration.openURLString = @"http://www.returnoc.com";
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
+}
+#pragma mark - subViews
+-(NSArray<UIView *> *)launchAdSubViews_alreadyView
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, 30, 60, 30)];
+    label.text  = @"已预载";
+    label.font = [UIFont systemFontOfSize:12];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.layer.cornerRadius = 5.0;
+    label.layer.masksToBounds = YES;
+    label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    return [NSArray arrayWithObject:label];
+    
+}
+-(NSArray<UIView *> *)launchAdSubViews
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, 30, 60, 30)];
+    label.text  = @"subViews";
+    label.font = [UIFont systemFontOfSize:12];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.layer.cornerRadius = 5.0;
+    label.layer.masksToBounds = YES;
+    label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    return [NSArray arrayWithObject:label];
+
 }
 #pragma mark - customSkipView
 //自定义跳过按钮

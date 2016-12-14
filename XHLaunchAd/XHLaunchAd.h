@@ -140,11 +140,31 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param urlArray 视频URL Array
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
+
 #pragma mark - skipAction
 /**
  *  跳过按钮事件
  */
 +(void)skipAction;
+
+#pragma mark - 是否已缓存
+/**
+ *  是否已缓存在该图片
+ *
+ *  @param url image url
+ *
+ *  @return BOOL
+ */
++(BOOL)checkImageInCacheWithURL:(NSURL *)url;
+
+/**
+ *  是否已缓存该视频
+ *
+ *  @param url video url
+ *
+ *  @return BOOL
+ */
++(BOOL)checkVideoInCacheWithURL:(NSURL *)url;
 
 #pragma mark - 缓存清除及大小
 /**
