@@ -29,6 +29,7 @@
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
+*	2016.12.14 -- v3.2.0 -->1.添加subViews属性2.添加缓存检测...
 *	2016.12.03 -- v3.0.0 -->1.增加mp4视频开屏广告2.增加对本地资源支持3.增加预缓存接口4.增加更多属性及接口,具有更强的自定义性5.可设置显示完成动画类型6.可自定义跳过按钮7.拥有更优雅的接入接口8.优化缓存机制,bug fix等等...
 *	2016.11.05 -- v2.2.0  -->增加一种缓存方案:先缓存,下次显示.<br>
 *	2016.09.13 -- v2.1.8  -->修复在Swift中使用异常.<br>
@@ -89,6 +90,10 @@
     imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     imageAdconfiguration.showEnterForeground = NO;
+    
+     //设置要添加的子视图(可选)
+    //imageAdconfiguration.subViews = ...
+
     //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self]; 
     
@@ -129,6 +134,10 @@
     videoAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     videoAdconfiguration.showEnterForeground = NO;
+    
+    //设置要添加的子视图(可选)
+    //videoAdconfiguration.subViews = ...
+    
     //显示视频开屏广告
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
     
@@ -232,7 +241,32 @@ configuration.customSkipView = [self customSkipView];
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 ```
-### 6.其他代理方法
+
+### 6.检测是否已缓存
+
+```objc
+
+/**
+ *  是否已缓存在该图片
+ *
+ *  @param url image url
+ *
+ *  @return BOOL
+ */
++(BOOL)checkImageInCacheWithURL:(NSURL *)url;
+
+/**
+ *  是否已缓存该视频
+ *
+ *  @param url video url
+ *
+ *  @return BOOL
+ */
++(BOOL)checkVideoInCacheWithURL:(NSURL *)url;
+
+```
+
+### 7.其他代理方法
 ```objc
 /**
  *  图片下载完成/或本地图片读取完成 回调
