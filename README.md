@@ -320,7 +320,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 7.其他操作
+### 8.其他操作
 ```objc
 
 /**
