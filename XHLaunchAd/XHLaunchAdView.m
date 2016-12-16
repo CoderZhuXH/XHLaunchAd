@@ -3,7 +3,7 @@
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 16/12/3.
-//  Copyright © 2016年 CoderZhuXH. All rights reserved.
+//  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdView.h"
@@ -60,7 +60,7 @@
         _adVideoPlayer = [[MPMoviePlayerController alloc] init];
         _adVideoPlayer.shouldAutoplay = YES;
         [_adVideoPlayer setControlStyle:MPMovieControlStyleNone];
-        _adVideoPlayer.repeatMode = MPMovieRepeatModeOne;
+        _adVideoPlayer.repeatMode = MPMovieRepeatModeNone;
         _adVideoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
         _adVideoPlayer.view.frame = [UIScreen mainScreen].bounds;
         _adVideoPlayer.view.backgroundColor = [UIColor clearColor];
@@ -76,4 +76,5 @@
     }
     
 }
+
 @end

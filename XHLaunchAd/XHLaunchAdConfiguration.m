@@ -3,7 +3,7 @@
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 2016/6/28.
-//  Copyright © 2016年 CoderZhuXH. All rights reserved.
+//  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdConfiguration.h"
@@ -48,7 +48,7 @@
     configuration.duration = 5;
     //广告frame
     configuration.frame = [UIScreen mainScreen].bounds;
-    //图片填充模式
+    //视频填充模式
     configuration.scalingMode = MPMovieScalingModeAspectFill;
     //广告显示完成动画
     configuration.showFinishAnimate =ShowFinishAnimateFadein;

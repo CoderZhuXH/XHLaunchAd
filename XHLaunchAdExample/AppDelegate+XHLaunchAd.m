@@ -3,7 +3,7 @@
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 16/11/30.
-//  Copyright © 2016年 CoderZhuXH. All rights reserved.
+//  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "AppDelegate+XHLaunchAd.h"
@@ -27,7 +27,7 @@
 #define videoURL1 @"http://ohnzw6ag6.bkt.clouddn.com/video0.mp4"
 #define videoURL2  @"http://120.25.226.186:32812/resources/videos/minion_01.mp4";
 #define videoURL3 @"http://ohnzw6ag6.bkt.clouddn.com/video1.mp4"
-#define videoURL4 @"https://github.com/CoderZhuXH/XHLaunchAdExample/blob/master/Source/video0.mp4?raw=true"
+#define videoURL4 @"https://github.com/it7090.com/XHLaunchAdExample/blob/master/Source/video0.mp4?raw=true"
 
 @interface AppDelegate()<XHLaunchAdDelegate>
 
@@ -132,7 +132,7 @@
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //跳过按钮类型
@@ -209,7 +209,7 @@
     //视频填充模式
     videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
     //广告点击打开链接
-    videoAdconfiguration.openURLString =  @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString =  @"http://www.it7090.com";
     //跳过按钮类型
     videoAdconfiguration.skipButtonType = SkipTypeTimeText;
     //广告显示完成动画
@@ -242,7 +242,7 @@
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //后台返回时,是否显示广告
@@ -272,7 +272,7 @@
      //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = imageURL3;
     //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.it7090.com";
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 }
 /**
@@ -285,7 +285,7 @@
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
     ////广告点击打开链接
-    videoAdconfiguration.openURLString = @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString = @"http://www.it7090.com";
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 }
 #pragma mark - subViews

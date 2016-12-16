@@ -3,7 +3,7 @@
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 16/12/3.
-//  Copyright © 2016年 CoderZhuXH. All rights reserved.
+//  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import <UIKit/UIKit.h>
@@ -13,7 +13,7 @@
 
 @interface XHLaunchAdView : UIImageView
 
-@property(nonatomic,copy,nonnull) void(^adClick)();
+@property(nonatomic,copy) void(^adClick)();
 
 @end
 
@@ -25,7 +25,7 @@
 #pragma mark - videoAdView
 @interface XHLaunchVideoAdView : XHLaunchAdView
 
-@property (strong, nonatomic,nonnull) MPMoviePlayerController *adVideoPlayer;
+@property (strong, nonatomic) MPMoviePlayerController *adVideoPlayer;
 @property(nonatomic,assign)MPMovieScalingMode adVideoScalingMode;
 
 @end

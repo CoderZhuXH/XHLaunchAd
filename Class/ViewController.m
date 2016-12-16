@@ -3,7 +3,7 @@
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 16/6/11.
-//  Copyright © 2016年 CoderZhuXH. All rights reserved.
+//  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 //  首页
 #import "ViewController.h"
@@ -25,7 +25,7 @@
     
     self.navigationItem.title = @"XHLaunchAdExample";
 
-    self.lab.text = @"使用说明及注意事项见github:\n https://github.com/CoderZhuXH/XHLaunchAd ";
+    self.lab.text = @"使用说明及注意事项见github:\n https://github.com/it7090.com/XHLaunchAd ";
     
     // Do any additional setup after loading the view from its nib.
 }
