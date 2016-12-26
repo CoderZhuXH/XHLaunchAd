@@ -71,6 +71,7 @@
 -(void)example01_imageAd_networkData
 {
     //设为3即表示,启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
+    //数据获取成功,初始化广告时,自动结束等待,显示广告
     [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置
     
     //广告数据请求
@@ -151,6 +152,7 @@
 -(void)example03_videoAd_networkData
 {
     //设为3即表示,启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
+    //数据获取成功,初始化广告时,自动结束等待,显示广告
     [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置
     
     //广告数据请求
