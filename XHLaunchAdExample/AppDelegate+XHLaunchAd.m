@@ -27,7 +27,6 @@
 #define videoURL1 @"http://ohnzw6ag6.bkt.clouddn.com/video0.mp4"
 #define videoURL2  @"http://120.25.226.186:32812/resources/videos/minion_01.mp4";
 #define videoURL3 @"http://ohnzw6ag6.bkt.clouddn.com/video1.mp4"
-#define videoURL4 @"https://github.com/it7090.com/XHLaunchAdExample/blob/master/Source/video0.mp4?raw=true"
 
 @interface AppDelegate()<XHLaunchAdDelegate>
 
