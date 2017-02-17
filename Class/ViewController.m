@@ -25,8 +25,8 @@
     
     self.navigationItem.title = @"XHLaunchAdExample";
 
-    self.lab.text = @"使用说明及注意事项见github:\n https://github.com/it7090.com/XHLaunchAd ";
-    
+    self.lab.text = @"使用说明及注意事项见github:\n https://github.com/CoderZhuXH/XHLaunchAd";
+
     // Do any additional setup after loading the view from its nib.
 }
 
