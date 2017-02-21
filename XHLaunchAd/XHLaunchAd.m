@@ -402,8 +402,8 @@ static NSInteger defaultWaitDataDuration = 3;
 }
 -(void)adClickAction
 {
-    
-    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)]) {
+    XHLaunchAdConfiguration * configuration = [self commonConfiguration];
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString ) {
         
         [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self.cutView];
         
@@ -412,7 +412,6 @@ static NSInteger defaultWaitDataDuration = 3;
             [self.cutView removeFromSuperview];
         });
         
-        XHLaunchAdConfiguration * configuration = [self commonConfiguration];
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
         [self remove];
     }

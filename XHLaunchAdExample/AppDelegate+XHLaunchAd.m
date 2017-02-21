@@ -35,7 +35,7 @@
 @implementation AppDelegate (XHLaunchAd)
 -(void)setupXHLaunchAd
 {
-
+    
     //1.******图片开屏广告 - 网络数据******
     //[self example01_imageAd_networkData];
     
@@ -51,7 +51,7 @@
     //4.******视频开屏广告 - 本地数据******
     //[self example04_videoAd_localData];
     
-
+    
     //5.******如需自定义跳过按钮,请看这个示例******
     //[self example05_customSkipButton];
     
@@ -107,7 +107,7 @@
         {
             //设置要添加的自定义视图(可选)
             imageAdconfiguration.subViews = [self launchAdSubViews_alreadyView];
-        
+            
         }
         //显示开屏广告
         [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
@@ -272,7 +272,7 @@
 {
     //使用默认配置
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
-     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
+    //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = imageURL3;
     //广告点击打开链接
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
@@ -316,7 +316,7 @@
     label.layer.masksToBounds = YES;
     label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     return [NSArray arrayWithObject:label];
-
+    
 }
 #pragma mark - customSkipView
 //自定义跳过按钮
@@ -360,13 +360,10 @@
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
 {
     NSLog(@"广告点击");
-    if(openURLString)
-    {
-        WebViewController *VC = [[WebViewController alloc] init];
-        VC.URLString = openURLString;
-        [self.window.rootViewController presentViewController:VC animated:YES completion:nil];
-        
-    }
+    WebViewController *VC = [[WebViewController alloc] init];
+    VC.URLString = openURLString;
+    [self.window.rootViewController presentViewController:VC animated:YES completion:nil];
+    
 }
 /**
  *  图片本地读取/或下载完成回调
