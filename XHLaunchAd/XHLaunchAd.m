@@ -403,6 +403,7 @@ static NSInteger defaultWaitDataDuration = 3;
 -(void)adClickAction
 {
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
+
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString ) {
         
         [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self.cutView];
