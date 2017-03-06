@@ -41,7 +41,7 @@
     
     
     //2.******图片开屏广告 - 本地数据******
-    //[self example02_imageAd_localData];
+    [self example02_imageAd_localData];
     
     
     //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示)******
@@ -49,7 +49,7 @@
     
     
     //4.******视频开屏广告 - 本地数据******
-    [self example04_videoAd_localData];
+    //[self example04_videoAd_localData];
     
     
     //5.******如需自定义跳过按钮,请看这个示例******
