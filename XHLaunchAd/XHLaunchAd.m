@@ -530,13 +530,15 @@ static NSInteger defaultWaitDataDuration = 3;
     }];
     self.window.hidden = YES;
     self.window = nil;
-    self.adVideoView.adVideoPlayer = nil;
+    
+    if(_adVideoView.adVideoPlayer) _adVideoView.adVideoPlayer = nil;
     
     if ([self.delegate respondsToSelector:@selector(xhLaunchShowFinish:)]) {
         
         [self.delegate xhLaunchShowFinish:self];
     }
 }
+
 -(void)removeSubViewsExceptLaunchAdImageView
 {
     [self.window.subviews.copy enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
