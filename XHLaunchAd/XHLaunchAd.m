@@ -406,12 +406,12 @@ static NSInteger defaultWaitDataDuration = 3;
 
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString ) {
         
+        /*
         [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self.cutView];
-        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
             [self.cutView removeFromSuperview];
         });
+         */
         
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
         [self remove];

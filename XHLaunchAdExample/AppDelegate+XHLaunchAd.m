@@ -307,7 +307,7 @@
 }
 -(NSArray<UIView *> *)launchAdSubViews
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, 30, 60, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-170, 30, 60, 30)];
     label.text  = @"subViews";
     label.font = [UIFont systemFontOfSize:12];
     label.textColor = [UIColor whiteColor];
