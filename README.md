@@ -1,6 +1,6 @@
 ![](Logo/header.png)
 
-###开屏广告解决方案---支持静态/动态图片广告/mp4视频广告
+### 开屏广告解决方案---支持静态/动态图片广告/mp4视频广告
 
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://github.com/CoderZhuXH/XHLaunchAd)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/CoderZhuXH/XHLaunchAd)
@@ -9,9 +9,9 @@
 [![Pod Platform](https://img.shields.io/cocoapods/p/XHLaunchAd.svg?style=flat)](http://cocoadocs.org/docsets/XHLaunchAd/)
 [![Pod License](https://img.shields.io/cocoapods/l/XHLaunchAd.svg?style=flat)](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LICENSE)
 
-==============
+============================
 
-###特性:
+### 特性:
 
 * 1.支持静态/动态图片广告.
 * 2.支持mp4视频广告.
@@ -26,7 +26,7 @@
 * 11.支持设置完成动画.
 * 12.无依赖其他第三方库等等...
 
-###技术交流群(群号:537476189).
+### 技术交流群(群号:537476189).
 
 ### 更新记录:
 
@@ -50,7 +50,7 @@
 
 ## 效果
 
-###静态/动态广告-图片/视频广告
+### 静态/动态广告-图片/视频广告
 
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot00.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot02.gif)
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot04.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot05.gif)  ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot06.gif)
