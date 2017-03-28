@@ -29,6 +29,7 @@
 ###技术交流群(群号:537476189).
 
 ### 更新记录:
+
 *   2017.02.17 -- v3.4.0 -->1.修复部分出现Crash Bug...
 *	2016.12.14 -- v3.2.0 -->1.添加subViews属性2.添加缓存检测...
 *	2016.12.03 -- v3.0.0 -->1.增加mp4视频开屏广告2.增加对本地资源支持3.增加预缓存接口4.增加更多属性及接口,具有更强的自定义性5.可设置显示完成动画类型6.可自定义跳过按钮7.拥有更优雅的接入接口8.优化缓存机制,bug fix等等...
@@ -48,7 +49,9 @@
 *	2016.06.13 -- v1.0
 
 ## 效果
+
 ###静态/动态广告-图片/视频广告
+
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot00.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot02.gif)
 ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot04.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot05.gif)  ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot06.gif)
 
