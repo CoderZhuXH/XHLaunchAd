@@ -9,8 +9,6 @@
 [![Pod Platform](https://img.shields.io/cocoapods/p/XHLaunchAd.svg?style=flat)](http://cocoadocs.org/docsets/XHLaunchAd/)
 [![Pod License](https://img.shields.io/cocoapods/l/XHLaunchAd.svg?style=flat)](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LICENSE)
 
-============================
-
 ### 特性:
 
 * 1.支持静态/动态图片广告.
@@ -60,8 +58,8 @@
 ### 1.设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
 ### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
 
-###-2.1 添加图片开屏广告
-####-- 2.1.1 使用默认配置快速初始化
+### -2.1 添加图片开屏广告
+#### -- 2.1.1 使用默认配置快速初始化
 ```objc
 //1.使用默认配置初始化
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
@@ -72,7 +70,7 @@
     //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 ```
-####-- 2.1.2自定义配置初始化
+#### -- 2.1.2自定义配置初始化
 ```objc
 //2.自定义配置初始化
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
@@ -102,8 +100,8 @@
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self]; 
     
 ```
-###-2.2添加视频开屏广告
-####--2.2.1 使用默认配置快速初始化
+### -2.2添加视频开屏广告
+#### --2.2.1 使用默认配置快速初始化
 ```objc
 
 //1.使用默认配置初始化
@@ -116,7 +114,7 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 ```
 
-####--2.2.2 自定义配置初始化
+#### --2.2.2 自定义配置初始化
 ```objc   
 //2.自定义配置
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
@@ -146,7 +144,7 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
     
 ```
-###注意:
+### 注意:
 >若你的广告图片/视频URL来源于数据请求,请在请求数据前设置等待时间,在数据请求成功回调里配置广告,如下:
 
 ```objc
