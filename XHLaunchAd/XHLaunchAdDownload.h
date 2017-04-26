@@ -42,3 +42,4 @@ typedef void(^XHLaunchAdDownloadVideoCompletedBlock)(NSURL * _Nullable location,
 -(nonnull instancetype)initWithURL:(nonnull NSURL *)url delegateQueue:(nonnull NSOperationQueue *)queue progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock;
 
 @end
+

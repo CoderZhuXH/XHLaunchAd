@@ -28,6 +28,7 @@
 
 ### 更新记录:
 
+*   2017.04.26 -- v3.4.5 -->1.版本优化,bug fix...
 *   2017.02.17 -- v3.4.0 -->1.修复部分出现Crash Bug...
 *	2016.12.14 -- v3.2.0 -->1.添加subViews属性2.添加缓存检测...
 *	2016.12.03 -- v3.0.0 -->1.增加mp4视频开屏广告2.增加对本地资源支持3.增加预缓存接口4.增加更多属性及接口,具有更强的自定义性5.可设置显示完成动画类型6.可自定义跳过按钮7.拥有更优雅的接入接口8.优化缓存机制,bug fix等等...
@@ -66,7 +67,7 @@
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image0.jpg";
     //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 ```
@@ -85,7 +86,7 @@
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.returnoc.com";
+    imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
     //跳过按钮类型
@@ -109,7 +110,7 @@
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
     //广告点击打开链接
-    videoAdconfiguration.openURLString = @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString = @"http://www.it7090.com";
     //显示视频开屏广告
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 ```
@@ -129,7 +130,7 @@
     //视频填充模式
     videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
     //广告点击打开链接
-    videoAdconfiguration.openURLString =  @"http://www.returnoc.com";
+    videoAdconfiguration.openURLString =  @"http://www.it7090.com";
     //广告显示完成动画
     videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
      //跳过按钮类型

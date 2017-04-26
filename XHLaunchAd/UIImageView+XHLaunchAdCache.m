@@ -34,7 +34,7 @@
 {
     if(placeholder) self.image = placeholder;
     if(!url) return;
-     __weak __typeof(self) weakSelf = self;
+     __weak typeof(self) weakSelf = self;
     [[XHLaunchAdImageManager sharedManager] loadImageWithURL:url options:options progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, NSURL * _Nullable imageURL) {
         if(image) weakSelf.image = image;
         if(completedBlock) completedBlock(image,error,imageURL);

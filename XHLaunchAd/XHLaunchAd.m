@@ -15,7 +15,6 @@
 #import "XHLaunchAdCache.h"
 #import "XHLaunchImageView.h"
 
-#define WEAKSELF  __weak __typeof(self) weakSelf = self;
 
 #define DISPATCH_SOURCE_CANCEL_SAFE(time) if(time)\
 {\
@@ -115,12 +114,6 @@ static NSInteger defaultWaitDataDuration = 3;
     return [XHLaunchAdCache xhLaunchAdCachePath];
 }
 
-+(NSString *)version
-{
-    return XHLaunchAdVersion;
-}
-
-
 #pragma mark - private
 +(XHLaunchAd *)shareLaunchAd{
     static XHLaunchAd *instance = nil;
@@ -177,9 +170,9 @@ static NSInteger defaultWaitDataDuration = 3;
     window.hidden = NO;
     window.alpha = 1;
     self.window = window;
-    //添加launchImage
+     /** 添加launchImage */
     [self.window addSubview:self.launchImageView];
-    //数据等待
+     /** 数据等待 */
     [self startWaitDataDispathTiemr];
 }
 
@@ -188,15 +181,15 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [self removeSubViewsExceptLaunchAdImageView];
     [self.window addSubview:self.imageAdView];
-    //frame
+     /** frame */
     if(configuration.frame.size.width>0 && configuration.frame.size.height>0) self.imageAdView.frame = configuration.frame;
     if(configuration.contentMode) self.imageAdView.contentMode = configuration.contentMode;
-    //image数据源
+     /** image数据源 */
     if(!configuration.imageNameOrURLString.length) return;
-    //webImage
+     /** webImage */
     if(configuration.imageNameOrURLString.xh_isURLString)
     {
-        //自设图片
+         /** 自设图片 */
         if ([self.delegate respondsToSelector:@selector(xhLaunchAd:launchAdImageView:URL:)]) {
             
             [self.delegate xhLaunchAd:self launchAdImageView:self.imageAdView URL:[NSURL URLWithString:configuration.imageNameOrURLString]];
@@ -204,7 +197,7 @@ static NSInteger defaultWaitDataDuration = 3;
         else
         {
             if(!configuration.imageOption) configuration.imageOption = XHLaunchAdImageDefault;
-            WEAKSELF;
+            __weak typeof(self)weakSelf = self;
             [self.imageAdView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil options:configuration.imageOption completed:^(UIImage *image,NSError *error,NSURL *url) {
                 
                 if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
@@ -214,10 +207,10 @@ static NSInteger defaultWaitDataDuration = 3;
             
             if(configuration.imageOption == XHLaunchAdImageCacheInBackground)
             {
-                //缓存中未有
+                 /** 缓存中未有 */
                 if(![XHLaunchAdCache checkImageInCacheWithURL:[NSURL URLWithString:configuration.imageNameOrURLString]])
                 {
-                    [self remove]; return;//完成显示
+                    [self remove]; return; /** 完成显示 */
                 }
             }
         }
@@ -238,20 +231,21 @@ static NSInteger defaultWaitDataDuration = 3;
             NSLog(@"Error:图片未找到,或名称有误!");
         }
     }
-    //timer
+    
     [self startSkipDispathTimer];
     
-    //skipButton
+     /** skipButton */
     [self addSkipButtonForConfiguration:configuration];
     
-    //customView
+     /** customView */
     if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
     
-    WEAKSELF;
+    __weak typeof(self)weakSelf = self;
     self.imageAdView.adClick = ^()
     {
         [weakSelf adClickAction];
     };
+    
 }
 
 -(void)addSkipButtonForConfiguration:(XHLaunchAdConfiguration *)configuration
@@ -275,10 +269,10 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [self removeSubViewsExceptLaunchAdImageView];
     [self.window addSubview:self.videoAdView];
-    //frame
+    /** frame */
     if(configuration.frame.size.width>0&&configuration.frame.size.height>0) self.videoAdView.frame = configuration.frame;
     if(configuration.scalingMode) self.videoAdView.adVideoScalingMode = configuration.scalingMode;
-    //video 数据源
+    /** video 数据源 */
     if(!configuration.videoNameOrURLString.length) return;
     if(configuration.videoNameOrURLString.xh_isURLString)
     {
@@ -308,7 +302,7 @@ static NSInteger defaultWaitDataDuration = 3;
             }];
             
 #pragma mark - 视频缓存,提前显示完成
-            [self remove]; return;//完成显示
+            [self remove]; return;  /** 显示完成 */
         }
     }
     else
@@ -332,13 +326,13 @@ static NSInteger defaultWaitDataDuration = 3;
     
     [self startSkipDispathTimer];
     
-    //skipButton
+     /** skipButton */
     [self addSkipButtonForConfiguration:configuration];
     
-    //customView
+     /** customView */
     if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
     
-    WEAKSELF;
+    __weak typeof(self)weakSelf = self;
     self.videoAdView.adClick = ^()
     {
         [weakSelf adClickAction];
