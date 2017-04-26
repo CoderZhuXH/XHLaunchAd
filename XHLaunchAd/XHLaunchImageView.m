@@ -8,7 +8,6 @@
 
 #import "XHLaunchImageView.h"
 
-
 @interface XHLaunchImageView ()
 
 @end
@@ -19,7 +18,6 @@
 {
     self = [super init];
     if (self) {
-        
         self.frame = [UIScreen mainScreen].bounds;
         self.userInteractionEnabled = YES;
         self.image = [self launchImage];

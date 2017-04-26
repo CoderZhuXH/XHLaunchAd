@@ -42,27 +42,17 @@
     
     switch (skipType) {
         case SkipTypeNone:
-            
             self.hidden = YES;
-            
             break;
         case SkipTypeTime:
-            
             self.timeLab.text = [NSString stringWithFormat:@"%d S",5];
-            
             break;
         case SkipTypeText:
-            
             self.timeLab.text = @"跳过";
-            
             break;
-            
         case SkipTypeTimeText:
-            
             self.timeLab.text = [NSString stringWithFormat:@"%d 跳过",5];
-            
             break;
-            
         default:
             break;
     }
@@ -70,33 +60,31 @@
 
 -(void)stateWithskipType:(SkipType )skipType andDuration:(NSInteger)duration
 {
-
+    
     switch (skipType) {
         case SkipTypeNone:
-            
+        {
             self.hidden = YES;
-            
+        }
             break;
         case SkipTypeTime:
-            
+        {
             self.hidden = NO;
             self.timeLab.text = [NSString stringWithFormat:@"%ld S",duration];
-            
+        }
             break;
         case SkipTypeText:
-            
-             self.hidden = NO;
+        {
+            self.hidden = NO;
             self.timeLab.text = @"跳过";
-            
+        }
             break;
-            
         case SkipTypeTimeText:
-            
-             self.hidden = NO;
+        {
+            self.hidden = NO;
             self.timeLab.text = [NSString stringWithFormat:@"%ld 跳过",duration];
-            
+        }
             break;
-            
         default:
             break;
     }
@@ -121,7 +109,7 @@
     frame = CGRectMake(0, topBottomSpace, frame.size.width, height-2*topBottomSpace);
     self.timeLab.frame = frame;
     [self timeLabcornerRadiusWithFrame:frame];
-
+    
 }
 -(void)timeLabcornerRadiusWithFrame:(CGRect)frame
 {

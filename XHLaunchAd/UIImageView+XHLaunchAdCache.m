@@ -22,7 +22,6 @@
 {
     [self xh_setImageWithURL:url placeholderImage:placeholder options:options completed:nil];
 }
-
 - (void)xh_setImageWithURL:(nonnull NSURL *)url completed:(nullable XHExternalCompletionBlock)completedBlock {
     
     [self xh_setImageWithURL:url placeholderImage:nil completed:completedBlock];
@@ -35,13 +34,10 @@
 {
     if(placeholder) self.image = placeholder;
     if(!url) return;
-     __weak __typeof(self)wself = self;
+     __weak __typeof(self) weakSelf = self;
     [[XHLaunchAdImageManager sharedManager] loadImageWithURL:url options:options progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, NSURL * _Nullable imageURL) {
-
-        if(image) wself.image = image;
-        
+        if(image) weakSelf.image = image;
         if(completedBlock) completedBlock(image,error,imageURL);
-        
     }];
 }
 @end

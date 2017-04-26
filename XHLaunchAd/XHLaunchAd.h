@@ -10,8 +10,12 @@
 #import <UIKit/UIKit.h>
 #import "XHLaunchAdConfiguration.h"
 
-NS_ASSUME_NONNULL_BEGIN
+/**
+ XHLaunchAd版本号
+ */
+#define XHLaunchAdVersion @"3.4.5"
 
+NS_ASSUME_NONNULL_BEGIN
 @class XHLaunchAd;
 
 @protocol XHLaunchAdDelegate <NSObject>
@@ -180,6 +184,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(NSString *)xhLaunchAdCachePath;
 
-@end
+#pragma mark - 其他
+/**
+ *  获取XHLaunchAd版本号
+ *
+ *  @return 版本值
+ */
++(NSString *)version;
 
+@end
 NS_ASSUME_NONNULL_END

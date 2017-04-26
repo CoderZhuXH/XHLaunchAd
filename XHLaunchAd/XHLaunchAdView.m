@@ -31,7 +31,6 @@
 #pragma mark - imageAdView
 @implementation XHLaunchImageAdView
 
-
 @end
 
 #pragma mark - videoAdView

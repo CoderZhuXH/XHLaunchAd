@@ -66,7 +66,6 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  */
 +(nullable NSURL *)getCacheVideoWithURL:(NSURL *)url;
 
-
 /**
  保存视频到缓存目录
 

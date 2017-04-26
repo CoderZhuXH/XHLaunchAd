@@ -23,13 +23,19 @@ dispatch_source_cancel(time);\
 time = nil;\
 }
 
+typedef NS_ENUM(NSInteger, XHLaunchAdType) {
+    
+    XHLaunchAdTypeImage,
+    XHLaunchAdTypeVideo
+};
+
 static NSInteger defaultWaitDataDuration = 3;
 
 @interface XHLaunchAd()
-
+@property(nonatomic,assign)XHLaunchAdType launchAdType;
 @property(nonatomic,strong)XHLaunchImageView *launchImageView;
-@property(nonatomic,strong)XHLaunchImageAdView *adView;
-@property(nonatomic,strong)XHLaunchVideoAdView *adVideoView;
+@property(nonatomic,strong)XHLaunchImageAdView *imageAdView;
+@property(nonatomic,strong)XHLaunchVideoAdView *videoAdView;
 @property(nonatomic,strong)XHLaunchAdButton *adSkipButton;
 @property(nonatomic,strong)UIWindow *window;
 @property(nonatomic,copy)dispatch_source_t waitDataTimer;
@@ -80,7 +86,7 @@ static NSInteger defaultWaitDataDuration = 3;
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray
 {
     if(urlArray.count==0) return;
-    [[XHLaunchAdDownloader sharedDownloader] downLoadVideoAndCacheWithURLArray:urlArray ];
+    [[XHLaunchAdDownloader sharedDownloader] downLoadVideoAndCacheWithURLArray:urlArray];
 }
 +(void)skipAction
 {
@@ -109,9 +115,14 @@ static NSInteger defaultWaitDataDuration = 3;
     return [XHLaunchAdCache xhLaunchAdCachePath];
 }
 
++(NSString *)version
+{
+    return XHLaunchAdVersion;
+}
+
+
 #pragma mark - private
 +(XHLaunchAd *)shareLaunchAd{
-    
     static XHLaunchAd *instance = nil;
     static dispatch_once_t oneToken;
     dispatch_once(&oneToken,^{
@@ -129,23 +140,33 @@ static NSInteger defaultWaitDataDuration = 3;
         
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             
-            if(_imageAdConfiguration&&_imageAdConfiguration.showEnterForeground)
-            {
-                [self setupLaunchAd];
-                [self setupImageAdForConfiguration:_imageAdConfiguration];
-                return ;
-            }
-            if(_videoAdConfiguration&&_videoAdConfiguration.showEnterForeground)
-            {
-                [self setupLaunchAd];
-                [self setupVideoAdForConfiguration:_videoAdConfiguration];
-            }
+            [self setupLaunchAdEnterForeground];
             
         }];
     }
     return self;
 }
-
+-(void)setupLaunchAdEnterForeground
+{
+    switch (_launchAdType) {
+        case XHLaunchAdTypeImage:
+        {
+            if(!_imageAdConfiguration.showEnterForeground) return;
+            [self setupLaunchAd];
+            [self setupImageAdForConfiguration:_imageAdConfiguration];
+        }
+            break;
+        case XHLaunchAdTypeVideo:
+        {
+            if(!_videoAdConfiguration.showEnterForeground) return;
+            [self setupLaunchAd];
+            [self setupVideoAdForConfiguration:_videoAdConfiguration];
+        }
+            break;
+        default:
+            break;
+    }
+}
 -(void)setupLaunchAd
 {
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -156,22 +177,21 @@ static NSInteger defaultWaitDataDuration = 3;
     window.hidden = NO;
     window.alpha = 1;
     self.window = window;
-    
     //添加launchImage
     [self.window addSubview:self.launchImageView];
     //数据等待
     [self startWaitDataDispathTiemr];
 }
 
-//图片
+/**图片*/
 -(void)setupImageAdForConfiguration:(XHLaunchImageAdConfiguration *)configuration
 {
     [self removeSubViewsExceptLaunchAdImageView];
-    [self.window addSubview:self.adView];
+    [self.window addSubview:self.imageAdView];
     //frame
-    if(configuration.frame.size.width>0&&configuration.frame.size.height>0) self.adView.frame = configuration.frame;
-    if(configuration.contentMode) self.adView.contentMode = configuration.contentMode;
-    //image 数据源
+    if(configuration.frame.size.width>0 && configuration.frame.size.height>0) self.imageAdView.frame = configuration.frame;
+    if(configuration.contentMode) self.imageAdView.contentMode = configuration.contentMode;
+    //image数据源
     if(!configuration.imageNameOrURLString.length) return;
     //webImage
     if(configuration.imageNameOrURLString.xh_isURLString)
@@ -179,13 +199,13 @@ static NSInteger defaultWaitDataDuration = 3;
         //自设图片
         if ([self.delegate respondsToSelector:@selector(xhLaunchAd:launchAdImageView:URL:)]) {
             
-            [self.delegate xhLaunchAd:self launchAdImageView:self.adView URL:[NSURL URLWithString:configuration.imageNameOrURLString]];
+            [self.delegate xhLaunchAd:self launchAdImageView:self.imageAdView URL:[NSURL URLWithString:configuration.imageNameOrURLString]];
         }
         else
         {
             if(!configuration.imageOption) configuration.imageOption = XHLaunchAdImageDefault;
             WEAKSELF;
-            [self.adView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil options:configuration.imageOption completed:^(UIImage *image,NSError *error,NSURL *url) {
+            [self.imageAdView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil options:configuration.imageOption completed:^(UIImage *image,NSError *error,NSURL *url) {
                 
                 if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
                     [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
@@ -199,7 +219,6 @@ static NSInteger defaultWaitDataDuration = 3;
                 {
                     [self remove]; return;//完成显示
                 }
-                
             }
         }
     }
@@ -212,7 +231,7 @@ static NSInteger defaultWaitDataDuration = 3;
                 
                 [self.delegate xhLaunchAd:self imageDownLoadFinish:image];
             }
-            self.adView.image = image;
+            self.imageAdView.image = image;
         }
         else
         {
@@ -229,7 +248,7 @@ static NSInteger defaultWaitDataDuration = 3;
     if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
     
     WEAKSELF;
-    self.adView.adClick = ^()
+    self.imageAdView.adClick = ^()
     {
         [weakSelf adClickAction];
     };
@@ -251,14 +270,14 @@ static NSInteger defaultWaitDataDuration = 3;
     }
 }
 
-//视频
+/**视频*/
 -(void)setupVideoAdForConfiguration:(XHLaunchVideoAdConfiguration *)configuration
 {
     [self removeSubViewsExceptLaunchAdImageView];
-    [self.window addSubview:self.adVideoView];
+    [self.window addSubview:self.videoAdView];
     //frame
-    if(configuration.frame.size.width>0&&configuration.frame.size.height>0) self.adVideoView.frame = configuration.frame;
-    if(configuration.scalingMode) self.adVideoView.adVideoScalingMode = configuration.scalingMode;
+    if(configuration.frame.size.width>0&&configuration.frame.size.height>0) self.videoAdView.frame = configuration.frame;
+    if(configuration.scalingMode) self.videoAdView.adVideoScalingMode = configuration.scalingMode;
     //video 数据源
     if(!configuration.videoNameOrURLString.length) return;
     if(configuration.videoNameOrURLString.xh_isURLString)
@@ -270,8 +289,8 @@ static NSInteger defaultWaitDataDuration = 3;
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
-            self.adVideoView.adVideoPlayer.contentURL = pathURL;
-            [self.adVideoView.adVideoPlayer prepareToPlay];
+            self.videoAdView.adVideoPlayer.contentURL = pathURL;
+            [self.videoAdView.adVideoPlayer prepareToPlay];
         }
         else
         {
@@ -301,8 +320,8 @@ static NSInteger defaultWaitDataDuration = 3;
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
-            self.adVideoView.adVideoPlayer.contentURL = pathURL;;
-            [self.adVideoView.adVideoPlayer prepareToPlay];
+            self.videoAdView.adVideoPlayer.contentURL = pathURL;;
+            [self.videoAdView.adVideoPlayer prepareToPlay];
         }
         else
         {
@@ -320,7 +339,7 @@ static NSInteger defaultWaitDataDuration = 3;
     if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
     
     WEAKSELF;
-    self.adVideoView.adClick = ^()
+    self.videoAdView.adClick = ^()
     {
         [weakSelf adClickAction];
     };
@@ -337,13 +356,13 @@ static NSInteger defaultWaitDataDuration = 3;
 -(void)setImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdConfiguration
 {
     _imageAdConfiguration = imageAdConfiguration;
-    _videoAdConfiguration = nil;
+    _launchAdType = XHLaunchAdTypeImage;
     [self setupImageAdForConfiguration:imageAdConfiguration];
 }
 -(void)setVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdConfiguration
 {
     _videoAdConfiguration = videoAdConfiguration;
-    _imageAdConfiguration = nil;
+    _launchAdType = XHLaunchAdTypeVideo;
     [self setupVideoAdForConfiguration:videoAdConfiguration];
 }
 
@@ -356,21 +375,21 @@ static NSInteger defaultWaitDataDuration = 3;
     }
     return _launchImageView;
 }
--(XHLaunchImageAdView *)adView
+-(XHLaunchImageAdView *)imageAdView
 {
-    if(_adView==nil)
+    if(_imageAdView==nil)
     {
-        _adView = [[XHLaunchImageAdView alloc] init];
+        _imageAdView = [[XHLaunchImageAdView alloc] init];
     }
-    return _adView;
+    return _imageAdView;
 }
--(XHLaunchVideoAdView *)adVideoView
+-(XHLaunchVideoAdView *)videoAdView
 {
-    if(_adVideoView==nil)
+    if(_videoAdView==nil)
     {
-        _adVideoView = [[XHLaunchVideoAdView alloc] init];
+        _videoAdView = [[XHLaunchVideoAdView alloc] init];
     }
-    return _adVideoView;
+    return _videoAdView;
 }
 -(XHLaunchAdButton *)adSkipButton
 {
@@ -404,7 +423,7 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
 
-    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString ) {
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString) {
         
         /*
         [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self.cutView];
@@ -421,14 +440,16 @@ static NSInteger defaultWaitDataDuration = 3;
 
 -(XHLaunchAdConfiguration *)commonConfiguration
 {
-    XHLaunchAdConfiguration *configuration;
-    if(_videoAdConfiguration)
-    {
-        configuration = _videoAdConfiguration;
-    }
-    else
-    {
-        configuration = _imageAdConfiguration;
+    XHLaunchAdConfiguration *configuration = nil;
+    switch (_launchAdType) {
+        case XHLaunchAdTypeVideo:
+            configuration = _videoAdConfiguration;
+            break;
+        case XHLaunchAdTypeImage:
+            configuration = _imageAdConfiguration;
+            break;
+        default:
+            break;
     }
     return configuration;
 }
@@ -530,8 +551,10 @@ static NSInteger defaultWaitDataDuration = 3;
     }];
     self.window.hidden = YES;
     self.window = nil;
-    
-    if(_adVideoView.adVideoPlayer) _adVideoView.adVideoPlayer = nil;
+    if(_launchAdType==XHLaunchAdTypeVideo)
+    {
+        if(_videoAdView.adVideoPlayer) [_videoAdView.adVideoPlayer stop];
+    }
     
     if ([self.delegate respondsToSelector:@selector(xhLaunchShowFinish:)]) {
         

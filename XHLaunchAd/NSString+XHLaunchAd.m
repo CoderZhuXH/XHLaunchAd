@@ -13,7 +13,7 @@
 
 -(BOOL)xh_isURLString
 {
-    if([self hasPrefix:@"https://"]|| [self hasPrefix:@"http://"]) return YES;
+    if([self hasPrefix:@"https://"] || [self hasPrefix:@"http://"]) return YES;
     return NO;
 }
 -(NSString *)xh_videoName
@@ -23,7 +23,6 @@
 -(NSString *)xh_md5String
 {
     const char *value = [self UTF8String];
-    
     unsigned char outputBuffer[CC_MD5_DIGEST_LENGTH];
     CC_MD5(value, (CC_LONG)strlen(value), outputBuffer);
     

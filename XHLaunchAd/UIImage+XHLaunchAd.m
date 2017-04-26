@@ -28,21 +28,15 @@
     if (!imageData) {
         return nil;
     }
-    
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
-    
     size_t count = CGImageSourceGetCount(source);
-    
     UIImage *animatedImage;
-    
     if (count <= 1) {
         animatedImage = [[UIImage alloc] initWithData:imageData];
     }
     else {
         NSMutableArray *images = [NSMutableArray array];
-        
         NSTimeInterval duration = 0.0f;
-        
         for (size_t i = 0; i < count; i++) {
             CGImageRef image = CGImageSourceCreateImageAtIndex(source, i, NULL);
             
@@ -52,16 +46,12 @@
             
             CGImageRelease(image);
         }
-        
         if (!duration) {
             duration = (1.0f / 10.0f) * count;
         }
-        
         animatedImage = [UIImage animatedImageWithImages:images duration:duration];
     }
-    
     CFRelease(source);
-    
     return animatedImage;
 }
 
@@ -70,7 +60,6 @@
     CFDictionaryRef cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil);
     NSDictionary *frameProperties = (__bridge NSDictionary *)cfFrameProperties;
     NSDictionary *gifProperties = frameProperties[(NSString *)kCGImagePropertyGIFDictionary];
-    
     NSNumber *delayTimeUnclampedProp = gifProperties[(NSString *)kCGImagePropertyGIFUnclampedDelayTime];
     if (delayTimeUnclampedProp) {
         frameDuration = [delayTimeUnclampedProp floatValue];
@@ -82,11 +71,9 @@
             frameDuration = [delayTimeProp floatValue];
         }
     }
-    
     if (frameDuration < 0.011f) {
         frameDuration = 0.100f;
     }
-    
     CFRelease(cfFrameProperties);
     return frameDuration;
 }
