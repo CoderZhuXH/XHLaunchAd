@@ -9,19 +9,197 @@
 #import "XHLaunchAdDownloader.h"
 #import "XHLaunchAdCache.h"
 #import "NSString+XHLaunchAd.h"
-@interface XHLaunchAdDownloader()<XHLaunchAdDownloadDelegate>
+#import "UIImage+XHLaunchAd.h"
 
+
+#pragma mark - XHLaunchAdDownload
+@interface XHLaunchAdDownload()
+
+@property (strong, nonatomic) NSURLSession *session;
+@property(strong,nonatomic)NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic, assign) unsigned long long totalLength;
+@property (nonatomic, assign) unsigned long long currentLength;
+@property (nonatomic, copy) XHLaunchAdDownloadProgressBlock progressBlock;
+@property (strong, nonatomic) NSURL *url;
+
+@end
+@implementation XHLaunchAdDownload
+
+@end
+
+#pragma mark -  XHLaunchAdImageDownload
+@interface XHLaunchAdImageDownload()<NSURLSessionDownloadDelegate,NSURLSessionTaskDelegate>
+
+@property (nonatomic, copy ) XHLaunchAdDownloadImageCompletedBlock completedBlock;
+
+@end
+@implementation XHLaunchAdImageDownload
+
+-(nonnull instancetype)initWithURL:(nonnull NSURL *)url delegateQueue:(nonnull NSOperationQueue *)queue progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadImageCompletedBlock)completedBlock
+{
+    self = [super init];
+    
+    if (self) {
+        self.url = url;
+        self.progressBlock = progressBlock;
+        _completedBlock = completedBlock;
+        NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        sessionConfiguration.timeoutIntervalForRequest = 15.0;
+        self.session = [NSURLSession sessionWithConfiguration:sessionConfiguration
+                                                     delegate:self
+                                                delegateQueue:queue];
+        
+        self.downloadTask =  [self.session downloadTaskWithRequest:[NSURLRequest requestWithURL:url]];
+        [self.downloadTask resume];
+    }
+    return self;
+}
+#pragma mark - NSURLSessionDownloadDelegate
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location {
+    
+    NSData *data = [NSData dataWithContentsOfURL:location];
+    UIImage *image = [UIImage xh_imageWithData:data];
+    //主线程回调
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (_completedBlock) {
+            _completedBlock(image,data, nil);
+            // 防止重复调用
+            _completedBlock = nil;
+        }
+        //下载完成回调
+        if ([self.delegate respondsToSelector:@selector(downloadFinishWithURL:)]) {
+            [self.delegate downloadFinishWithURL:self.url];
+        }
+    });
+    
+    //销毁
+    [self.session invalidateAndCancel];
+    self.session = nil;
+}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    
+    self.currentLength = totalBytesWritten;
+    self.totalLength = totalBytesExpectedToWrite;
+    
+    if (self.progressBlock) {
+        self.progressBlock(self.totalLength, self.currentLength);
+    }
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    
+    if (error){
+        NSLog(@"error=%@",error);
+        if (_completedBlock) {
+            _completedBlock(nil,nil, error);
+        }
+        _completedBlock = nil;
+    }
+}
+
+
+@end
+
+#pragma makr - XHLaunchAdVideoDownload
+@interface XHLaunchAdVideoDownload()<NSURLSessionDownloadDelegate,NSURLSessionTaskDelegate>
+
+@property (nonatomic, copy ) XHLaunchAdDownloadVideoCompletedBlock completedBlock;
+
+@end
+@implementation XHLaunchAdVideoDownload
+
+-(nonnull instancetype)initWithURL:(nonnull NSURL *)url delegateQueue:(nonnull NSOperationQueue *)queue progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock
+{
+    self = [super init];
+    if (self) {
+        
+        self.url = url;
+        self.progressBlock = progressBlock;
+        _completedBlock = completedBlock;
+        NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        sessionConfiguration.timeoutIntervalForRequest = 15.0;
+        self.session = [NSURLSession sessionWithConfiguration:sessionConfiguration
+                                                     delegate:self
+                                                delegateQueue:queue];
+        self.downloadTask =  [self.session downloadTaskWithRequest:[NSURLRequest requestWithURL:url]];
+        [self.downloadTask resume];
+    }
+    return self;
+    
+}
+
+#pragma mark - NSURLSessionDownloadDelegate
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location {
+    
+    NSError *error=nil;
+    NSURL *toURL = [NSURL fileURLWithPath:[XHLaunchAdCache videoPathWithURL:self.url]];
+    [[NSFileManager defaultManager] copyItemAtURL:location toURL:toURL error:&error];
+    if(error)  NSLog(@"error=%@",error);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (_completedBlock) {
+            
+            if(!error)
+            {
+                _completedBlock(toURL,nil);
+            }
+            else
+            {
+                _completedBlock(nil,error);
+            }
+            // 防止重复调用
+            _completedBlock = nil;
+        }
+        //下载完成回调
+        if ([self.delegate respondsToSelector:@selector(downloadFinishWithURL:)]) {
+            [self.delegate downloadFinishWithURL:self.url];
+        }
+    });
+    
+    [self.session invalidateAndCancel];
+    self.session = nil;
+}
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    
+    self.currentLength = totalBytesWritten;
+    self.totalLength = totalBytesExpectedToWrite;
+    
+    if (self.progressBlock) {
+        self.progressBlock(self.totalLength, self.currentLength);
+    }
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    
+    if (error) {
+        if (_completedBlock) {
+            _completedBlock(nil, error);
+        }
+        _completedBlock = nil;
+    }
+}
+
+@end
+
+
+#pragma mark - XHLaunchAdDownloader
+@interface XHLaunchAdDownloader()<XHLaunchAdDownloadDelegate>
 @property (strong, nonatomic, nonnull) NSOperationQueue *downloadImageQueue;
 @property (strong, nonatomic, nonnull) NSOperationQueue *downloadVideoQueue;
-
 @property (strong, nonatomic) NSMutableDictionary *allDownloadDict;
-
 @end
 
 @implementation XHLaunchAdDownloader
 
 +(nonnull instancetype )sharedDownloader{
-    
     static XHLaunchAdDownloader *instance = nil;
     static dispatch_once_t oneToken;
     dispatch_once(&oneToken,^{
@@ -36,7 +214,6 @@
 {
     self = [super init];
     if (self) {
-        
         _downloadImageQueue = [NSOperationQueue new];
         _downloadImageQueue.maxConcurrentOperationCount = 6;
         _downloadImageQueue.name = @"com.it7090.XHLaunchAdDownloadImageQueue";
@@ -60,47 +237,37 @@
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if(![XHLaunchAdCache checkImageInCacheWithURL:url])//尚未缓存
-        {
+        if([XHLaunchAdCache checkImageInCacheWithURL:url]) return ;
         
-            [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
-                    
-                    [XHLaunchAdCache async_saveImageData:data imageURL:url];
-              
-                
-            }];
-        }
-    }];
+        [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
+            
+            [XHLaunchAdCache async_saveImageData:data imageURL:url];
 
+        }];
+    }];
+    
 }
 - (void)downloadVideoWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock
 {
-
     if(self.allDownloadDict[url.absoluteString.xh_md5String]) return;
+    
     XHLaunchAdVideoDownload * download = [[XHLaunchAdVideoDownload alloc] initWithURL:url delegateQueue:_downloadVideoQueue progress:progressBlock completed:completedBlock];
     download.delegate = self;
     [self.allDownloadDict setObject:download forKey:url.absoluteString.xh_md5String];
-
 }
 - (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if(![XHLaunchAdCache checkVideoInCacheWithURL:url])//尚未缓存
-        {
-            [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
-               
-                if(!error && location)
-                {
-                
-                    [XHLaunchAdCache async_saveVideoAtLocation:location URL:url];
-                }
-                
-            }];
+        if([XHLaunchAdCache checkVideoInCacheWithURL:url]) return ;
+        
+        [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
             
-        }
+            if(!error && location) [XHLaunchAdCache async_saveVideoAtLocation:location URL:url];
+            
+        }];
     }];
-
+    
 }
 - (NSMutableDictionary *)allDownloadDict {
     if (!_allDownloadDict) {
@@ -112,7 +279,7 @@
 }
 
 - (void)downloadFinishWithURL:(NSURL *)url{
-
+    
     [self.allDownloadDict removeObjectForKey:url.absoluteString.xh_md5String];
 }
 
