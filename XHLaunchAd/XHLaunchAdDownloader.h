@@ -7,10 +7,8 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "XHLaunchAdDownload.h"
 
-#pragma mark - XHLaunchAdDownloader
 @interface XHLaunchAdDownloader : NSObject
 
 +(nonnull instancetype )sharedDownloader;
@@ -24,4 +22,3 @@
 - (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray;
 
 @end
-

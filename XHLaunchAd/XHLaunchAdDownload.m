@@ -114,17 +114,20 @@ didFinishDownloadingToURL:(NSURL *)location {
 
 -(nonnull instancetype)initWithURL:(nonnull NSURL *)url delegateQueue:(nonnull NSOperationQueue *)queue progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock
 {
+    
     self = [super init];
     if (self) {
         
         self.url = url;
         self.progressBlock = progressBlock;
         _completedBlock = completedBlock;
+        
         NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         sessionConfiguration.timeoutIntervalForRequest = 15.0;
         self.session = [NSURLSession sessionWithConfiguration:sessionConfiguration
                                                  delegate:self
                                             delegateQueue:queue];
+        
         self.downloadTask =  [self.session downloadTaskWithRequest:[NSURLRequest requestWithURL:url]];
         [self.downloadTask resume];
     }
