@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  图片本地读取/或下载完成回调
  *
  *  @param launchAd  XHLaunchAd
- *  @param imageSize image
+ *  @param image image
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image;
 
