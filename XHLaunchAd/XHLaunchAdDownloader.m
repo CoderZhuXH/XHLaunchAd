@@ -237,13 +237,15 @@ didFinishDownloadingToURL:(NSURL *)location {
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if([XHLaunchAdCache checkImageInCacheWithURL:url]) return ;
-        
-        [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
+        if(![XHLaunchAdCache checkImageInCacheWithURL:url])
+        {
+            [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
+                
+                [XHLaunchAdCache async_saveImageData:data imageURL:url];
+                
+            }];
             
-            [XHLaunchAdCache async_saveImageData:data imageURL:url];
-
-        }];
+        };
     }];
     
 }
@@ -259,13 +261,15 @@ didFinishDownloadingToURL:(NSURL *)location {
 {
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if([XHLaunchAdCache checkVideoInCacheWithURL:url]) return ;
+        if(![XHLaunchAdCache checkVideoInCacheWithURL:url])
+        {
+            [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
+                
+                if(!error && location) [XHLaunchAdCache async_saveVideoAtLocation:location URL:url];
+                
+            }];
+        }
         
-        [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
-            
-            if(!error && location) [XHLaunchAdCache async_saveVideoAtLocation:location URL:url];
-            
-        }];
     }];
     
 }

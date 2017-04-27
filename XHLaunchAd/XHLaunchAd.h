@@ -11,7 +11,7 @@
 #import "XHLaunchAdConfiguration.h"
 
 /**
- *  版本：3.4.5
+ *  版本：3.4.6
  *  发布：2017.04.26
  */
 
