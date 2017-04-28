@@ -40,6 +40,21 @@
     NSString *viewOrientation = type;
     NSString *launchImageName = nil;
     NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+    
+    if (imagesDict == nil) {
+        NSString * launchsbname = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchStoryboardName"];
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:launchsbname bundle:nil];
+        UIViewController *vc = [sb instantiateInitialViewController];
+        for (UIView * v in vc.view.subviews) {
+            if ([v class] == [UIImageView class]){
+                UIImageView *imgv = (UIImageView *)v;
+                return imgv.image;
+                break;
+            }
+        }
+    }
+
+    
     for (NSDictionary* dict in imagesDict)
     {
         CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
