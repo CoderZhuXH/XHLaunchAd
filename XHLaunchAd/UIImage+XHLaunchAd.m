@@ -20,10 +20,13 @@
         imageName = [imageName stringByAppendingString:@".png"];
     }
     NSString *imagePath = [[NSBundle mainBundle]pathForResource:imageName ofType:nil];
+    if(imagePath==nil) return nil;
     NSURL *imageURL = [NSURL fileURLWithPath:imagePath];
+    if(imageURL==nil) return nil;
     NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
     return [UIImage xh_imageWithData:imageData];
 }
+
 +(nullable UIImage *)xh_imageWithData:(nonnull NSData *)imageData{
     if (!imageData) {
         return nil;
