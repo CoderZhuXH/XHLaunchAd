@@ -25,7 +25,7 @@
 
 //视频链接
 #define videoURL1 @"http://ohnzw6ag6.bkt.clouddn.com/video0.mp4"
-#define videoURL2  @"http://120.25.226.186:32812/resources/videos/minion_01.mp4";
+#define videoURL2  @"http://120.25.226.186:32812/resources/videos/minion_01.mp4"
 #define videoURL3 @"http://ohnzw6ag6.bkt.clouddn.com/video1.mp4"
 
 @interface AppDelegate()<XHLaunchAdDelegate>
@@ -37,37 +37,35 @@
 {
     
     //1.******图片开屏广告 - 网络数据******
-    //[self example01_imageAd_networkData];
-    
-    
+    //[self example01];
+
     //2.******图片开屏广告 - 本地数据******
-    [self example02_imageAd_localData];
-    
+    [self example02];
     
     //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示)******
-    //[self example03_videoAd_networkData];
-    
+    //[self example03];
     
     //4.******视频开屏广告 - 本地数据******
-    //[self example04_videoAd_localData];
-    
+    //[self example04];
     
     //5.******如需自定义跳过按钮,请看这个示例******
-    //[self example05_customSkipButton];
-    
+    //[self example05];
     
     //6.******使用默认配置快速初始化,请看下面两个示例******
-    //[self example06_imageAd_defaultConfiguration];
-    //[self example07_videoAd_defaultConfiguration];
-    
+    //[self example06];
+    //[self example07];
     
     //7.******如果你想提前缓存图片/视频请调下面这两个接口*****
-    //+(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
-    //+(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
+    //批量缓存图片
+    //[XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3]]];
+    //批量缓存视频
+    //[XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]]];
+  
 }
+
 #pragma mark - 图片开屏广告-网络数据-示例
 //图片开屏广告 - 网络数据
--(void)example01_imageAd_networkData
+-(void)example01
 {
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
@@ -118,7 +116,7 @@
 }
 #pragma mark - 图片开屏广告-本地数据-示例
 //图片开屏广告 - 本地数据
--(void)example02_imageAd_localData
+-(void)example02
 {
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
@@ -128,8 +126,6 @@
     imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image2.jpg";
-    //缓存机制(仅对网络图片有效)
-    imageAdconfiguration.imageOption = XHLaunchAdImageRefreshCached;
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
@@ -149,7 +145,7 @@
 
 #pragma mark - 视频开屏广告-网络数据-示例
 //视频开屏广告 - 网络数据
--(void)example03_videoAd_networkData
+-(void)example03
 {
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
@@ -199,7 +195,7 @@
 }
 #pragma mark - 视频开屏广告-本地数据-示例
 //视频开屏广告 - 本地数据
--(void)example04_videoAd_localData
+-(void)example04
 {
     //配置广告数据
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
@@ -226,7 +222,7 @@
     
 }
 #pragma mark - 自定义跳过按钮-示例
--(void)example05_customSkipButton
+-(void)example05
 {
     //注意:
     //1.自定义跳过按钮很简单,configuration有一个customSkipView属性.
@@ -268,7 +264,7 @@
 /**
  *  图片
  */
--(void)example06_imageAd_defaultConfiguration
+-(void)example06
 {
     //使用默认配置
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
@@ -281,7 +277,7 @@
 /**
  *  视频
  */
--(void)example07_videoAd_defaultConfiguration
+-(void)example07
 {
     //使用默认配置
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];

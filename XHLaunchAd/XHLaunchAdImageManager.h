@@ -35,7 +35,7 @@ typedef NS_OPTIONS(NSUInteger, XHLaunchAdImageOptions) {
     
 };
 
-typedef void(^XHExternalCompletionBlock)(UIImage * _Nullable image, NSError * _Nullable error, NSURL * _Nullable imageURL);
+typedef void(^XHExternalCompletionBlock)(UIImage * _Nullable image,NSData * _Nullable imageData, NSError * _Nullable error, NSURL * _Nullable imageURL);
 
 @interface XHLaunchAdImageManager : NSObject
 

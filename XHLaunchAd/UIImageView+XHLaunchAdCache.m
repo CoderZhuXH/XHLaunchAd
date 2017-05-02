@@ -7,7 +7,7 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "UIImageView+XHLaunchAdCache.h"
-
+#import "XHLaunchAdImage.h"
 @implementation UIImageView (XHLaunchAdCache)
 
 - (void)xh_setImageWithURL:(nonnull NSURL *)url
@@ -35,9 +35,10 @@
     if(placeholder) self.image = placeholder;
     if(!url) return;
      __weak typeof(self) weakSelf = self;
-    [[XHLaunchAdImageManager sharedManager] loadImageWithURL:url options:options progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, NSURL * _Nullable imageURL) {
+    [[XHLaunchAdImageManager sharedManager] loadImageWithURL:url options:options progress:nil completed:^(UIImage * _Nullable image,  NSData *_Nullable imageData, NSError * _Nullable error, NSURL * _Nullable imageURL) {
+        
         if(image) weakSelf.image = image;
-        if(completedBlock) completedBlock(image,error,imageURL);
+        if(completedBlock) completedBlock(image,imageData,error,imageURL);
     }];
 }
 @end

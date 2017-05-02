@@ -11,8 +11,8 @@
 #import "XHLaunchAdConfiguration.h"
 
 /**
- *  版本：3.4.6
- *  发布：2017.04.26
+ *  版本：3.5.0
+ *  发布：2017.05.02
  */
 
 NS_ASSUME_NONNULL_BEGIN
@@ -167,6 +167,21 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return BOOL
  */
 +(BOOL)checkVideoInCacheWithURL:(NSURL *)url;
+
+#pragma mark - 获取缓存url
+/**
+ 从缓存中获取上一次的ImageURLString(XHLaunchAd 会默认缓存imageURLString)
+ 
+ @return imageUrlString
+ */
++(NSString *)cacheImageURLString;
+
+/**
+ 从缓存中获取上一次的videoURLString(XHLaunchAd 会默认缓存VideoURLString)
+ 
+ @return videoUrlString
+ */
++(NSString *)cacheVideoURLString;
 
 #pragma mark - 缓存清除及大小
 /**

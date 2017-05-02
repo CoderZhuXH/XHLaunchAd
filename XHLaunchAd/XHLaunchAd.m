@@ -9,12 +9,11 @@
 #import "XHLaunchAd.h"
 #import "XHLaunchAdView.h"
 #import "UIImageView+XHLaunchAdCache.h"
-#import "UIImage+XHLaunchAd.h"
 #import "NSString+XHLaunchAd.h"
 #import "XHLaunchAdDownloader.h"
 #import "XHLaunchAdCache.h"
 #import "XHLaunchImageView.h"
-
+#import "XHLaunchAdImage.h"
 
 #define DISPATCH_SOURCE_CANCEL_SAFE(time) if(time)\
 {\
@@ -113,7 +112,14 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     return [XHLaunchAdCache xhLaunchAdCachePath];
 }
-
++(NSString *)cacheImageURLString
+{
+    return [XHLaunchAdCache getCacheImageUrl];
+}
++(NSString *)cacheVideoURLString
+{
+   return [XHLaunchAdCache getCacheVideoUrl];
+}
 #pragma mark - private
 +(XHLaunchAd *)shareLaunchAd{
     static XHLaunchAd *instance = nil;
@@ -189,6 +195,9 @@ static NSInteger defaultWaitDataDuration = 3;
      /** webImage */
     if(configuration.imageNameOrURLString.xh_isURLString)
     {
+
+        [XHLaunchAdCache async_saveImageUrl:configuration.imageNameOrURLString];
+        
          /** 自设图片 */
         if ([self.delegate respondsToSelector:@selector(xhLaunchAd:launchAdImageView:URL:)]) {
             
@@ -198,7 +207,7 @@ static NSInteger defaultWaitDataDuration = 3;
         {
             if(!configuration.imageOption) configuration.imageOption = XHLaunchAdImageDefault;
             __weak typeof(self)weakSelf = self;
-            [self.imageAdView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil options:configuration.imageOption completed:^(UIImage *image,NSError *error,NSURL *url) {
+            [self.imageAdView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil options:configuration.imageOption completed:^(UIImage *image,NSData *imageData,NSError *error,NSURL *url) {
                 
                 if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
                     [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
@@ -217,7 +226,7 @@ static NSInteger defaultWaitDataDuration = 3;
     }
     else
     {
-        UIImage *image = [UIImage xh_imageWithName:configuration.imageNameOrURLString];
+        UIImage *image = [XHLaunchAdImage imageNamed:configuration.imageNameOrURLString];
         if(image)
         {
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
@@ -276,6 +285,8 @@ static NSInteger defaultWaitDataDuration = 3;
     if(!configuration.videoNameOrURLString.length) return;
     if(configuration.videoNameOrURLString.xh_isURLString)
     {
+        [XHLaunchAdCache async_saveVideoUrl:configuration.videoNameOrURLString];
+        
         NSURL *pathURL = [XHLaunchAdCache getCacheVideoWithURL:[NSURL URLWithString:configuration.videoNameOrURLString]];
         //NSURL *pathURL = [NSURL URLWithString:configuration.videoNameOrURLString];
         if(pathURL)

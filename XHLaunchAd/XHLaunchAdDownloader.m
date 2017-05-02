@@ -9,8 +9,7 @@
 #import "XHLaunchAdDownloader.h"
 #import "XHLaunchAdCache.h"
 #import "NSString+XHLaunchAd.h"
-#import "UIImage+XHLaunchAd.h"
-
+#import "XHLaunchAdImage.h"
 
 #pragma mark - XHLaunchAdDownload
 @interface XHLaunchAdDownload()
@@ -61,7 +60,7 @@
 didFinishDownloadingToURL:(NSURL *)location {
     
     NSData *data = [NSData dataWithContentsOfURL:location];
-    UIImage *image = [UIImage xh_imageWithData:data];
+    UIImage *image = [XHLaunchAdImage imageWithData:data];
     //主线程回调
     dispatch_async(dispatch_get_main_queue(), ^{
         

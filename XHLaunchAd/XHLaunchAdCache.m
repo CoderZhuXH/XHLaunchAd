@@ -7,8 +7,11 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdCache.h"
-#import "UIImage+XHLaunchAd.h"
 #import "NSString+XHLaunchAd.h"
+#import "XHLaunchAdImage.h"
+
+static NSString *const key_cacheImageUrlString = @"xhLaunchAd_key_cacheImageUrlString";
+static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlString";
 
 @implementation XHLaunchAdCache
 
@@ -16,9 +19,13 @@
 {
     if(url==nil) return nil;
     NSData *data = [NSData dataWithContentsOfFile:[self imagePathWithURL:url]];
-    return [UIImage xh_imageWithData:data];
+    return [XHLaunchAdImage imageWithData:data];
 }
-
++(NSData *)getCacheImageDataWithURL:(NSURL *)url
+{
+    if(url==nil) return nil;
+    return [NSData dataWithContentsOfFile:[self imagePathWithURL:url]];
+}
 +(BOOL)saveImageData:(NSData *)data imageURL:(NSURL *)url{
     
     NSString *path = [NSString stringWithFormat:@"%@/%@",[self xhLaunchAdCachePath],url.absoluteString.xh_md5String];
@@ -113,7 +120,37 @@
         }
     }
 }
+#pragma mark - url缓存
++(void)async_saveImageUrl:(NSString *)url{
+    
+    if(url==nil) return;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        [[NSUserDefaults standardUserDefaults] setObject:url forKey:key_cacheImageUrlString];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
 
+}
++(NSString *)getCacheImageUrl{
+
+   return [[NSUserDefaults standardUserDefaults] objectForKey:key_cacheImageUrlString];
+}
++(void)async_saveVideoUrl:(NSString *)url{
+
+    if(url==nil) return;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [[NSUserDefaults standardUserDefaults] setObject:url forKey:key_cacheVideoUrlString];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
+
+}
++(NSString *)getCacheVideoUrl
+{
+  return [[NSUserDefaults standardUserDefaults] objectForKey:key_cacheVideoUrlString];
+}
+
+#pragma mark - 其他
 +(void)clearDiskCache
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

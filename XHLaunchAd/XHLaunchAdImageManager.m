@@ -8,6 +8,7 @@
 
 #import "XHLaunchAdImageManager.h"
 #import "XHLaunchAdCache.h"
+#import "XHLaunchAdImage.h"
 
 @interface XHLaunchAdImageManager()
 
@@ -44,18 +45,20 @@
         
         [_downloader downloadImageWithURL:url progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
            
-            if(completedBlock) completedBlock(image,error,url);
+            if(completedBlock) completedBlock(image,data,error,url);
             
         }];
     }
     else if (options & XHLaunchAdImageRefreshCached)
     {
         
-        UIImage *image = [XHLaunchAdCache getCacheImageWithURL:url];
-        if(image && completedBlock) completedBlock(image,nil,url);
+        
+        NSData *imageData = [XHLaunchAdCache getCacheImageDataWithURL:url];
+        UIImage *image =  [XHLaunchAdImage imageWithData:imageData];
+        if(image && completedBlock) completedBlock(image,imageData,nil,url);
         [_downloader downloadImageWithURL:url progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
             
-            if(completedBlock) completedBlock(image,error,url);
+            if(completedBlock) completedBlock(image,data,error,url);
             [XHLaunchAdCache async_saveImageData:data imageURL:url];
             
         }];
@@ -63,10 +66,11 @@
     }
     else if (options & XHLaunchAdImageCacheInBackground)
     {
-        UIImage *image = [XHLaunchAdCache getCacheImageWithURL:url];
+        NSData *imageData = [XHLaunchAdCache getCacheImageDataWithURL:url];
+        UIImage *image =  [XHLaunchAdImage imageWithData:imageData];
         if(image && completedBlock)
         {
-            completedBlock(image,nil,url);
+            completedBlock(image,imageData,nil,url);
         }
         else
         {
@@ -80,16 +84,17 @@
     }
     else//default
     {
-        UIImage *image = [XHLaunchAdCache getCacheImageWithURL:url];
+        NSData *imageData = [XHLaunchAdCache getCacheImageDataWithURL:url];
+        UIImage *image =  [XHLaunchAdImage imageWithData:imageData];
         if(image && completedBlock)
         {
-            completedBlock(image,nil,url);
+            completedBlock(image,imageData,nil,url);
         }
         else
         {
             [_downloader downloadImageWithURL:url progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
                 
-                if(completedBlock) completedBlock(image,error,url);
+                if(completedBlock) completedBlock(image,data,error,url);
                 
                 [XHLaunchAdCache async_saveImageData:data imageURL:url];
                 

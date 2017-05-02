@@ -15,6 +15,7 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
 
 @interface XHLaunchAdCache : NSObject
 
+#pragma mark - 图片
 /**
  *  获取缓存图片
  *
@@ -23,6 +24,14 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  *  @return 图片
  */
 +(UIImage *)getCacheImageWithURL:(NSURL *)url;
+
+/**
+ 获取缓存图片
+
+ @param url 图片url
+ @return imageData
+ */
++(NSData *)getCacheImageDataWithURL:(NSURL *)url;
 
 /**
  *  缓存图片
@@ -47,6 +56,8 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  *
  *  @return BOOL
  */
+
+#pragma mark - 视频
 +(BOOL)checkImageInCacheWithURL:(NSURL *)url;
 
 /**
@@ -85,14 +96,44 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
 +(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url;
 
 /**
- *  缓存路径
- */
-+ (NSString *)xhLaunchAdCachePath;
-
-/**
  *  生成视频路径 for url
  */
 +(NSString *)videoPathWithURL:(NSURL *)url;
+
+#pragma mark - url缓存
+/**
+ 存储图片url - 异步
+ 
+ @param url 图片url
+ */
++(void)async_saveImageUrl:(NSString *)url;
+
+/**
+ 获取最后一次缓存的图片url
+ 
+ @return url string
+ */
++(NSString *)getCacheImageUrl;
+
+/**
+ 存储视频url - 异步
+
+ @param url 视频url
+ */
++(void)async_saveVideoUrl:(NSString *)url;
+
+/**
+ 获取最后一次缓存的视频url
+
+ @return url string
+ */
++(NSString *)getCacheVideoUrl;
+
+#pragma mark - 其他
+/**
+ *  缓存路径
+ */
++ (NSString *)xhLaunchAdCachePath;
 
 /**
  *  清除XHLaunch本地缓存
