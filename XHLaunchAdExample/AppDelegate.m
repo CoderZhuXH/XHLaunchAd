@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "AppDelegate+XHLaunchAd.h"
 
 @interface AppDelegate ()
 
@@ -21,11 +20,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     
-    /**
-     *  添加开屏广告
-     */
-    [self setupXHLaunchAd];
-    
+    //开屏广告初始化,见XHLaunchAdManager
     
     [self.window makeKeyAndVisible];
     return YES;

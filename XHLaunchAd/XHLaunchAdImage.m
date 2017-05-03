@@ -3,13 +3,12 @@
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 2017/5/2.
-//  Copyright © 2017年 CoderZhuXH. All rights reserved.
+//  Copyright © 2017年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdImage.h"
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-
 
 //gif优化方案源于https://github.com/liyong03/YLGIFImage
 inline static NSTimeInterval CGImageSourceGetGifFrameDelay(CGImageSourceRef imageSource, NSUInteger index)

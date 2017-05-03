@@ -11,8 +11,8 @@
 #import "XHLaunchAdConfiguration.h"
 
 /**
- *  版本：3.5.0
- *  发布：2017.05.02
+ *  版本：3.5.1
+ *  发布：2017.05.03
  */
 
 NS_ASSUME_NONNULL_BEGIN

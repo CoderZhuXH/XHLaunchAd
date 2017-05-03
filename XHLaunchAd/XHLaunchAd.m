@@ -41,7 +41,6 @@ static NSInteger defaultWaitDataDuration = 3;
 @property(nonatomic,strong)XHLaunchImageAdConfiguration *imageAdConfiguration;
 @property(nonatomic,strong)XHLaunchVideoAdConfiguration *videoAdConfiguration;
 @property(nonatomic,assign)NSInteger waitDataDuration;
-@property(nonatomic,strong)UIImageView *cutView;
 
 @end
 
@@ -178,8 +177,6 @@ static NSInteger defaultWaitDataDuration = 3;
     self.window = window;
      /** 添加launchImage */
     [self.window addSubview:self.launchImageView];
-     /** 数据等待 */
-    [self startWaitDataDispathTiemr];
 }
 
 /**图片*/
@@ -370,7 +367,12 @@ static NSInteger defaultWaitDataDuration = 3;
     _launchAdType = XHLaunchAdTypeVideo;
     [self setupVideoAdForConfiguration:videoAdConfiguration];
 }
-
+-(void)setWaitDataDuration:(NSInteger)waitDataDuration
+{
+    _waitDataDuration = waitDataDuration;
+    /** 数据等待 */
+    [self startWaitDataDispathTiemr];
+}
 #pragma mark - 懒加载
 -(XHLaunchImageView *)launchImageView
 {
@@ -408,17 +410,6 @@ static NSInteger defaultWaitDataDuration = 3;
     }
     return _adSkipButton;
 }
--(UIImageView *)cutView
-{
-    if(_cutView==nil)
-    {
-        _cutView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _cutView.image = [self cutFromView:self.window];
-        _cutView.userInteractionEnabled = YES;
-    }
-    return _cutView;
-    
-}
 #pragma mark - Action
 -(void)adSkipButtonClick
 {
@@ -429,16 +420,14 @@ static NSInteger defaultWaitDataDuration = 3;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
 
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString) {
-        
-        /*
-        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self.cutView];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.cutView removeFromSuperview];
-        });
-         */
-        
+
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
-        [self remove];
+       
+        [UIView animateWithDuration:0.3 animations:^{
+            self.window.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self remove];
+        }];
     }
     
 }
@@ -577,15 +566,5 @@ static NSInteger defaultWaitDataDuration = 3;
         }
     }];
     
-}
-- (UIImage *)cutFromView:(UIView *)view {
-    
-    CGSize size = view.bounds.size;
-    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    CGRect rect = view.frame;
-    [view drawViewHierarchyInRect:rect afterScreenUpdates:YES];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
 }
 @end

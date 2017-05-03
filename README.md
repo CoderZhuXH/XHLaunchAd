@@ -155,7 +155,7 @@
 //3.数据获取成功,初始化广告时,自动结束等待,显示广告.
 
 	 //设置数据等待时间
-    [XHLaunchAd setWaitDataDuration:3];
+    [XHLaunchAd setWaitDataDuration:3];//请求广告URL前,必须设置,否则会先进入window的RootVC
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -180,14 +180,12 @@
  */
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
 {
-    if(openURLString)
-    {
-    	 //跳转到广告详情页面
-        WebViewController *VC = [[WebViewController alloc] init];
-        VC.URLString = openURLString;
-        [self.window.rootViewController presentViewController:VC animated:YES completion:nil];
-        
-    }
+
+    //跳转到广告详情页面,详见demo
+    WebViewController *VC = [[WebViewController alloc] init];
+    VC.URLString = openURLString;
+    .....
+
 }
 
 ```

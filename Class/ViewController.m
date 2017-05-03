@@ -10,7 +10,7 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *lab;
+@property(nonatomic,strong)UILabel *lab;
 
 @end
 
@@ -25,11 +25,22 @@
     
     self.navigationItem.title = @"XHLaunchAdExample";
 
+    [self.view addSubview:self.lab];
+    
     self.lab.text = @"使用说明及注意事项见github:\n https://github.com/CoderZhuXH/XHLaunchAd";
     
     // Do any additional setup after loading the view from its nib.
 }
-
+-(UILabel *)lab
+{
+    if(_lab==nil)
+    {
+        _lab = [[UILabel alloc] initWithFrame:self.view.bounds];
+        _lab.textAlignment = NSTextAlignmentCenter;
+        _lab.numberOfLines = 0;
+    }
+    return _lab;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

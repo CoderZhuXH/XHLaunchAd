@@ -1,15 +1,18 @@
 //
-//  AppDelegate+XHLaunchAd.m
+//  XHLaunchAdManager.m
 //  XHLaunchAdExample
 //
-//  Created by zhuxiaohui on 16/11/30.
-//  Copyright © 2016年 it7090.com. All rights reserved.
+//  Created by zhuxiaohui on 2017/5/3.
+//  Copyright © 2017年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
+//  开屏广告初始化
 
-#import "AppDelegate+XHLaunchAd.h"
+#import "XHLaunchAdManager.h"
 #import "XHLaunchAd.h"
+#import "AppDelegate.h"
 #import "Network.h"
 #import "LaunchAdModel.h"
+#import "UIViewController+Nav.h"
 #import "WebViewController.h"
 
 //静态图
@@ -28,17 +31,47 @@
 #define videoURL2  @"http://120.25.226.186:32812/resources/videos/minion_01.mp4"
 #define videoURL3 @"http://ohnzw6ag6.bkt.clouddn.com/video1.mp4"
 
-@interface AppDelegate()<XHLaunchAdDelegate>
+@interface XHLaunchAdManager()<XHLaunchAdDelegate>
 
 @end
 
-@implementation AppDelegate (XHLaunchAd)
+@implementation XHLaunchAdManager
+
++(void)load
+{
+    [self shareManager];
+}
+
++(XHLaunchAdManager *)shareManager{
+    static XHLaunchAdManager *instance = nil;
+    static dispatch_once_t oneToken;
+    dispatch_once(&oneToken,^{
+        instance = [[XHLaunchAdManager alloc] init];
+    });
+    return instance;
+}
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+
+        //在UIApplicationDidFinishLaunching时初始化开屏广告
+        //当然你也可以直接在AppDelegate didFinishLaunchingWithOptions中初始化
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            
+            //初始化开屏广告
+            [self setupXHLaunchAd];
+            
+        }];
+    }
+    return self;
+}
 -(void)setupXHLaunchAd
 {
     
     //1.******图片开屏广告 - 网络数据******
     //[self example01];
-
+    
     //2.******图片开屏广告 - 本地数据******
     [self example02];
     
@@ -52,15 +85,15 @@
     //[self example05];
     
     //6.******使用默认配置快速初始化,请看下面两个示例******
-    //[self example06];
-    //[self example07];
+    //[self example06];//图片
+    //[self example07];//视频
     
     //7.******如果你想提前缓存图片/视频请调下面这两个接口*****
     //批量缓存图片
     //[XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3]]];
     //批量缓存视频
     //[XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]]];
-  
+    
 }
 
 #pragma mark - 图片开屏广告-网络数据-示例
@@ -70,7 +103,7 @@
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
     //3.数据获取成功,初始化广告时,自动结束等待,显示广告
-    [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置
+    [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置,否则会先进入window的RootVC
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -88,6 +121,7 @@
         //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
         imageAdconfiguration.imageNameOrURLString = model.content;
         //缓存机制(仅对网络图片有效)
+        //为告展示效果更好,可设置为XHLaunchAdImageCacheInBackground,先缓存,下次显示
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
         //图片填充模式
         imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
@@ -135,7 +169,7 @@
     //跳过按钮类型
     imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
-    imageAdconfiguration.showEnterForeground = NO;
+    imageAdconfiguration.showEnterForeground = YES;
     //设置要添加的子视图(可选)
     //imageAdconfiguration.subViews = [self launchAdSubViews];
     //显示开屏广告
@@ -150,7 +184,7 @@
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
     //3.数据获取成功,初始化广告时,自动结束等待,显示广告
-    [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置
+    [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置,否则会先进入window的RootVC
     
     //广告数据请求
     [Network getLaunchAdVideoDataSuccess:^(NSDictionary * response) {
@@ -253,7 +287,6 @@
     //start********************自定义跳过按钮**************************
     imageAdconfiguration.customSkipView = [self customSkipView];
     //********************自定义跳过按钮*****************************end
-    
     
     //显示开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
@@ -358,8 +391,9 @@
     NSLog(@"广告点击");
     WebViewController *VC = [[WebViewController alloc] init];
     VC.URLString = openURLString;
-    [self.window.rootViewController presentViewController:VC animated:YES completion:nil];
-    
+    //此处不要直接取keyWindow
+    UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
+    [rootVC.myNavigationController pushViewController:VC animated:YES];
 }
 /**
  *  图片本地读取/或下载完成回调

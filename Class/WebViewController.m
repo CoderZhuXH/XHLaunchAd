@@ -10,9 +10,7 @@
 #import "WebViewController.h"
 #import "UIView+MBProgressHUD.h"
 @interface WebViewController ()<UIWebViewDelegate>
-
-@property (weak, nonatomic) IBOutlet UIWebView *myWebView;
-
+@property(nonatomic,strong)UIWebView *webView;
 @end
 
 @implementation WebViewController
@@ -20,17 +18,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"详情";
-
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"←" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    [self.view addSubview:self.webView];
+    self.webView.delegate = self;
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.URLString]];
-    [self.myWebView loadRequest:request];
+    [self.webView loadRequest:request];
 
 }
-
-- (IBAction)closeAction:(id)sender {
-
-    [self dismissViewControllerAnimated:YES completion:nil];
-
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark - webViewDelegate
 -(void)webViewDidStartLoad:(UIWebView *)webView
 {
     [self.view showHUD];
@@ -39,7 +37,15 @@
 {
     [self.view hideHUD];
 }
-
+#pragma mark - lazy
+-(UIWebView *)webView
+{
+    if(_webView==nil)
+    {
+        _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    }
+    return _webView;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
