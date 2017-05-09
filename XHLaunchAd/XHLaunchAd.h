@@ -10,10 +10,15 @@
 #import <UIKit/UIKit.h>
 #import "XHLaunchAdConfiguration.h"
 
-/**
- *  版本：3.5.1
- *  发布：2017.05.03
+/*
+ *****************************************************
+ *  XHLaunchAd
+ *  版本:3.5.2
+ *  发布:2017.05.09
+ *****************************************************
  */
+
+#define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
 NS_ASSUME_NONNULL_BEGIN
 @class XHLaunchAd;
@@ -57,17 +62,17 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadProgress:(float)progress total:(unsigned long long)total current:(unsigned long long)current;
 
 /**
- *  广告显示完成
- */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
-
-/**
  *  倒计时回调
  *
  *  @param launchAd XHLaunchAd
  *  @param duration 倒计时时间
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd customSkipView:(UIView *)customSkipView duration:(NSInteger)duration;
+
+/**
+ *  广告显示完成
+ */
+-(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
 
 /**
  如果你想用SDWebImage等框架加载网络广告图片,请实现此代理

@@ -549,7 +549,6 @@ static NSInteger defaultWaitDataDuration = 3;
     {
         if(_videoAdView.adVideoPlayer) [_videoAdView.adVideoPlayer stop];
     }
-    
     if ([self.delegate respondsToSelector:@selector(xhLaunchShowFinish:)]) {
         
         [self.delegate xhLaunchShowFinish:self];
