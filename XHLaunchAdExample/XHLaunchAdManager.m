@@ -169,7 +169,7 @@
     //跳过按钮类型
     imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
-    imageAdconfiguration.showEnterForeground = YES;
+    imageAdconfiguration.showEnterForeground = NO;
     //设置要添加的子视图(可选)
     //imageAdconfiguration.subViews = [self launchAdSubViews];
     //显示开屏广告

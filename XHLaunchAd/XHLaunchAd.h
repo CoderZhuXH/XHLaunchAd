@@ -6,19 +6,21 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
+//  版本:3.5.3
+//  发布:2017.05.23
+
+//  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
+//  QQ交流群:537476189
+//  Email:it7090@163.com
+//  新浪微博:朱晓辉Allen
+
+//  GitHub:https://github.com/CoderZhuXH
+//  使用说明:https://github.com/CoderZhuXH/XHLaunchAd/blob/master/README.md
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "XHLaunchAdConfiguration.h"
 
-/*
- *****************************************************
- *  XHLaunchAd
- *  版本:3.5.2
- *  发布:2017.05.09
- *****************************************************
- */
-
-#define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
 NS_ASSUME_NONNULL_BEGIN
 @class XHLaunchAd;
