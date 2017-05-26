@@ -30,3 +30,4 @@
 @property(nonatomic,assign)MPMovieScalingMode adVideoScalingMode;
 
 @end
+

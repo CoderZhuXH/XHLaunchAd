@@ -25,11 +25,10 @@
 {
     if(self.adClick) self.adClick();
 }
+
 @end
 
-
 #pragma mark - imageAdView
-
 //gif优化方案源于https://github.com/liyong03/YLGIFImage
 @interface XHLaunchImageAdView ()
 @property (nonatomic, strong) XHLaunchAdImage *animatedImage;
@@ -279,3 +278,4 @@ const NSTimeInterval kMaxTimeStep = 1; // note: To avoid spiral-o-death
 }
 
 @end
+

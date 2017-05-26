@@ -30,7 +30,7 @@
     UIImage *imageP = [self launchImageWithType:@"Portrait"];
     if(imageP) return imageP;
     UIImage *imageL = [self launchImageWithType:@"Landscape"];
-    if(imageL) return imageL;
+    if(imageL)  return imageL;
     NSLog(@"获取LaunchImage失败!请检查是否添加启动图,或者规格是否有误.");
     return nil;
 }
@@ -60,4 +60,5 @@
     }
     return nil;
 }
+
 @end

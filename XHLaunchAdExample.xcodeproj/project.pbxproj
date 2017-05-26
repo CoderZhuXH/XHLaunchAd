@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C4412D01ED7CC0B0065B6AE /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C4412CF1ED7CC0B0065B6AE /* ViewController.xib */; };
+		0C4412D61ED7D96E0065B6AE /* XHLaunchAdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4412D51ED7D96E0065B6AE /* XHLaunchAdController.m */; };
 		0C6E81A51EB814DA005F61C1 /* XHLaunchAdImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E81A41EB814DA005F61C1 /* XHLaunchAdImage.m */; };
 		0C6E81B41EB9763F005F61C1 /* XHLaunchAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E81B31EB9763F005F61C1 /* XHLaunchAdManager.m */; };
 		0C6E81BC1EB986C3005F61C1 /* UIViewController+Nav.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E81BB1EB986C3005F61C1 /* UIViewController+Nav.m */; };
@@ -44,6 +46,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C4412CF1ED7CC0B0065B6AE /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		0C4412D41ED7D96E0065B6AE /* XHLaunchAdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdController.h; sourceTree = "<group>"; };
+		0C4412D51ED7D96E0065B6AE /* XHLaunchAdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdController.m; sourceTree = "<group>"; };
 		0C6E81A31EB814DA005F61C1 /* XHLaunchAdImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdImage.h; sourceTree = "<group>"; };
 		0C6E81A41EB814DA005F61C1 /* XHLaunchAdImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdImage.m; sourceTree = "<group>"; };
 		0C6E81B21EB9763F005F61C1 /* XHLaunchAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdManager.h; sourceTree = "<group>"; };
@@ -228,6 +233,7 @@
 				4B1BBA931DF44C1D00E7839E /* Model */,
 				4B6CF2361D0E904900F76B47 /* ViewController.h */,
 				4B6CF2371D0E904900F76B47 /* ViewController.m */,
+				0C4412CF1ED7CC0B0065B6AE /* ViewController.xib */,
 				4B5C5C261D8118A700C18148 /* WebViewController.h */,
 				4B5C5C271D8118A700C18148 /* WebViewController.m */,
 			);
@@ -239,6 +245,8 @@
 			children = (
 				4B63D24D1DF2DD5100FA2520 /* XHLaunchAd.h */,
 				4B63D24E1DF2DD5100FA2520 /* XHLaunchAd.m */,
+				0C4412D41ED7D96E0065B6AE /* XHLaunchAdController.h */,
+				0C4412D51ED7D96E0065B6AE /* XHLaunchAdController.m */,
 				0C6E81A31EB814DA005F61C1 /* XHLaunchAdImage.h */,
 				0C6E81A41EB814DA005F61C1 /* XHLaunchAdImage.m */,
 				4B63D2531DF2DD5100FA2520 /* XHLaunchAdConfiguration.h */,
@@ -294,6 +302,7 @@
 				TargetAttributes = {
 					4B6CF2201D0E902800F76B47 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 6UD925M2H4;
 					};
 				};
 			};
@@ -320,6 +329,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C4412D01ED7CC0B0065B6AE /* ViewController.xib in Resources */,
 				4B63D27E1DF2DDAD00FA2520 /* image11.gif in Resources */,
 				4B63D2841DF2DDAD00FA2520 /* LaunchImageAd.json in Resources */,
 				4B63D2871DF2DDAD00FA2520 /* video0.mp4 in Resources */,
@@ -354,6 +364,7 @@
 				0C6E81A51EB814DA005F61C1 /* XHLaunchAdImage.m in Sources */,
 				4B63D25F1DF2DD5100FA2520 /* NSString+XHLaunchAd.m in Sources */,
 				4B63D26A1DF2DD5100FA2520 /* XHLaunchImageView.m in Sources */,
+				0C4412D61ED7D96E0065B6AE /* XHLaunchAdController.m in Sources */,
 				4B6CF2291D0E902800F76B47 /* AppDelegate.m in Sources */,
 				4B6CF2261D0E902800F76B47 /* main.m in Sources */,
 				4B63D2691DF2DD5100FA2520 /* XHLaunchAdView.m in Sources */,
@@ -472,7 +483,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6UD925M2H4;
 				INFOPLIST_FILE = XHLaunchAdExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.it7090.XHLaunchAdExample;
@@ -486,7 +497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6UD925M2H4;
 				INFOPLIST_FILE = XHLaunchAdExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.it7090.XHLaunchAdExample;

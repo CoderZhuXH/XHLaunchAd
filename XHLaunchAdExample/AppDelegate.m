@@ -21,7 +21,7 @@
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     
     //开屏广告初始化,见XHLaunchAdManager
-    
+
     [self.window makeKeyAndVisible];
     return YES;
 }

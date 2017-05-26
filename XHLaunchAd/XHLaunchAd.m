@@ -14,6 +14,7 @@
 #import "XHLaunchAdCache.h"
 #import "XHLaunchImageView.h"
 #import "XHLaunchAdImage.h"
+#import "XHLaunchAdController.h"
 
 #define DISPATCH_SOURCE_CANCEL_SAFE(time) if(time)\
 {\
@@ -141,9 +142,11 @@ static NSInteger defaultWaitDataDuration = 3;
             [self setupLaunchAdEnterForeground];
             
         }];
+
     }
     return self;
 }
+
 -(void)setupLaunchAdEnterForeground
 {
     switch (_launchAdType) {
@@ -168,7 +171,7 @@ static NSInteger defaultWaitDataDuration = 3;
 -(void)setupLaunchAd
 {
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    window.rootViewController = [UIViewController new];
+    window.rootViewController = [XHLaunchAdController new];
     window.rootViewController.view.backgroundColor = [UIColor clearColor];
     window.rootViewController.view.userInteractionEnabled = NO;
     window.windowLevel = UIWindowLevelStatusBar + 1;

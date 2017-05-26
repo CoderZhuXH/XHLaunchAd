@@ -15,6 +15,7 @@
 #import "UIViewController+Nav.h"
 #import "WebViewController.h"
 
+
 //静态图
 #define imageURL1 @"http://c.hiphotos.baidu.com/image/pic/item/4d086e061d950a7b78c4e5d703d162d9f2d3c934.jpg"
 #define imageURL2 @"http://d.hiphotos.baidu.com/image/pic/item/f7246b600c3387444834846f580fd9f9d72aa034.jpg"
@@ -68,7 +69,6 @@
 }
 -(void)setupXHLaunchAd
 {
-    
     //1.******图片开屏广告 - 网络数据******
     //[self example01];
     
@@ -445,4 +445,24 @@
 //
 //}
 
+
+#pragma mark - tool
+/**
+ 是否是横屏
+ */
+-(BOOL)isLandscape
+{
+    BOOL orientation = NO;
+    UIDeviceOrientation duration = [[UIDevice currentDevice] orientation];
+    switch (duration) {
+        case UIDeviceOrientationLandscapeLeft://Home按钮右
+        case UIDeviceOrientationLandscapeRight://Home按钮左
+            orientation = YES;
+            break;
+        default:
+            break;
+    }
+    NSLog(@"____方向=%d",orientation);
+    return orientation;
+}
 @end
