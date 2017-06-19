@@ -30,6 +30,8 @@
     configuration.contentMode = UIViewContentModeScaleToFill;
     //广告显示完成动画
     configuration.showFinishAnimate =ShowFinishAnimateFadein;
+     //显示完成动画时间
+    configuration.showFinishAnimateTime = showFinishAnimateTimeDefault;
     //跳过按钮类型
     configuration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
@@ -52,6 +54,8 @@
     configuration.scalingMode = MPMovieScalingModeAspectFill;
     //广告显示完成动画
     configuration.showFinishAnimate =ShowFinishAnimateFadein;
+    //显示完成动画时间
+    configuration.showFinishAnimateTime = showFinishAnimateTimeDefault;
     //跳过按钮类型
     configuration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告

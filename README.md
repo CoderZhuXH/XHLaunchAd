@@ -26,7 +26,8 @@
 
 ### 技术交流群(群号:537476189).
 
-### 更新记录:   
+### 更新记录:  
+
 *   2017.05.26 -- v3.5.4 -->修复横屏启动造成的界面问题...
 *   2017.05.02 -- v3.5.0 -->Gif动图占用内存优化...
 *   2017.04.26 -- v3.4.6 -->版本优化,bug fix...
@@ -90,6 +91,8 @@
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+    //广告显示完成动画时间
+    imageAdconfiguration.showFinishAnimateTime = 0.8;
     //跳过按钮类型
     imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
@@ -134,7 +137,9 @@
     videoAdconfiguration.openURLString =  @"http://www.it7090.com";
     //广告显示完成动画
     videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
-     //跳过按钮类型
+    //广告显示完成动画时间
+    videoAdconfiguration.showFinishAnimateTime = 0.8;
+    //跳过按钮类型
     videoAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     videoAdconfiguration.showEnterForeground = NO;

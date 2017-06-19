@@ -14,6 +14,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//显示完成动画时间默认时间
+static CGFloat const showFinishAnimateTimeDefault = 0.8;
+
 /**
  *  显示完成动画
  */
@@ -38,7 +41,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @interface XHLaunchAdConfiguration : NSObject
 
 /**
- *  停留时间(default 5)
+ *  停留时间(default 5 ,单位:秒)
  */
 @property(nonatomic,assign)NSInteger duration;
 
@@ -51,6 +54,11 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
  *  显示完成动画(default ShowFinishAnimateFadein)
  */
 @property(nonatomic,assign)ShowFinishAnimate showFinishAnimate;
+
+/**
+ *  显示完成动画时间(default 0.8 , 单位:秒)
+ */
+@property(nonatomic,assign)CGFloat showFinishAnimateTime;
 
 /**
  *  设置开屏广告的frame(default [UIScreen mainScreen].bounds)

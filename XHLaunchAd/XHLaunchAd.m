@@ -517,7 +517,9 @@ static NSInteger defaultWaitDataDuration = 3;
     
     if(configuration.showFinishAnimate == ShowFinishAnimateLite)
     {
-        [UIView animateWithDuration:1.5 animations:^{
+        CGFloat duration = showFinishAnimateTimeDefault;
+        if(configuration.showFinishAnimateTime>0) duration = configuration.showFinishAnimateTime;
+        [UIView animateWithDuration:duration animations:^{
             
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             self.window.transform=CGAffineTransformMakeScale(2.f, 2.f);
@@ -528,7 +530,9 @@ static NSInteger defaultWaitDataDuration = 3;
     }
     else if(configuration.showFinishAnimate == ShowFinishAnimateFadein)
     {
-        [UIView animateWithDuration:0.3 animations:^{
+        CGFloat duration = showFinishAnimateTimeDefault;
+        if(configuration.showFinishAnimateTime>0) duration = configuration.showFinishAnimateTime;
+        [UIView animateWithDuration:duration animations:^{
             self.window.alpha = 0;
         } completion:^(BOOL finished) {
             [self remove];

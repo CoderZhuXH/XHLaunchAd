@@ -129,6 +129,8 @@
         imageAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
         imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+        //广告显示完成动画时间
+        imageAdconfiguration.showFinishAnimateTime = 0.8;
         //跳过按钮类型
         imageAdconfiguration.skipButtonType = SkipTypeTimeText;
         //后台返回时,是否显示广告
@@ -166,6 +168,8 @@
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+    //广告显示完成动画时间
+    imageAdconfiguration.showFinishAnimateTime = 0.8;
     //跳过按钮类型
     imageAdconfiguration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
@@ -209,6 +213,8 @@
         videoAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
         videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+        //广告显示完成动画时间
+        videoAdconfiguration.showFinishAnimateTime = 0.8;
         //后台返回时,是否显示广告
         videoAdconfiguration.showEnterForeground = NO;
         //跳过按钮类型
@@ -247,6 +253,8 @@
     videoAdconfiguration.skipButtonType = SkipTypeTimeText;
     //广告显示完成动画
     videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+    //广告显示完成动画时间
+    videoAdconfiguration.showFinishAnimateTime = 0.8;
     //后台返回时,是否显示广告
     videoAdconfiguration.showEnterForeground = NO;
     //设置要添加的子视图(可选)
@@ -278,6 +286,8 @@
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+    //广告显示完成动画时间
+    imageAdconfiguration.showFinishAnimateTime = 0.8;
     //后台返回时,是否显示广告
     imageAdconfiguration.showEnterForeground = NO;
     
