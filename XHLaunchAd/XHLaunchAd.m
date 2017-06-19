@@ -219,7 +219,7 @@ static NSInteger defaultWaitDataDuration = 3;
                  /** 缓存中未有 */
                 if(![XHLaunchAdCache checkImageInCacheWithURL:[NSURL URLWithString:configuration.imageNameOrURLString]])
                 {
-                    [self remove]; return; /** 完成显示 */
+                    [self removeAndAnimateDefault]; return; /** 完成显示 */
                 }
             }
         }
@@ -313,7 +313,7 @@ static NSInteger defaultWaitDataDuration = 3;
             }];
             
 #pragma mark - 视频缓存,提前显示完成
-            [self remove]; return;  /** 显示完成 */
+            [self removeAndAnimateDefault]; return;  /** 显示完成 */
         }
     }
     else
@@ -426,11 +426,7 @@ static NSInteger defaultWaitDataDuration = 3;
 
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
        
-        [UIView animateWithDuration:0.3 animations:^{
-            self.window.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self remove];
-        }];
+        [self removeAndAnimateDefault];
     }
     
 }
@@ -464,7 +460,7 @@ static NSInteger defaultWaitDataDuration = 3;
             if(duration==0)
             {
                 DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
-                [self remove]; return ;
+                [self removeAndAnimateDefault]; return ;
             }
             duration--;
         });
@@ -480,7 +476,6 @@ static NSInteger defaultWaitDataDuration = 3;
     if(!configuration.skipButtonType) configuration.skipButtonType = SkipTypeTimeText;//默认
     __block NSInteger duration = 5;//默认
     if(configuration.duration) duration = configuration.duration;
-    
     NSTimeInterval period = 1.0;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     _skipTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
@@ -543,6 +538,7 @@ static NSInteger defaultWaitDataDuration = 3;
         [self remove];
     }
 }
+
 -(void)remove{
     
     DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
@@ -561,7 +557,14 @@ static NSInteger defaultWaitDataDuration = 3;
         [self.delegate xhLaunchShowFinish:self];
     }
 }
-
+-(void)removeAndAnimateDefault
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.window.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self remove];
+    }];
+}
 -(void)removeSubViewsExceptLaunchAdImageView
 {
     [self.window.subviews.copy enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
