@@ -28,6 +28,6 @@
 
 @property (strong, nonatomic) MPMoviePlayerController *adVideoPlayer;
 @property(nonatomic,assign)MPMovieScalingMode adVideoScalingMode;
-
+-(void)stopVideoPlayer;
 @end
 

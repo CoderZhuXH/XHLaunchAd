@@ -237,6 +237,10 @@ const NSTimeInterval kMaxTimeStep = 1; // note: To avoid spiral-o-death
 #pragma mark - videoAdView
 @implementation XHLaunchVideoAdView
 
+-(void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"frame"];
+}
 - (instancetype)init
 {
     self = [super init];
@@ -267,6 +271,14 @@ const NSTimeInterval kMaxTimeStep = 1; // note: To avoid spiral-o-death
     }
     return _adVideoPlayer;
     
+}
+-(void)stopVideoPlayer{
+
+    if(_adVideoPlayer==nil) return;
+    [_adVideoPlayer stop];
+    [_adVideoPlayer.view removeFromSuperview];
+    _adVideoPlayer = nil;
+
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {

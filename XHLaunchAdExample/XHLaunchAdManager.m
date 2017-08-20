@@ -13,7 +13,7 @@
 #import "Network.h"
 #import "LaunchAdModel.h"
 #import "UIViewController+Nav.h"
-#import "WebViewController.h"
+#import "XHWebViewController.h"
 
 
 //静态图
@@ -399,7 +399,7 @@
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
 {
     NSLog(@"广告点击");
-    WebViewController *VC = [[WebViewController alloc] init];
+    XHWebViewController *VC = [[XHWebViewController alloc] init];
     VC.URLString = openURLString;
     //此处不要直接取keyWindow
     UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;

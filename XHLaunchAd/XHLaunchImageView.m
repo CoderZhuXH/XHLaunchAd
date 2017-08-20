@@ -14,12 +14,14 @@
 
 @implementation XHLaunchImageView
 
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         self.frame = [UIScreen mainScreen].bounds;
         self.userInteractionEnabled = YES;
+        self.backgroundColor = [UIColor whiteColor];
         self.image = [self launchImage];
     }
     return self;

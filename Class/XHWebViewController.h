@@ -1,5 +1,5 @@
 //
-//  WebViewController.h
+//  XHWebViewController.h
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 16/9/8.
@@ -9,8 +9,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WebViewController : UIViewController
-
-@property (nonatomic, copy) NSString *URLString;
-
+@interface XHWebViewController : UIViewController
+@property(nonatomic,copy)NSString *URLString;
 @end

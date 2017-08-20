@@ -76,7 +76,6 @@ static NSUInteger _prefetchedNum = 10;
 @synthesize images;
 
 #pragma mark - Class Methods
-
 + (id)imageNamed:(NSString *)name
 {
     if(name==nil) return nil;
@@ -248,7 +247,10 @@ static NSUInteger _prefetchedNum = 10;
 - (CGSize)size
 {
     if (self.images.count) {
-        return [[self.images objectAtIndex:0] size];
+        //fix issues -> https://github.com/CoderZhuXH/XHLaunchAd/issues/70
+        //return [[self.images objectAtIndex:0] size];
+         UIImage *image = [self.images objectAtIndex:0];
+         return [image size];
     }
     return [super size];
 }
@@ -293,6 +295,8 @@ static NSUInteger _prefetchedNum = 10;
     if (_incrementalSource) {
         CFRelease(_incrementalSource);
     }
+
+    //NSLog(@"dealloc ---- %@\n\n", NSStringFromClass(self.class));
 }
 
 @end

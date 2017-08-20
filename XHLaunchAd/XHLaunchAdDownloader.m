@@ -24,6 +24,11 @@
 @end
 @implementation XHLaunchAdDownload
 
+-(void)dealloc
+{
+    NSLog(@"\n*****dealloc_%@\n",[self class]);
+}
+
 @end
 
 #pragma mark -  XHLaunchAdImageDownload
