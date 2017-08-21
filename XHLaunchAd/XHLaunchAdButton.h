@@ -26,6 +26,6 @@ typedef NS_ENUM(NSInteger,SkipType) {
 @property(nonatomic,assign)CGFloat leftRightSpace;
 @property(nonatomic,assign)CGFloat topBottomSpace;
 
--(void)stateWithskipType:(SkipType)skipType andDuration:(NSInteger)duration;
+-(void)stateWithSkipType:(SkipType)skipType andDuration:(NSInteger)duration;
 
 @end

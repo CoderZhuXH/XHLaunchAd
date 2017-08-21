@@ -60,7 +60,7 @@
     }
 }
 
--(void)stateWithskipType:(SkipType )skipType andDuration:(NSInteger)duration
+-(void)stateWithSkipType:(SkipType )skipType andDuration:(NSInteger)duration
 {
     
     switch (skipType) {

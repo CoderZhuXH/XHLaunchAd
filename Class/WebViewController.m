@@ -1,5 +1,5 @@
 //
-//  XHWebViewController.m
+//  WebViewController.m
 //  XHLaunchAdExample
 //
 //  Created by zhuxiaohui on 16/9/8.
@@ -7,14 +7,14 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 //  广告详情页
 
-#import "XHWebViewController.h"
+#import "WebViewController.h"
 #import <WebKit/WebKit.h>
-@interface XHWebViewController ()<UIWebViewDelegate>
+@interface WebViewController ()
 @property(nonatomic,strong)WKWebView *webView;
 @property (nonatomic, strong) UIProgressView *progressView;
 @end
 
-@implementation XHWebViewController
+@implementation WebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

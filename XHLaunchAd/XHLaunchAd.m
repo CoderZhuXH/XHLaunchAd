@@ -289,7 +289,7 @@ static NSInteger defaultWaitDataDuration = 3;
         
         }
         [_window addSubview:_adSkipButton];
-        [_adSkipButton stateWithskipType:configuration.skipButtonType andDuration:configuration.duration];
+        [_adSkipButton stateWithSkipType:configuration.skipButtonType andDuration:configuration.duration];
     }
 }
 
@@ -479,7 +479,7 @@ static NSInteger defaultWaitDataDuration = 3;
             }
             if(!configuration.customSkipView)
             {
-                [_adSkipButton stateWithskipType:configuration.skipButtonType andDuration:duration];
+                [_adSkipButton stateWithSkipType:configuration.skipButtonType andDuration:duration];
             }
             if(duration==0)
             {

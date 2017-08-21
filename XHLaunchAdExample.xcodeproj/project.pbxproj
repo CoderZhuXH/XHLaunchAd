@@ -15,7 +15,7 @@
 		0CFD772D1EB10DA1008937E4 /* XHLaunchAdDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD772B1EB10DA1008937E4 /* XHLaunchAdDownloader.m */; };
 		4B1BBA961DF44C1D00E7839E /* LaunchAdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BBA951DF44C1D00E7839E /* LaunchAdModel.m */; };
 		4B27845F1DF545EA00417DB2 /* Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B27845E1DF545EA00417DB2 /* Network.m */; };
-		4B5C5C291D8118A700C18148 /* XHWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C5C271D8118A700C18148 /* XHWebViewController.m */; };
+		4B5C5C291D8118A700C18148 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C5C271D8118A700C18148 /* WebViewController.m */; };
 		4B63D25F1DF2DD5100FA2520 /* NSString+XHLaunchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B63D2481DF2DD5100FA2520 /* NSString+XHLaunchAd.m */; };
 		4B63D2611DF2DD5100FA2520 /* UIImageView+XHLaunchAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B63D24C1DF2DD5100FA2520 /* UIImageView+XHLaunchAdCache.m */; };
 		4B63D2621DF2DD5100FA2520 /* XHLaunchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B63D24E1DF2DD5100FA2520 /* XHLaunchAd.m */; };
@@ -59,8 +59,8 @@
 		4B1BBA951DF44C1D00E7839E /* LaunchAdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAdModel.m; sourceTree = "<group>"; };
 		4B27845D1DF545EA00417DB2 /* Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Network.h; sourceTree = "<group>"; };
 		4B27845E1DF545EA00417DB2 /* Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Network.m; sourceTree = "<group>"; };
-		4B5C5C261D8118A700C18148 /* XHWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHWebViewController.h; sourceTree = "<group>"; };
-		4B5C5C271D8118A700C18148 /* XHWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHWebViewController.m; sourceTree = "<group>"; };
+		4B5C5C261D8118A700C18148 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		4B5C5C271D8118A700C18148 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		4B63D2471DF2DD5100FA2520 /* NSString+XHLaunchAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHLaunchAd.h"; sourceTree = "<group>"; };
 		4B63D2481DF2DD5100FA2520 /* NSString+XHLaunchAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XHLaunchAd.m"; sourceTree = "<group>"; };
 		4B63D24B1DF2DD5100FA2520 /* UIImageView+XHLaunchAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XHLaunchAdCache.h"; sourceTree = "<group>"; };
@@ -216,8 +216,8 @@
 				4B6CF2361D0E904900F76B47 /* ViewController.h */,
 				4B6CF2371D0E904900F76B47 /* ViewController.m */,
 				0C4412CF1ED7CC0B0065B6AE /* ViewController.xib */,
-				4B5C5C261D8118A700C18148 /* XHWebViewController.h */,
-				4B5C5C271D8118A700C18148 /* XHWebViewController.m */,
+				4B5C5C261D8118A700C18148 /* WebViewController.h */,
+				4B5C5C271D8118A700C18148 /* WebViewController.m */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -335,7 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CFD772D1EB10DA1008937E4 /* XHLaunchAdDownloader.m in Sources */,
-				4B5C5C291D8118A700C18148 /* XHWebViewController.m in Sources */,
+				4B5C5C291D8118A700C18148 /* WebViewController.m in Sources */,
 				4B6CF23E1D0E904900F76B47 /* ViewController.m in Sources */,
 				4B63D2631DF2DD5100FA2520 /* XHLaunchAdButton.m in Sources */,
 				4B63D2651DF2DD5100FA2520 /* XHLaunchAdConfiguration.m in Sources */,
