@@ -455,24 +455,4 @@
 //
 //}
 
-
-#pragma mark - tool
-/**
- 是否是横屏
- */
--(BOOL)isLandscape
-{
-    BOOL orientation = NO;
-    UIDeviceOrientation duration = [[UIDevice currentDevice] orientation];
-    switch (duration) {
-        case UIDeviceOrientationLandscapeLeft://Home按钮右
-        case UIDeviceOrientationLandscapeRight://Home按钮左
-            orientation = YES;
-            break;
-        default:
-            break;
-    }
-    NSLog(@"____方向=%d",orientation);
-    return orientation;
-}
 @end
