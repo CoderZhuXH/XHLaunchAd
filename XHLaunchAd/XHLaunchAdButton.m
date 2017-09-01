@@ -98,7 +98,7 @@
     CGRect frame = self.timeLab.frame;
     CGFloat width = frame.size.width;
     if(leftRightSpace<=0 || leftRightSpace*2>= width) return;
-    frame = CGRectMake(leftRightSpace, 0, width-2*leftRightSpace, frame.size.height);
+    frame = CGRectMake(leftRightSpace, frame.origin.y, width-2*leftRightSpace, frame.size.height);
     self.timeLab.frame = frame;
     [self timeLabcornerRadiusWithFrame:frame];
 }
@@ -108,7 +108,7 @@
     CGRect frame = self.timeLab.frame;
     CGFloat height = frame.size.height;
     if(topBottomSpace<=0 || topBottomSpace*2>= height) return;
-    frame = CGRectMake(0, topBottomSpace, frame.size.width, height-2*topBottomSpace);
+    frame = CGRectMake(frame.origin.x, topBottomSpace, frame.size.width, height-2*topBottomSpace);
     self.timeLab.frame = frame;
     [self timeLabcornerRadiusWithFrame:frame];
     

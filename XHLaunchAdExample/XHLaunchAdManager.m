@@ -47,6 +47,7 @@
     static XHLaunchAdManager *instance = nil;
     static dispatch_once_t oneToken;
     dispatch_once(&oneToken,^{
+        
         instance = [[XHLaunchAdManager alloc] init];
     });
     return instance;
@@ -57,7 +58,7 @@
     if (self) {
 
         //在UIApplicationDidFinishLaunching时初始化开屏广告
-        //当然你也可以直接在AppDelegate didFinishLaunchingWithOptions中初始化
+        //当然你也可以直接在AppDelegate didFinishLaunchingWithOptions方法中初始化
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             
             //初始化开屏广告
@@ -75,7 +76,7 @@
     //2.******图片开屏广告 - 本地数据******
     [self example02];
     
-    //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示)******
+    //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行)******
     //[self example03];
     
     //4.******视频开屏广告 - 本地数据******
@@ -101,9 +102,11 @@
 -(void)example01
 {
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
+    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,初始化广告时,自动结束等待,显示广告
-    [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置,否则会先进入window的RootVC
+    
+    //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
+    [XHLaunchAd setWaitDataDuration:3];
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -119,7 +122,7 @@
         //广告frame
         imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
         //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-        imageAdconfiguration.imageNameOrURLString = model.content;
+        //imageAdconfiguration.imageNameOrURLString = model.content;
         //缓存机制(仅对网络图片有效)
         //为告展示效果更好,可设置为XHLaunchAdImageCacheInBackground,先缓存,下次显示
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
@@ -186,9 +189,11 @@
 -(void)example03
 {
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
+    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,初始化广告时,自动结束等待,显示广告
-    [XHLaunchAd setWaitDataDuration:3];//请求广告数据前,必须设置,否则会先进入window的RootVC
+    
+    //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
+    [XHLaunchAd setWaitDataDuration:3];
     
     //广告数据请求
     [Network getLaunchAdVideoDataSuccess:^(NSDictionary * response) {
@@ -205,7 +210,7 @@
         //广告frame
         videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
         //广告视频URLString/或本地视频名(请带上后缀)
-        //注意:视频广告只支持先缓存,下次显示
+        //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
         //视频缩放模式
         videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
@@ -333,7 +338,7 @@
 #pragma mark - subViews
 -(NSArray<UIView *> *)launchAdSubViews_alreadyView
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, 30, 60, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, 22, 60, 30)];
     label.text  = @"已预载";
     label.font = [UIFont systemFontOfSize:12];
     label.textColor = [UIColor whiteColor];
