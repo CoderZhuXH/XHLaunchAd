@@ -17,7 +17,7 @@
 * 4.支持网络及本地资源.
 * 5.兼容iPhone和iPad.
 * 6.支持广告点击事件.
-* 7.支持自定义跳过按钮.
+* 7.支持自定义跳过按钮,添加子视图.
 * 8.支持设置数据等待时间.
 * 9.自带图片/视频下载,缓存功能.
 * 10.支持预缓存图片及视频.
@@ -158,11 +158,12 @@
 ```objc
 
 //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-//2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将自动进入window的RootVC
+//2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示启动广告
 //3.数据获取成功,初始化广告时,自动结束等待,显示广告.
 
+	 //请求广告URL前,必须设置,否则会先进入window的RootVC
 	 //设置数据等待时间
-    [XHLaunchAd setWaitDataDuration:3];//请求广告URL前,必须设置,否则会先进入window的RootVC
+    [XHLaunchAd setWaitDataDuration:3];
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -170,7 +171,7 @@
       //在此处利用服务器返回的广告数据,按上面示例添加开屏广告代码
       XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration ... 
 
-     //配置相关参数.... 
+     //按照上面示例配置相关参数.... 
 
      //显示开屏广告
      [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
