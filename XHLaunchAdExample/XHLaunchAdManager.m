@@ -103,7 +103,7 @@
 {
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
-    //3.数据获取成功,初始化广告时,自动结束等待,显示广告
+    //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
@@ -122,7 +122,7 @@
         //广告frame
         imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
         //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-        //imageAdconfiguration.imageNameOrURLString = model.content;
+        imageAdconfiguration.imageNameOrURLString = model.content;
         //缓存机制(仅对网络图片有效)
         //为告展示效果更好,可设置为XHLaunchAdImageCacheInBackground,先缓存,下次显示
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
@@ -190,7 +190,7 @@
 {
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
-    //3.数据获取成功,初始化广告时,自动结束等待,显示广告
+    //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
@@ -448,7 +448,7 @@
 }
 
 /**
- 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理
+ 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理(实现此方法后,图片缓存将不受XHLaunchAd管理)
  
  @param launchAd          XHLaunchAd
  @param launchAdImageView launchAdImageView
