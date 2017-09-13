@@ -29,7 +29,7 @@ typedef NS_OPTIONS(NSUInteger, XHLaunchAdImageOptions) {
     XHLaunchAdImageRefreshCached = 1 << 2 ,
     
     /**
-     *  后台缓存本次不显示,缓存OK后下次再显示
+     *  后台缓存本次不显示,缓存OK后下次再显示(建议使用这种方式)
      */
     XHLaunchAdImageCacheInBackground = 1 << 3
     

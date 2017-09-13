@@ -158,14 +158,14 @@ static NSInteger defaultWaitDataDuration = 3;
 -(void)setupLaunchAdEnterForeground
 {
     switch (_launchAdType) {
-            case XHLaunchAdTypeImage:
+        case XHLaunchAdTypeImage:
         {
             if(!_imageAdConfiguration.showEnterForeground) return;
             [self setupLaunchAd];
             [self setupImageAdForConfiguration:_imageAdConfiguration];
         }
             break;
-            case XHLaunchAdTypeVideo:
+        case XHLaunchAdTypeVideo:
         {
             if(!_videoAdConfiguration.showEnterForeground) return;
             [self setupLaunchAd];
@@ -426,10 +426,10 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     XHLaunchAdConfiguration *configuration = nil;
     switch (_launchAdType) {
-            case XHLaunchAdTypeVideo:
+        case XHLaunchAdTypeVideo:
             configuration = _videoAdConfiguration;
             break;
-            case XHLaunchAdTypeImage:
+        case XHLaunchAdTypeImage:
             configuration = _imageAdConfiguration;
             break;
         default:
@@ -499,37 +499,80 @@ static NSInteger defaultWaitDataDuration = 3;
     
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
     
-    if(!configuration.showFinishAnimate) configuration.showFinishAnimate = ShowFinishAnimateFadein;
+    CGFloat duration = showFinishAnimateTimeDefault;
+    if(configuration.showFinishAnimateTime>0) duration = configuration.showFinishAnimateTime;
     
-    if(configuration.showFinishAnimate == ShowFinishAnimateLite)
-    {
-        CGFloat duration = showFinishAnimateTimeDefault;
-        if(configuration.showFinishAnimateTime>0) duration = configuration.showFinishAnimateTime;
-        [UIView animateWithDuration:duration animations:^{
+    switch (configuration.showFinishAnimate) {
             
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-            _window.transform=CGAffineTransformMakeScale(2.f, 2.f);
-            _window.alpha = 0;
-        } completion:^(BOOL finished) {
+        case ShowFinishAnimateNone:{
+            
             [self remove];
-        }];
-    }
-    else if(configuration.showFinishAnimate == ShowFinishAnimateFadein)
-    {
-        CGFloat duration = showFinishAnimateTimeDefault;
-        if(configuration.showFinishAnimateTime>0) duration = configuration.showFinishAnimateTime;
-        [UIView animateWithDuration:duration animations:^{
-            _window.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self remove];
-        }];
-    }
-    else
-    {
-        [self remove];
+        }
+            break;
+        case ShowFinishAnimateFadein:{
+            
+            [self removeAndAnimateDefault];
+        }
+            break;
+        case ShowFinishAnimateLite:{
+            
+            [UIView transitionWithView:_window duration:duration options:UIViewAnimationOptionCurveEaseOut animations:^{
+                _window.transform = CGAffineTransformMakeScale(1.5, 1.5);
+                _window.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self remove];
+            }];
+            
+        }
+            break;
+        case ShowFinishAnimateFlipFromLeft:{
+            
+            [UIView transitionWithView:_window duration:duration options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+                _window.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self remove];
+            }];
+            
+        }
+            break;
+        case ShowFinishAnimateFlipFromBottom:{
+            
+            [UIView transitionWithView:_window duration:duration options:UIViewAnimationOptionTransitionFlipFromBottom animations:^{
+                _window.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self remove];
+            }];
+            
+        }
+            break;
+        case ShowFinishAnimateCurlUp:{
+            
+            [UIView transitionWithView:_window duration:duration options:UIViewAnimationOptionTransitionCurlUp animations:^{
+                _window.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self remove];
+            }];
+            
+        }
+            break;
+        default:{
+            
+            [self removeAndAnimateDefault];
+        }
+            break;
     }
 }
-
+-(void)removeAndAnimateDefault
+{
+    XHLaunchAdConfiguration * configuration = [self commonConfiguration];
+    CGFloat duration = showFinishAnimateTimeDefault;
+    if(configuration.showFinishAnimateTime>0) duration = configuration.showFinishAnimateTime;
+    [UIView transitionWithView:_window duration:duration options:UIViewAnimationOptionTransitionNone animations:^{
+        _window.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self remove];
+    }];
+}
 -(void)remove{
     
     DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer)
@@ -553,14 +596,7 @@ static NSInteger defaultWaitDataDuration = 3;
         [self.delegate xhLaunchShowFinish:self];
     }
 }
--(void)removeAndAnimateDefault
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        _window.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self remove];
-    }];
-}
+
 -(void)removeSubViewsExceptLaunchAdImageView
 {
     [_window.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

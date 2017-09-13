@@ -14,27 +14,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-//显示完成动画时间默认时间
+/** 显示完成动画时间默认时间 */
 static CGFloat const showFinishAnimateTimeDefault = 0.8;
 
-/**
- *  显示完成动画
- */
+/** 显示完成动画类型 */
 typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
     
-    /**
-     *  无
-     */
+    /** 无动画 */
     ShowFinishAnimateNone = 1,
-    /**
-     *  普通淡入(default)
-     */
-    ShowFinishAnimateFadein = 2,
-    /**
-     *  放大淡入
-     */
-    ShowFinishAnimateLite = 3
     
+    /** 普通淡入(default) */
+    ShowFinishAnimateFadein = 2,
+    
+    /** 放大淡入 */
+    ShowFinishAnimateLite = 3,
+    
+    /** 左右翻转(类似网易云音乐) */
+    ShowFinishAnimateFlipFromLeft = 4,
+    
+    /** 下上翻转 */
+    ShowFinishAnimateFlipFromBottom = 5,
+    
+    /** 向上翻页 */
+    ShowFinishAnimateCurlUp = 6,
 };
 
 #pragma mark - 公共属性
@@ -81,7 +83,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property(nonatomic,strong) UIView *customSkipView;
 
 /**
- *  子视图(若定义此属性,这些视图将会被自动添加在广告视图上)
+ *  子视图(若定义此属性,这些视图将会被自动添加在广告视图上,frame相对于window)
  */
 @property(nonatomic,copy,nullable) NSArray<UIView *> *subViews;
 

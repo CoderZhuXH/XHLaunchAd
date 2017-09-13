@@ -197,7 +197,7 @@ static NSUInteger _prefetchedNum = 10;
     //});
     
     _scale = scale;
-    readFrameQueue = dispatch_queue_create("com.it7090.gifreadframe", DISPATCH_QUEUE_SERIAL);
+    readFrameQueue = dispatch_queue_create("com.ronnie.gifreadframe", DISPATCH_QUEUE_SERIAL);
     
     return self;
 }

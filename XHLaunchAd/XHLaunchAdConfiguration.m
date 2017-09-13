@@ -11,9 +11,7 @@
 #pragma mark - 公共
 @implementation XHLaunchAdConfiguration
 
-
 @end
-
 
 #pragma mark - 图片广告相关
 @implementation XHLaunchImageAdConfiguration
