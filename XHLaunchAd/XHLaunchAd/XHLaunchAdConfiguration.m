@@ -8,6 +8,7 @@
 
 #import "XHLaunchAdConfiguration.h"
 
+
 #pragma mark - 公共
 @implementation XHLaunchAdConfiguration
 
@@ -24,6 +25,8 @@
     configuration.duration = 5;
     //广告frame
     configuration.frame = [UIScreen mainScreen].bounds;
+    //设置GIF动图是否只循环播放一次(仅对动图设置有效)
+    configuration.GIFImageCycleOnce = NO;
     //缓存机制
     configuration.imageOption = XHLaunchAdImageDefault;
     //图片填充模式

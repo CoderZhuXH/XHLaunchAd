@@ -1,15 +1,16 @@
 //
-//  UIImageView+XHLaunchAdCache.m
+//  XHLaunchAdImageView+XHLaunchAdCache.m
 //  XHLaunchAdExample
 //
-//  Created by zhuxiaohui on 16/6/13.
-//  Copyright © 2016年 it7090.com. All rights reserved.
+//  Created by zhuxiaohui on 2017/9/18.
+//  Copyright © 2017年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-#import "UIImageView+XHLaunchAdCache.h"
-#import "XHLaunchAdImage.h"
-@implementation UIImageView (XHLaunchAdCache)
+#import "XHLaunchAdImageView+XHLaunchAdCache.h"
+#import "FLAnimatedImage.h"
+#import "XHLaunchAdConst.h"
 
+@implementation XHLaunchAdImageView (XHLaunchAdCache)
 - (void)xh_setImageWithURL:(nonnull NSURL *)url
 {
     [self xh_setImageWithURL:url placeholderImage:nil];
@@ -32,12 +33,30 @@
 }
 -(void)xh_setImageWithURL:(nonnull NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(XHLaunchAdImageOptions)options completed:(nullable XHExternalCompletionBlock)completedBlock
 {
+    [self xh_setImageWithURL:url placeholderImage:placeholder GIFImageCycleOnce:NO options:options completed:completedBlock];
+}
+- (void)xh_setImageWithURL:(nonnull NSURL *)url placeholderImage:(nullable UIImage *)placeholder GIFImageCycleOnce:(BOOL)GIFImageCycleOnce options:(XHLaunchAdImageOptions)options completed:(nullable XHExternalCompletionBlock)completedBlock
+{
     if(placeholder) self.image = placeholder;
     if(!url) return;
-     __weak typeof(self) weakSelf = self;
+    XHWeakSelf
     [[XHLaunchAdImageManager sharedManager] loadImageWithURL:url options:options progress:nil completed:^(UIImage * _Nullable image,  NSData *_Nullable imageData, NSError * _Nullable error, NSURL * _Nullable imageURL) {
         
-        if(image) weakSelf.image = image;
+        if(XHISGIFTypeWithData(imageData)){
+            
+            weakSelf.image = nil;
+            weakSelf.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+            weakSelf.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
+                
+                if(GIFImageCycleOnce) [weakSelf stopAnimating];
+            };
+            
+        }else{
+            
+            weakSelf.image = image;
+            weakSelf.animatedImage = nil;
+        }
+        
         if(completedBlock) completedBlock(image,imageData,error,imageURL);
     }];
 }

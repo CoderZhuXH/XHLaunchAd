@@ -8,7 +8,6 @@
 
 #import "XHLaunchAdImageManager.h"
 #import "XHLaunchAdCache.h"
-#import "XHLaunchAdImage.h"
 
 @interface XHLaunchAdImageManager()
 
@@ -51,10 +50,9 @@
     }
     else if (options & XHLaunchAdImageRefreshCached)
     {
-        
-        
+
         NSData *imageData = [XHLaunchAdCache getCacheImageDataWithURL:url];
-        UIImage *image =  [XHLaunchAdImage imageWithData:imageData];
+        UIImage *image =  [UIImage imageWithData:imageData];
         if(image && completedBlock) completedBlock(image,imageData,nil,url);
         [_downloader downloadImageWithURL:url progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
             
@@ -67,7 +65,7 @@
     else if (options & XHLaunchAdImageCacheInBackground)
     {
         NSData *imageData = [XHLaunchAdCache getCacheImageDataWithURL:url];
-        UIImage *image =  [XHLaunchAdImage imageWithData:imageData];
+        UIImage *image =  [UIImage imageWithData:imageData];
         if(image && completedBlock)
         {
             completedBlock(image,imageData,nil,url);
@@ -85,7 +83,7 @@
     else//default
     {
         NSData *imageData = [XHLaunchAdCache getCacheImageDataWithURL:url];
-        UIImage *image =  [XHLaunchAdImage imageWithData:imageData];
+        UIImage *image =  [UIImage imageWithData:imageData];
         if(image && completedBlock)
         {
             completedBlock(image,imageData,nil,url);

@@ -22,12 +22,13 @@
 * 9.自带图片/视频下载,缓存功能.
 * 10.支持预缓存图片及视频.
 * 11.支持设置完成动画.
-* 12.无依赖其他第三方库等等...
+* 12.等等等...
 
 ### 技术交流群(群号:537476189).
 
 ### 更新记录:  
 
+*   2017.09.18 -- v3.6.0 -->1.优化图片解码方案,2.支持设置GIF动图是否循环播放
 *   2017.09.13 -- v3.5.8 -->增加几种显示完成的动画...
 *   2017.08.20 -- v3.5.6 -->已知问题修复及内存优化...
 *   2017.05.26 -- v3.5.4 -->修复横屏启动造成的界面问题...
@@ -281,12 +282,13 @@ configuration.customSkipView = [self customSkipView];
 ### 7.其他代理方法
 ```objc
 /**
- *  图片下载完成/或本地图片读取完成 回调
+ *  图片本地读取/或下载完成回调
  *
- *  @param launchAd XHLaunchAd
- *  @param image    image
+ *  @param launchAd  XHLaunchAd
+ *  @param image 读取/下载的image
+ *  @param imageData 读取/下载的imageData
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(NSData *)imageData;
 {
     NSLog(@"图片下载完成/或本地图片读取完成回调");
 }
@@ -351,6 +353,9 @@ configuration.customSkipView = [self customSkipView];
 +(NSString *)xhLaunchAdCachePath;
 
 ```
+##  依赖
+*   1.本库依赖FLAnimatedImage
+
 ##  安装
 ### 1.手动添加:<br>
 *   1.将 XHLaunchAd 文件夹添加到工程目录中<br>

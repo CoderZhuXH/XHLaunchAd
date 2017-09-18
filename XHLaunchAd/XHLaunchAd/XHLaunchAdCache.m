@@ -7,11 +7,7 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdCache.h"
-#import "NSString+XHLaunchAd.h"
-#import "XHLaunchAdImage.h"
-
-static NSString *const key_cacheImageUrlString = @"xhLaunchAd_key_cacheImageUrlString";
-static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlString";
+#import "XHLaunchAdConst.h"
 
 @implementation XHLaunchAdCache
 
@@ -19,7 +15,7 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
 {
     if(url==nil) return nil;
     NSData *data = [NSData dataWithContentsOfFile:[self imagePathWithURL:url]];
-    return [XHLaunchAdImage imageWithData:data];
+    return [UIImage imageWithData:data];
 }
 +(NSData *)getCacheImageDataWithURL:(NSURL *)url
 {
@@ -28,11 +24,11 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
 }
 +(BOOL)saveImageData:(NSData *)data imageURL:(NSURL *)url{
     
-    NSString *path = [NSString stringWithFormat:@"%@/%@",[self xhLaunchAdCachePath],url.absoluteString.xh_md5String];
+    NSString *path = [NSString stringWithFormat:@"%@/%@",[self xhLaunchAdCachePath],XHMd5String(url.absoluteString)];
     if (data) {
         BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
 
-        if (!isOk) NSLog(@"cache file error for URL: %@", url);
+        if (!isOk) XHLaunchAdLog(@"cache file error for URL: %@", url);
         
         return isOk;
     }
@@ -48,7 +44,7 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
 }
 +(nullable NSURL *)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url
 {
-    NSString *savePath = [[self xhLaunchAdCachePath] stringByAppendingPathComponent:url.absoluteString.xh_videoName];
+    NSString *savePath = [[self xhLaunchAdCachePath] stringByAppendingPathComponent:XHVideoName(url.absoluteString)];
     NSURL *savePathUrl = [NSURL fileURLWithPath:savePath];
     
     BOOL result =[[NSFileManager defaultManager] moveItemAtURL:location toURL:savePathUrl error:nil];
@@ -73,7 +69,7 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
 }
 +(nullable NSURL *)getCacheVideoWithURL:(NSURL *)url
 {
-    NSString *savePath = [[self xhLaunchAdCachePath] stringByAppendingPathComponent:url.absoluteString.xh_videoName];
+    NSString *savePath = [[self xhLaunchAdCachePath] stringByAppendingPathComponent:XHVideoName(url.absoluteString)];
     //如果存在
     if([[NSFileManager defaultManager] fileExistsAtPath:savePath])
     {
@@ -92,12 +88,12 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
 +(NSString *)imagePathWithURL:(NSURL *)url
 {
     if(url==nil) return nil;
-    return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:url.absoluteString.xh_md5String];
+    return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:XHMd5String(url.absoluteString)];
 }
 +(NSString *)videoPathWithURL:(NSURL *)url
 {
     if(url==nil) return nil;
-    return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:url.absoluteString.xh_videoName];
+    return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:XHVideoName(url.absoluteString)];
 }
 +(BOOL)checkImageInCacheWithURL:(NSURL *)url
 {
@@ -126,28 +122,28 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
     if(url==nil) return;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
        
-        [[NSUserDefaults standardUserDefaults] setObject:url forKey:key_cacheImageUrlString];
+        [[NSUserDefaults standardUserDefaults] setObject:url forKey:XHCacheImageUrlStringKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     });
 
 }
 +(NSString *)getCacheImageUrl{
 
-   return [[NSUserDefaults standardUserDefaults] objectForKey:key_cacheImageUrlString];
+   return [[NSUserDefaults standardUserDefaults] objectForKey:XHCacheImageUrlStringKey];
 }
 +(void)async_saveVideoUrl:(NSString *)url{
 
     if(url==nil) return;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [[NSUserDefaults standardUserDefaults] setObject:url forKey:key_cacheVideoUrlString];
+        [[NSUserDefaults standardUserDefaults] setObject:url forKey:XHCacheVideoUrlStringKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     });
 
 }
 +(NSString *)getCacheVideoUrl
 {
-  return [[NSUserDefaults standardUserDefaults] objectForKey:key_cacheVideoUrlString];
+  return [[NSUserDefaults standardUserDefaults] objectForKey:XHCacheVideoUrlStringKey];
 }
 
 #pragma mark - 其他
@@ -196,9 +192,9 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES
                                                attributes:nil error:&error];
     if (error) {
-        NSLog(@"create cache directory failed, error = %@", error);
+        XHLaunchAdLog(@"create cache directory failed, error = %@", error);
     } else {
-        NSLog(@"XHLaunchAdCachePath:%@",path);
+        XHLaunchAdLog(@"XHLaunchAdCachePath:%@",path);
         [self addDoNotBackupAttribute:path];
     }
 }
@@ -208,7 +204,7 @@ static NSString *const key_cacheVideoUrlString = @"xhLaunchAd_key_cacheVideoUrlS
     NSError *error = nil;
     [url setResourceValue:[NSNumber numberWithBool:YES] forKey:NSURLIsExcludedFromBackupKey error:&error];
     if (error) {
-        NSLog(@"error to set do not backup attribute, error = %@", error);
+        XHLaunchAdLog(@"error to set do not backup attribute, error = %@", error);
     }
 }
 @end

@@ -10,24 +10,23 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVKit/AVKit.h>
-#import "XHLaunchAdImage.h"
+#import "FLAnimatedImage.h"
+#import "FLAnimatedImageView.h"
 
-@interface XHLaunchAdView : UIImageView
+#pragma mark - image
+@interface XHLaunchAdImageView : FLAnimatedImageView
 
-@property(nonatomic,copy) void(^adClick)();
+@property (nonatomic, copy) void(^click)();
 
 @end
 
-#pragma mark - imageAdView
-@interface XHLaunchImageAdView : XHLaunchAdView
-@property (nonatomic,copy) NSString *runLoopMode;
-@end
+#pragma mark - video
+@interface XHLaunchAdVideoView : UIView
 
-#pragma mark - videoAdView
-@interface XHLaunchVideoAdView : XHLaunchAdView
-
+@property (nonatomic, copy) void(^click)();
 @property (strong, nonatomic) MPMoviePlayerController *adVideoPlayer;
 @property(nonatomic,assign)MPMovieScalingMode adVideoScalingMode;
 -(void)stopVideoPlayer;
+
 @end
 

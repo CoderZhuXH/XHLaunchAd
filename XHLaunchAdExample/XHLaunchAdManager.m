@@ -124,6 +124,8 @@
         imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
         //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
         imageAdconfiguration.imageNameOrURLString = model.content;
+        //设置GIF动图是否只循环播放一次(仅对动图设置有效)
+        imageAdconfiguration.GIFImageCycleOnce = NO;
         //缓存机制(仅对网络图片有效)
         //为告展示效果更好,可设置为XHLaunchAdImageCacheInBackground,先缓存,下次显示
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
@@ -166,6 +168,8 @@
     imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image2.jpg";
+    //设置GIF动图是否只循环播放一次(仅对动图设置有效)
+    imageAdconfiguration.GIFImageCycleOnce = NO;
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
@@ -414,10 +418,11 @@
 /**
  *  图片本地读取/或下载完成回调
  *
- *  @param launchAd XHLaunchAd
- *  @param image    image
+ *  @param launchAd  XHLaunchAd
+ *  @param image 读取/下载的image
+ *  @param imageData 读取/下载的imageData
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(nonnull NSData *)imageData
 {
     NSLog(@"图片下载完成/或本地图片读取完成回调");
 }

@@ -8,8 +8,8 @@
 
 #import "XHLaunchAdDownloader.h"
 #import "XHLaunchAdCache.h"
-#import "NSString+XHLaunchAd.h"
-#import "XHLaunchAdImage.h"
+#import "FLAnimatedImage.h"
+#import "XHLaunchAdConst.h"
 
 #pragma mark - XHLaunchAdDownload
 @interface XHLaunchAdDownload()
@@ -61,7 +61,7 @@
 didFinishDownloadingToURL:(NSURL *)location {
     
     NSData *data = [NSData dataWithContentsOfURL:location];
-    UIImage *image = [XHLaunchAdImage imageWithData:data];
+    UIImage *image = [UIImage imageWithData:data];
     //主线程回调
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -94,7 +94,7 @@ didFinishDownloadingToURL:(NSURL *)location {
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     
     if (error){
-        NSLog(@"error=%@",error);
+        XHLaunchAdLog(@"error=%@",error);
         if (_completedBlock) {
             _completedBlock(nil,nil, error);
         }
@@ -153,7 +153,7 @@ didFinishDownloadingToURL:(NSURL *)location {
     NSError *error=nil;
     NSURL *toURL = [NSURL fileURLWithPath:[XHLaunchAdCache videoPathWithURL:self.url]];
     [[NSFileManager defaultManager] copyItemAtURL:location toURL:toURL error:&error];
-    if(error)  NSLog(@"error=%@",error);
+    if(error)  XHLaunchAdLog(@"error=%@",error);
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if (_completedBlock) {
@@ -238,10 +238,10 @@ didFinishDownloadingToURL:(NSURL *)location {
 - (void)downloadImageWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadImageCompletedBlock)completedBlock
 {
     
-    if(self.allDownloadDict[url.absoluteString.xh_md5String]) return;
+    if(self.allDownloadDict[XHMd5String(url.absoluteString)]) return;
     XHLaunchAdImageDownload * download = [[XHLaunchAdImageDownload alloc] initWithURL:url delegateQueue:_downloadImageQueue progress:progressBlock completed:completedBlock];
     download.delegate = self;
-    [self.allDownloadDict setObject:download forKey:url.absoluteString.xh_md5String];
+    [self.allDownloadDict setObject:download forKey:XHMd5String(url.absoluteString)];
 }
 
 - (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray
@@ -262,11 +262,11 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downloadVideoWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock
 {
-    if(self.allDownloadDict[url.absoluteString.xh_md5String]) return;
+    if(self.allDownloadDict[XHMd5String(url.absoluteString)]) return;
     
     XHLaunchAdVideoDownload * download = [[XHLaunchAdVideoDownload alloc] initWithURL:url delegateQueue:_downloadVideoQueue progress:progressBlock completed:completedBlock];
     download.delegate = self;
-    [self.allDownloadDict setObject:download forKey:url.absoluteString.xh_md5String];
+    [self.allDownloadDict setObject:download forKey:XHMd5String(url.absoluteString)];
 }
 - (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray
 {
@@ -295,7 +295,7 @@ didFinishDownloadingToURL:(NSURL *)location {
 
 - (void)downloadFinishWithURL:(NSURL *)url{
     
-    [self.allDownloadDict removeObjectForKey:url.absoluteString.xh_md5String];
+    [self.allDownloadDict removeObjectForKey:XHMd5String(url.absoluteString)];
 }
 
 @end

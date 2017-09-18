@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.5.8
-//  发布:2017.09.13
+//  版本:3.6.0
+//  发布:2017.09.18
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -41,9 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
  *  图片本地读取/或下载完成回调
  *
  *  @param launchAd  XHLaunchAd
- *  @param image 下载的image
+ *  @param image 读取/下载的image
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image;
+
+/**
+ *  图片本地读取/或下载完成回调
+ *
+ *  @param launchAd  XHLaunchAd
+ *  @param image 读取/下载的image
+ *  @param imageData 读取/下载的imageData
+ */
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(NSData *)imageData;
 
 /**
  *  video本地读取/或下载完成回调

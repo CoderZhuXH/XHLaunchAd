@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "XHLaunchAdButton.h"
-#import "UIImageView+XHLaunchAdCache.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "XHLaunchAdImageManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -107,9 +107,13 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
  */
 @property(nonatomic,assign)XHLaunchAdImageOptions imageOption;
 
+/**
+ 设置GIF动图是否只循环播放一次(仅对动图设置有效)
+ */
+@property (nonatomic, assign) BOOL GIFImageCycleOnce;
+
 
 +(XHLaunchImageAdConfiguration *)defaultConfiguration;
-
 
 @end
 
