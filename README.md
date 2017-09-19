@@ -86,6 +86,8 @@
     imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-150);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image0.jpg";
+    //设置GIF动图是否只循环播放一次(仅对动图设置有效)
+    imageAdconfiguration.GIFImageCycleOnce = NO;
     //网络图片缓存机制(只对网络图片有效)
     imageAdconfiguration.imageOption = XHLaunchAdImageRefreshCached;
     //图片填充模式
@@ -354,7 +356,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 ##  依赖
-*   1.本库依赖FLAnimatedImage
+####    1.本库依赖于:FLAnimatedImage
 
 ##  安装
 ### 1.手动添加:<br>
