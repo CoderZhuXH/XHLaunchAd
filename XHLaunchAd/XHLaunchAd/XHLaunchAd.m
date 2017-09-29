@@ -7,7 +7,6 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAd.h"
-#import "XHLaunchAdConst.h"
 #import "XHLaunchAdView.h"
 #import "XHLaunchAdImageView+XHLaunchAdCache.h"
 #import "XHLaunchAdDownloader.h"
@@ -35,6 +34,7 @@ static NSInteger defaultWaitDataDuration = 3;
 @property(nonatomic,strong)UIWindow * window;
 @property(nonatomic,copy)dispatch_source_t waitDataTimer;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
+@property (nonatomic, assign) BOOL detailPageShowing;
 
 @end
 
@@ -83,6 +83,7 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [[XHLaunchAd shareLaunchAd] adSkipButtonClick];
 }
+
 +(BOOL)checkImageInCacheWithURL:(NSURL *)url
 {
     return [XHLaunchAdCache checkImageInCacheWithURL:url];
@@ -95,6 +96,16 @@ static NSInteger defaultWaitDataDuration = 3;
 +(void)clearDiskCache
 {
     [XHLaunchAdCache clearDiskCache];
+}
+
++(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray
+{
+    [XHLaunchAdCache clearDiskCacheWithImageUrlArray:imageUrlArray];
+}
+
++(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray
+{
+    [XHLaunchAdCache clearDiskCacheWithVideoUrlArray:videoUrlArray];
 }
 
 +(float)diskCacheSize
@@ -139,6 +150,19 @@ static NSInteger defaultWaitDataDuration = 3;
             
         }];
         
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageWillShowNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            
+            _detailPageShowing = YES;
+            
+        }];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageShowFinishNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+           
+            _detailPageShowing = NO;
+            
+        }];
+        
     }
     return self;
 }
@@ -148,14 +172,14 @@ static NSInteger defaultWaitDataDuration = 3;
     switch (_launchAdType) {
         case XHLaunchAdTypeImage:
         {
-            if(!_imageAdConfiguration.showEnterForeground) return;
+            if(!_imageAdConfiguration.showEnterForeground || _detailPageShowing) return;
             [self setupLaunchAd];
             [self setupImageAdForConfiguration:_imageAdConfiguration];
         }
             break;
         case XHLaunchAdTypeVideo:
         {
-            if(!_videoAdConfiguration.showEnterForeground) return;
+            if(!_videoAdConfiguration.showEnterForeground || _detailPageShowing) return;
             [self setupLaunchAd];
             [self setupVideoAdForConfiguration:_videoAdConfiguration];
         }
@@ -283,7 +307,8 @@ static NSInteger defaultWaitDataDuration = 3;
         
         if(_adSkipButton == nil){
             
-            _adSkipButton = [[XHLaunchAdButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-80,20, 70, 35)];
+            CGFloat y = XH_IPHONEX ? 44 : 20;
+            _adSkipButton = [[XHLaunchAdButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-80,y, 70, 35)];
             _adSkipButton.hidden = YES;
             [_adSkipButton addTarget:self action:@selector(adSkipButtonClick) forControlEvents:UIControlEventTouchUpInside];
             _adSkipButton.leftRightSpace = 5;
@@ -417,7 +442,7 @@ static NSInteger defaultWaitDataDuration = 3;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
     
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
-        
+
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
         
         [self removeAndAnimateDefault];

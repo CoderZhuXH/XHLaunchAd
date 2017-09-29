@@ -66,14 +66,17 @@ time = nil;\
 view = nil;\
 }
 
+#define XH_IPHONEX  ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
 #define XHVideoName(string) [XHMd5String(string) stringByAppendingString:@".mp4"]
 #define XHISURLString(string)  ([string hasPrefix:@"https://"] || [string hasPrefix:@"http://"]) ? YES:NO
 #define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
 
-
 UIKIT_EXTERN NSString *const XHCacheImageUrlStringKey;
 UIKIT_EXTERN NSString *const XHCacheVideoUrlStringKey;
 
+UIKIT_EXTERN NSString *const XHLaunchAdDetailPageWillShowNotification;
+UIKIT_EXTERN NSString *const XHLaunchAdDetailPageShowFinishNotification;
 
 
 

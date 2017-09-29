@@ -73,7 +73,7 @@
 {
     //1.******图片开屏广告 - 网络数据******
     //[self example01];
-    
+
     //2.******图片开屏广告 - 本地数据******
     [self example02];
     
@@ -343,7 +343,8 @@
 #pragma mark - subViews
 -(NSArray<UIView *> *)launchAdSubViews_alreadyView
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, 22, 60, 30)];
+    CGFloat y = XH_IPHONEX ? 46:22;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, y, 60, 30)];
     label.text  = @"已预载";
     label.font = [UIFont systemFontOfSize:12];
     label.textColor = [UIColor whiteColor];
@@ -356,7 +357,8 @@
 }
 -(NSArray<UIView *> *)launchAdSubViews
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-170, 30, 60, 30)];
+    CGFloat y = XH_IPHONEX ? 54 : 30;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-170, y, 60, 30)];
     label.text  = @"subViews";
     label.font = [UIFont systemFontOfSize:12];
     label.textColor = [UIColor whiteColor];
@@ -378,7 +380,8 @@
     button.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:14];
-    button.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-100,30, 85, 40);
+    CGFloat y = XH_IPHONEX ? 54 : 30;
+    button.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-100,y, 85, 30);
     [button addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }

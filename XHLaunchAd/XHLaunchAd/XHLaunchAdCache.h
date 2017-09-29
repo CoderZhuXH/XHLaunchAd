@@ -136,9 +136,23 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
 + (NSString *)xhLaunchAdCachePath;
 
 /**
- *  清除XHLaunch本地缓存
+ *  清除XHLaunch本地所有缓存
  */
 +(void)clearDiskCache;
+
+/**
+ 清除指定Url的图片本地缓存
+ 
+ @param imageUrlArray 图片Url数组
+ */
++(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
+
+/**
+ 清除指定Url的视频本地缓存
+ 
+ @param videoUrlArray 视频url数组
+ */
++(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
 
 /**
  *  获取XHLaunch本地缓存大小(M)

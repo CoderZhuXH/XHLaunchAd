@@ -22,13 +22,15 @@
 * 9.自带图片/视频下载,缓存功能.
 * 10.支持预缓存图片及视频.
 * 11.支持设置完成动画.
-* 12.等等等...
+* 12.支持清除指定资源缓存.
+* 13.等等等...
 
 ### 技术交流群(群号:537476189).
 
 ### 更新记录:  
 
-*   2017.09.18 -- v3.6.0 -->1.优化图片解码方案,2.支持设置GIF动图是否循环播放
+*   2017.09.29 -- v3.6.1 -->1.增加清除指定图片/视频缓存接口,2.优化在iPhoneX上显示效果,3.已知问题优化与修复...
+*   2017.09.18 -- v3.6.0 -->1.优化图片解码方案,2.支持设置GIF动图是否循环播放...
 *   2017.09.13 -- v3.5.8 -->增加几种显示完成的动画...
 *   2017.08.20 -- v3.5.6 -->已知问题修复及内存优化...
 *   2017.05.26 -- v3.5.4 -->修复横屏启动造成的界面问题...
@@ -240,6 +242,7 @@ configuration.customSkipView = [self customSkipView];
     [button setTitle:[NSString stringWithFormat:@"自定义%lds",duration] forState:UIControlStateNormal];
 }
 ```
+
 ### 5.预缓存接口(如果你需要提前下载并缓存广告图片或视频 请调用下面方法)
 ```objc
 /**
@@ -340,9 +343,23 @@ configuration.customSkipView = [self customSkipView];
 ```objc
 
 /**
- *  清除XHLaunch本地缓存
+ *  清除XHLaunch本地所有缓存
  */
 +(void)clearDiskCache;
+
+/**
+ 清除指定Url的图片本地缓存
+
+ @param imageUrlArray 图片Url数组
+ */
++(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
+
+/**
+ 清除指定Url的视频本地缓存
+
+ @param videoUrlArray 视频url数组
+ */
++(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
 
 /**
  *  获取XHLaunch本地缓存大小(M)
@@ -355,6 +372,7 @@ configuration.customSkipView = [self customSkipView];
 +(NSString *)xhLaunchAdCachePath;
 
 ```
+
 ##  依赖
 ####    1.本库依赖于:FLAnimatedImage
 

@@ -159,6 +159,39 @@
     });
 
 }
++(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray
+{
+    if(imageUrlArray.count==0) return;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [imageUrlArray enumerateObjectsUsingBlock:^(NSURL * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if([self checkImageInCacheWithURL:obj])
+            {
+                [[NSFileManager defaultManager] removeItemAtPath:[self imagePathWithURL:obj] error:nil];
+            }
+        }];
+    
+    });
+}
+
++(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray
+{
+    if(videoUrlArray.count==0) return;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [videoUrlArray enumerateObjectsUsingBlock:^(NSURL * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if([self checkVideoInCacheWithURL:obj])
+            {
+                [[NSFileManager defaultManager] removeItemAtPath:[self videoPathWithURL:obj] error:nil];
+            }
+        }];
+        
+    });
+}
 
 +(float)diskCacheSize
 {

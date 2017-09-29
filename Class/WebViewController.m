@@ -9,6 +9,8 @@
 
 #import "WebViewController.h"
 #import <WebKit/WebKit.h>
+#import "XHLaunchAd.h"
+
 @interface WebViewController ()
 @property(nonatomic,strong)WKWebView *webView;
 @property (nonatomic, strong) UIProgressView *progressView;
@@ -16,6 +18,28 @@
 
 @implementation WebViewController
 
+-(void)dealloc
+{
+    /**
+     如果你设置了APP从后台恢复时也显示广告,
+     当用户停留在广告详情页时,APP从后台恢复时,你不想再次显示启动广告,
+     请在广告详情控制器销毁时,发下面通知,告诉XHLaunchAd,广告详情页面已显示完
+     */
+    [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdDetailPageShowFinishNotification object:nil];
+    
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    /**
+     如果你设置了APP从后台恢复时也显示广告,
+     当用户停留在广告详情页时,APP从后台恢复时,你不想再次显示启动广告,
+     请在广告详情控制器将要显示时,发下面通知,告诉XHLaunchAd,广告详情页面将要显示
+     */
+    [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdDetailPageWillShowNotification object:nil];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"详情";
@@ -38,6 +62,11 @@
     self.progressView.progressTintColor = [UIColor blackColor];
     [self.navigationController.view addSubview:self.progressView];
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.progressView removeFromSuperview];
+}
 -(void)back{
     
     if([_webView canGoBack])
@@ -49,13 +78,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.progressView removeFromSuperview];
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
         
@@ -73,10 +95,7 @@
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
-- (void)dealloc{
-    
-    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

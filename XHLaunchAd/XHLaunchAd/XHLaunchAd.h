@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "XHLaunchAdConfiguration.h"
-
+#import "XHLaunchAdConst.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @class XHLaunchAd;
@@ -159,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 
-#pragma mark - skipAction
+#pragma mark - ction
 /**
  *  跳过按钮事件
  */
@@ -204,6 +204,20 @@ NS_ASSUME_NONNULL_BEGIN
  *  清除XHLaunch本地缓存
  */
 +(void)clearDiskCache;
+
+/**
+ 清除指定Url的图片本地缓存
+
+ @param imageUrlArray 图片Url数组
+ */
++(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
+
+/**
+ 清除指定Url的视频本地缓存
+
+ @param videoUrlArray 视频url数组
+ */
++(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
 
 /**
  *  获取XHLaunch本地缓存大小(M)
