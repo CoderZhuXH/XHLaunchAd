@@ -226,8 +226,6 @@
     videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
-    //URL
-    //videoAdconfiguration.videoNameOrURLString = videoURL;
     //视频填充模式
     videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
     //广告点击打开链接
