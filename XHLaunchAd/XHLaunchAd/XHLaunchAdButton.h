@@ -14,18 +14,23 @@
 typedef NS_ENUM(NSInteger,SkipType) {
     
     SkipTypeNone      = 1,//无
-    SkipTypeTime      = 2,//倒计时
-    SkipTypeText      = 3,//跳过
-    SkipTypeTimeText  = 4,//倒计时+跳过
     
+    /** 方形 */
+    SkipTypeTime      = 2,//方形:倒计时
+    SkipTypeText      = 3,//方形:跳过
+    SkipTypeTimeText  = 4,//方形:倒计时+跳过 (default)
+    
+    /** 圆形 */
+    SkipTypeRoundTime = 5,//圆形:倒计时
+    SkipTypeRoundText = 6,//圆形:跳过
+    SkipTypeRoundProgressTime = 7,//圆形:进度圈+倒计时
+    SkipTypeRoundProgressText = 8,//圆形:进度圈+跳过
 };
 
 @interface XHLaunchAdButton : UIButton
 
-@property(nonatomic,strong)UILabel *timeLab;
-@property(nonatomic,assign)CGFloat leftRightSpace;
-@property(nonatomic,assign)CGFloat topBottomSpace;
-
--(void)stateWithSkipType:(SkipType)skipType andDuration:(NSInteger)duration;
+- (instancetype)initWithSkipType:(SkipType)skipType;
+-(void)startRoundDispathTimerWithDuration:(CGFloat )duration;
+- (void)setTitleWithSkipType:(SkipType)skipType duration:(NSInteger)duration;
 
 @end

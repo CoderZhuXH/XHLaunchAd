@@ -34,11 +34,12 @@
 @end
 
 #pragma mark - videoAdView
+@interface XHLaunchAdVideoView ()<UIGestureRecognizerDelegate>
+
+@end
+
 @implementation XHLaunchAdVideoView
--(void)dealloc
-{
-    [self removeObserver:self forKeyPath:@"frame"];
-}
+
 - (instancetype)init
 {
     self = [super init];
@@ -46,13 +47,12 @@
         
         self.userInteractionEnabled = YES;
         self.frame = [UIScreen mainScreen].bounds;
+
+        [self addSubview:self.adVideoPlayer.view];
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+        tapGesture.delegate = self;
         [self addGestureRecognizer:tapGesture];
-        
-        [self addSubview:self.adVideoPlayer.view];
-        [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        
     }
     return self;
 }
@@ -60,7 +60,10 @@
 {
      if(self.click) self.click();
 }
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 -(void)setAdVideoScalingMode:(MPMovieScalingMode)adVideoScalingMode
 {
     _adVideoScalingMode = adVideoScalingMode;
@@ -89,12 +92,12 @@
     _adVideoPlayer = nil;
 
 }
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+
+-(void)setFrame:(CGRect)frame
 {
-    if ([keyPath isEqualToString:@"frame"]) {
-        
-        _adVideoPlayer.view.frame =  self.frame;
-    }
+    [super setFrame:frame];
+    
+    _adVideoPlayer.view.frame = self.frame;
 }
 
 @end

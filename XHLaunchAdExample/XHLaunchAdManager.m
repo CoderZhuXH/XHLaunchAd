@@ -15,7 +15,6 @@
 #import "UIViewController+Nav.h"
 #import "WebViewController.h"
 
-
 /** 以下连接供测试使用 */
 /** 静态图 */
 #define imageURL1 @"http://c.hiphotos.baidu.com/image/pic/item/4d086e061d950a7b78c4e5d703d162d9f2d3c934.jpg"
@@ -58,13 +57,13 @@
     self = [super init];
     if (self) {
 
-        //在UIApplicationDidFinishLaunching时初始化开屏广告
+        //在UIApplicationDidFinishLaunching时初始化开屏广告,做到对业务层无干扰
         //当然你也可以直接在AppDelegate didFinishLaunchingWithOptions方法中初始化
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             
             //初始化开屏广告
             [self setupXHLaunchAd];
-            
+
         }];
     }
     return self;
@@ -92,7 +91,7 @@
     
     //7.******如果你想提前缓存图片/视频请调下面这两个接口*****
     //批量缓存图片
-    //[XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3]]];
+    //[XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3],[NSURL URLWithString:imageURL4],[NSURL URLWithString:imageURL5]]];
     //批量缓存视频
     //[XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]]];
     
@@ -179,7 +178,7 @@
     //广告显示完成动画时间
     imageAdconfiguration.showFinishAnimateTime = 0.8;
     //跳过按钮类型
-    imageAdconfiguration.skipButtonType = SkipTypeTimeText;
+    imageAdconfiguration.skipButtonType = SkipTypeRoundProgressText;
     //后台返回时,是否显示广告
     imageAdconfiguration.showEnterForeground = NO;
     //设置要添加的子视图(可选)
@@ -260,9 +259,9 @@
     //广告点击打开链接
     videoAdconfiguration.openURLString =  @"http://www.it7090.com";
     //跳过按钮类型
-    videoAdconfiguration.skipButtonType = SkipTypeTimeText;
+    videoAdconfiguration.skipButtonType = SkipTypeRoundProgressTime;
     //广告显示完成动画
-    videoAdconfiguration.showFinishAnimate =ShowFinishAnimateLite;
+    videoAdconfiguration.showFinishAnimate = ShowFinishAnimateLite;
     //广告显示完成动画时间
     videoAdconfiguration.showFinishAnimateTime = 0.8;
     //后台返回时,是否显示广告

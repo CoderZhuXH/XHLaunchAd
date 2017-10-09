@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.6.1
-//  发布:2017.09.29
+//  版本:3.7.0
+//  发布:2017.10.09
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign) id<XHLaunchAdDelegate> delegate;
 
 /**
- *  设置等待数据源时间(default 3)
+ *  设置等待数据源时间(建议值:3)
  *
  *  @param waitDataDuration waitDataDuration
  */
@@ -146,14 +146,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 如果你需要提前下载并缓存广告图片或视频 请调用下面方法
 /**
- *  批量下载并缓存image(异步)
+ *  批量下载并缓存image(异步) - 已缓存的image不会再次下载缓存
  *
  *  @param urlArray image URL Array
  */
 +(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 
 /**
- *  批量下载并缓存视频(异步)
+ *  批量下载并缓存视频(异步) - 已缓存的视频不会再次下载缓存
  *
  *  @param urlArray 视频URL Array
  */
@@ -199,25 +199,39 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(NSString *)cacheVideoURLString;
 
-#pragma mark - 缓存清除及大小
+#pragma mark - 缓存相关
 /**
- *  清除XHLaunch本地缓存
+ *  清除XHLaunchAd本地所有缓存(异步)
  */
 +(void)clearDiskCache;
 
 /**
- 清除指定Url的图片本地缓存
+ 清除指定Url的图片本地缓存(异步)
 
- @param imageUrlArray 图片Url数组
+ @param imageUrlArray 需要清除缓存的图片Url数组
  */
 +(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
 
 /**
- 清除指定Url的视频本地缓存
+ 清除指定Url除外的图片本地缓存(异步)
+ 
+ @param exceptImageUrlArray 不需要清除缓存的图片Url数组,此url数组的图片缓存将被保留
+ */
++(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray;
 
- @param videoUrlArray 视频url数组
+/**
+ 清除指定Url的视频本地缓存(异步)
+
+ @param videoUrlArray 需要清除缓存的视频url数组
  */
 +(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
+
+/**
+ 清除指定Url除外的视频本地缓存(异步)
+ 
+ @param exceptVideoUrlArray 不需要清除缓存的视频Url数组,此url数组的视频缓存将被保留
+ */
++(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray;
 
 /**
  *  获取XHLaunch本地缓存大小(M)

@@ -9,17 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonDigest.h>
 
-/** 弱引用 */
 #define XHWeakSelf __weak typeof(self) weakSelf = self;
 
-/** 日志输出 */
+#define XH_ScreenW    [UIScreen mainScreen].bounds.size.width
+#define XH_ScreenH    [UIScreen mainScreen].bounds.size.height
+
+#define XH_IPHONEX  ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define XHVideoName(string) [XHMd5String(string) stringByAppendingString:@".mp4"]
+#define XHISURLString(string)  ([string hasPrefix:@"https://"] || [string hasPrefix:@"http://"]) ? YES:NO
+#define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
+
 #ifdef DEBUG
 #define XHLaunchAdLog(...) NSLog(__VA_ARGS__)
 #else
 #define XHLaunchAdLog(...)
 #endif
 
-/** MD5 */
 #define XHMd5String(string)\
 ({\
 NSString *md5String = @"";\
@@ -44,6 +50,13 @@ if(c == 0x47) result = YES;\
 (result);\
 })
 
+#define XHISVideoTypeWithPath(path)\
+({\
+BOOL result = NO;\
+if([path hasSuffix:@".mp4"])  result =  YES;\
+(result);\
+})
+
 #define XHDataWithFileName(name)\
 ({\
 NSData *data = nil;\
@@ -65,12 +78,6 @@ time = nil;\
 [view removeFromSuperview];\
 view = nil;\
 }
-
-#define XH_IPHONEX  ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
-
-#define XHVideoName(string) [XHMd5String(string) stringByAppendingString:@".mp4"]
-#define XHISURLString(string)  ([string hasPrefix:@"https://"] || [string hasPrefix:@"http://"]) ? YES:NO
-#define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
 
 UIKIT_EXTERN NSString *const XHCacheImageUrlStringKey;
 UIKIT_EXTERN NSString *const XHCacheVideoUrlStringKey;

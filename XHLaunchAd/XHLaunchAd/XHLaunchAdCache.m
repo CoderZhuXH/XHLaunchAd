@@ -176,6 +176,25 @@
     });
 }
 
++(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *allFilePaths = [self allFilePathWithDirectoryPath:[self xhLaunchAdCachePath]];
+        NSArray *exceptImagePaths = [self filePathsWithFileUrlArray:exceptImageUrlArray videoType:NO];
+        [allFilePaths enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if(![exceptImagePaths containsObject:obj] && !XHISVideoTypeWithPath(obj))
+            {
+                [[NSFileManager defaultManager] removeItemAtPath:obj error:nil];
+            }
+        }];
+
+        XHLaunchAdLog(@"allFilePath = %@",allFilePaths);
+
+    });
+}
+
 +(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray
 {
     if(videoUrlArray.count==0) return;
@@ -193,6 +212,24 @@
     });
 }
 
++(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *allFilePaths = [self allFilePathWithDirectoryPath:[self xhLaunchAdCachePath]];
+        NSArray *exceptVideoPaths = [self filePathsWithFileUrlArray:exceptVideoUrlArray videoType:YES];
+        [allFilePaths enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if(![exceptVideoPaths containsObject:obj] && XHISVideoTypeWithPath(obj))
+            {
+                [[NSFileManager defaultManager] removeItemAtPath:obj error:nil];
+            }
+        }];
+        
+        XHLaunchAdLog(@"allFilePath = %@",allFilePaths);
+        
+    });
+}
 +(float)diskCacheSize
 {
     NSString *directoryPath = [self xhLaunchAdCachePath];
@@ -218,6 +255,49 @@
     }
     return total/(1024.0*1024.0);
 
+}
+
++(NSArray *)filePathsWithFileUrlArray:(NSArray <NSURL *> *)fileUrlArray videoType:(BOOL)videoType
+{
+    NSMutableArray *filePaths = [[NSMutableArray alloc] init];
+    [fileUrlArray enumerateObjectsUsingBlock:^(NSURL * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *path;
+        if(videoType)
+        {
+            path = [self videoPathWithURL:obj];
+        }
+        else
+        {
+            path = [self imagePathWithURL:obj];
+        }
+        [filePaths addObject:path];
+    }];
+    return filePaths;
+}
+
++(NSArray*)allFilePathWithDirectoryPath:(NSString*)directoryPath{
+    
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    
+    NSArray* tempArray = [fileManager contentsOfDirectoryAtPath:directoryPath error:nil];
+    
+    for (NSString* fileName in tempArray) {
+        
+        BOOL flag = YES;
+        
+        NSString* fullPath = [directoryPath stringByAppendingPathComponent:fileName];
+        
+        if ([fileManager fileExistsAtPath:fullPath isDirectory:&flag]) {
+            
+            if (!flag) {
+                
+                [array addObject:fullPath];
+            }
+        }
+    }
+    return array;
 }
 
 + (void)createBaseDirectoryAtPath:(NSString *)path {

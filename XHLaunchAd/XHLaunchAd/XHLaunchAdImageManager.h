@@ -14,17 +14,17 @@
 typedef NS_OPTIONS(NSUInteger, XHLaunchAdImageOptions) {
     
     /**
-     *  有缓存,读取缓存,不重新加载,没缓存先加载,并缓存
+     *  有缓存,读取缓存,不重新下载,没缓存先下载,并缓存
      */
     XHLaunchAdImageDefault = 1 << 0,
     
     /**
-     *  只加载,不缓存
+     *  只下载,不缓存
      */
     XHLaunchAdImageOnlyLoad = 1 << 1,
     
     /**
-     *  先读缓存,再加载刷新图片和缓存
+     *  先读缓存,再下载刷新图片和缓存
      */
     XHLaunchAdImageRefreshCached = 1 << 2 ,
     

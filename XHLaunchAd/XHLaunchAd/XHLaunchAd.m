@@ -29,7 +29,7 @@ static NSInteger defaultWaitDataDuration = 3;
 @property(nonatomic,assign)NSInteger waitDataDuration;
 @property(nonatomic,strong)XHLaunchImageAdConfiguration * imageAdConfiguration;
 @property(nonatomic,strong)XHLaunchVideoAdConfiguration * videoAdConfiguration;
-@property(nonatomic,strong)XHLaunchAdButton * adSkipButton;
+@property(nonatomic,strong)XHLaunchAdButton * skipButton;
 @property(nonatomic,strong)XHLaunchAdVideoView * adVideoView;
 @property(nonatomic,strong)UIWindow * window;
 @property(nonatomic,copy)dispatch_source_t waitDataTimer;
@@ -103,9 +103,19 @@ static NSInteger defaultWaitDataDuration = 3;
     [XHLaunchAdCache clearDiskCacheWithImageUrlArray:imageUrlArray];
 }
 
++(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray
+{
+    [XHLaunchAdCache clearDiskCacheExceptImageUrlArray:exceptImageUrlArray];
+}
+
 +(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray
 {
     [XHLaunchAdCache clearDiskCacheWithVideoUrlArray:videoUrlArray];
+}
+
++(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray
+{
+    [XHLaunchAdCache clearDiskCacheExceptVideoUrlArray:exceptVideoUrlArray];
 }
 
 +(float)diskCacheSize
@@ -158,7 +168,7 @@ static NSInteger defaultWaitDataDuration = 3;
         }];
         
         [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageShowFinishNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-           
+            
             _detailPageShowing = NO;
             
         }];
@@ -279,11 +289,11 @@ static NSInteger defaultWaitDataDuration = 3;
         
     }
     
-    [self startSkipDispathTimer];
-    
     /** skipButton */
     [self addSkipButtonForConfiguration:configuration];
     
+    [self startSkipDispathTimer];
+
     /** customView */
     if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
     
@@ -305,19 +315,16 @@ static NSInteger defaultWaitDataDuration = 3;
         
     }else{
         
-        if(_adSkipButton == nil){
+        if(_skipButton == nil){
             
-            CGFloat y = XH_IPHONEX ? 44 : 20;
-            _adSkipButton = [[XHLaunchAdButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-80,y, 70, 35)];
-            _adSkipButton.hidden = YES;
-            [_adSkipButton addTarget:self action:@selector(adSkipButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            _adSkipButton.leftRightSpace = 5;
-            _adSkipButton.topBottomSpace = 2.5;
-            
+            _skipButton = [[XHLaunchAdButton alloc] initWithSkipType:configuration.skipButtonType];
+            _skipButton.hidden = YES;
+            [_skipButton addTarget:self action:@selector(adSkipButtonClick) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        [_window addSubview:_adSkipButton];
-        [_adSkipButton stateWithSkipType:configuration.skipButtonType andDuration:configuration.duration];
+        [_window addSubview:_skipButton];
+        [_skipButton setTitleWithSkipType:configuration.skipButtonType duration:configuration.duration];
+        
     }
 }
 
@@ -391,11 +398,11 @@ static NSInteger defaultWaitDataDuration = 3;
         }
     }
     
-    [self startSkipDispathTimer];
-    
     /** skipButton */
     [self addSkipButtonForConfiguration:configuration];
     
+    [self startSkipDispathTimer];
+
     /** customView */
     if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
     
@@ -442,7 +449,7 @@ static NSInteger defaultWaitDataDuration = 3;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
     
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
-
+        
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
         
         [self removeAndAnimateDefault];
@@ -469,9 +476,8 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     __block NSInteger duration = defaultWaitDataDuration;
     if(_waitDataDuration) duration = _waitDataDuration;
+    _waitDataTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     NSTimeInterval period = 1.0;
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    _waitDataTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     dispatch_source_set_timer(_waitDataTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_waitDataTimer, ^{
         
@@ -496,9 +502,12 @@ static NSInteger defaultWaitDataDuration = 3;
     if(!configuration.skipButtonType) configuration.skipButtonType = SkipTypeTimeText;//默认
     __block NSInteger duration = 5;//默认
     if(configuration.duration) duration = configuration.duration;
+    if(configuration.skipButtonType == SkipTypeRoundProgressTime || configuration.skipButtonType == SkipTypeRoundProgressText)
+    {
+        [_skipButton startRoundDispathTimerWithDuration:duration];
+    }
     NSTimeInterval period = 1.0;
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    _skipTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    _skipTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     dispatch_source_set_timer(_skipTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_skipTimer, ^{
         
@@ -510,13 +519,14 @@ static NSInteger defaultWaitDataDuration = 3;
             }
             if(!configuration.customSkipView){
                 
-                [_adSkipButton stateWithSkipType:configuration.skipButtonType andDuration:duration];
+                [_skipButton setTitleWithSkipType:configuration.skipButtonType duration:duration];
             }
             if(duration==0){
                 
                 DISPATCH_SOURCE_CANCEL_SAFE(_skipTimer);
                 [self removeAndAnimate]; return ;
             }
+            
             duration--;
         });
     });
@@ -606,7 +616,7 @@ static NSInteger defaultWaitDataDuration = 3;
     
     DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer)
     DISPATCH_SOURCE_CANCEL_SAFE(_skipTimer)
-    REMOVE_FROM_SUPERVIEW_SAFE(_adSkipButton)
+    REMOVE_FROM_SUPERVIEW_SAFE(_skipButton)
     if(_launchAdType==XHLaunchAdTypeVideo){
         
         if(_adVideoView==nil) return;
