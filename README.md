@@ -492,18 +492,32 @@ configuration.customSkipView = [self customSkipView];
 +(void)clearDiskCache;
 
 /**
- 清除指定Url的图片本地缓存
+ 清除指定Url的图片本地缓存(异步)
 
- @param imageUrlArray 图片Url数组
+ @param imageUrlArray 需要清除缓存的图片Url数组
  */
 +(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
 
 /**
- 清除指定Url的视频本地缓存
+ 清除指定Url除外的图片本地缓存(异步)
+ 
+ @param exceptImageUrlArray 不需要清除缓存的图片Url数组,此url数组的图片缓存将被保留
+ */
++(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray;
 
- @param videoUrlArray 视频url数组
+/**
+ 清除指定Url的视频本地缓存(异步)
+
+ @param videoUrlArray 需要清除缓存的视频url数组
  */
 +(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
+
+/**
+ 清除指定Url除外的视频本地缓存(异步)
+ 
+ @param exceptVideoUrlArray 不需要清除缓存的视频Url数组,此url数组的视频缓存将被保留
+ */
++(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray;
 
 /**
  *  获取XHLaunch本地缓存大小(M)
