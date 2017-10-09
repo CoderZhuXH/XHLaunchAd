@@ -483,7 +483,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 8.其他操作
+### 8.缓存/清理相关
 ```objc
 
 /**

@@ -313,7 +313,6 @@
 				TargetAttributes = {
 					4B6CF2201D0E902800F76B47 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 3VC3TP3LE9;
 					};
 				};
 			};
@@ -493,7 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 3VC3TP3LE9;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = XHLaunchAdExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.it7090.XHLaunchAdExample;
@@ -507,7 +506,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 3VC3TP3LE9;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = XHLaunchAdExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.it7090.XHLaunchAdExample;

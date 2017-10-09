@@ -25,7 +25,6 @@
 /** 动态图 */
 #define imageURL5 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
 #define imageURL6 @"http://p1.bqimg.com/567571/4ce1a4c844b09201.gif"
-#define imageURL7 @"http://p1.bqimg.com/567571/23a4bc7a285c1179.gif"
 
 /** 视频链接 */
 #define videoURL1 @"http://ohnzw6ag6.bkt.clouddn.com/video0.mp4"
