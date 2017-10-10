@@ -428,7 +428,56 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 7.其他代理方法
+### 7.缓存/清理相关
+```objc
+
+/**
+ *  清除XHLaunch本地所有缓存
+ */
++(void)clearDiskCache;
+
+/**
+ 清除指定Url的图片本地缓存(异步)
+
+ @param imageUrlArray 需要清除缓存的图片Url数组
+ */
++(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
+
+/**
+ 清除指定Url除外的图片本地缓存(异步)
+ 
+ @param exceptImageUrlArray 此url数组的图片缓存将被保留,不会被清理
+ */
++(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray;
+
+/**
+ 清除指定Url的视频本地缓存(异步)
+
+ @param videoUrlArray 需要清除缓存的视频url数组
+ */
++(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
+
+/**
+ 清除指定Url除外的视频本地缓存(异步)
+ 
+ @param exceptVideoUrlArray 此url数组的视频缓存将被保留,不会被清理
+ */
++(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray;
+
+
+/**
+ *  获取XHLaunch本地缓存大小(M)
+ */
++(float)diskCacheSize;
+
+/**
+ *  缓存路径
+ */
++(NSString *)xhLaunchAdCachePath;
+
+```
+
+### 8.代理方法
 ```objc
 /**
  *  图片本地读取/或下载完成回调
@@ -480,54 +529,6 @@ configuration.customSkipView = [self customSkipView];
     [launchAdImageView sd_setImageWithURL:url];
 
 }
-
-```
-
-### 8.缓存/清理相关
-```objc
-
-/**
- *  清除XHLaunch本地所有缓存
- */
-+(void)clearDiskCache;
-
-/**
- 清除指定Url的图片本地缓存(异步)
-
- @param imageUrlArray 需要清除缓存的图片Url数组
- */
-+(void)clearDiskCacheWithImageUrlArray:(NSArray<NSURL *> *)imageUrlArray;
-
-/**
- 清除指定Url除外的图片本地缓存(异步)
- 
- @param exceptImageUrlArray 不需要清除缓存的图片Url数组,此url数组的图片缓存将被保留
- */
-+(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray;
-
-/**
- 清除指定Url的视频本地缓存(异步)
-
- @param videoUrlArray 需要清除缓存的视频url数组
- */
-+(void)clearDiskCacheWithVideoUrlArray:(NSArray<NSURL *> *)videoUrlArray;
-
-/**
- 清除指定Url除外的视频本地缓存(异步)
- 
- @param exceptVideoUrlArray 不需要清除缓存的视频Url数组,此url数组的视频缓存将被保留
- */
-+(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray;
-
-/**
- *  获取XHLaunch本地缓存大小(M)
- */
-+(float)diskCacheSize;
-
-/**
- *  缓存路径
- */
-+(NSString *)xhLaunchAdCachePath;
 
 ```
 
