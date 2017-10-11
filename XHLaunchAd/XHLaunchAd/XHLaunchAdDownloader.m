@@ -208,8 +208,6 @@ didFinishDownloadingToURL:(NSURL *)location {
 @property (strong, nonatomic, nonnull) NSOperationQueue *downloadImageQueue;
 @property (strong, nonatomic, nonnull) NSOperationQueue *downloadVideoQueue;
 @property (strong, nonatomic) NSMutableDictionary *allDownloadDict;
-//@property (nonatomic, strong) NSMutableDictionary *batchSaveImageDict;
-//@property (nonatomic, strong) NSMutableDictionary *batchSaveVideoDict;
 @end
 
 @implementation XHLaunchAdDownloader
@@ -235,6 +233,8 @@ didFinishDownloadingToURL:(NSURL *)location {
         _downloadVideoQueue = [NSOperationQueue new];
         _downloadVideoQueue.maxConcurrentOperationCount = 3;
         _downloadVideoQueue.name = @"com.it7090.XHLaunchAdDownloadVideoQueue";
+        
+        XHLaunchAdLog(@"XHLaunchAdCachePath:%@",[XHLaunchAdCache xhLaunchAdCachePath]);
     }
     return self;
 }
@@ -249,6 +249,11 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downloadImageAndCacheWithURL:(nonnull NSURL *)url completed:(void(^)(BOOL result))completedBlock
 {
+    if(url == nil){
+         if(completedBlock) completedBlock(NO);
+        return;
+    }
+    
     [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
        
         if(error){
@@ -268,28 +273,30 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
 {
+    if(urlArray.count==0) return;
+    __block NSMutableArray * resultArray = [[NSMutableArray alloc] init];
     dispatch_group_t downLoadGroup = dispatch_group_create();
-    __block NSMutableDictionary * resultDict = [[NSMutableDictionary alloc] init];
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
         if(![XHLaunchAdCache checkImageInCacheWithURL:url]){
+            
             dispatch_group_enter(downLoadGroup);
             
             [self downloadImageAndCacheWithURL:url completed:^(BOOL result) {
                 
                 dispatch_group_leave(downLoadGroup);
-                [resultDict setObject:@(result) forKey:url.absoluteString];
+                [resultArray addObject:@{@"url":url.absoluteString,@"result":@(result)}];
             }];
             
         }else{
             
-            [resultDict setObject:@(YES) forKey:url.absoluteString];
+          [resultArray addObject:@{@"url":url.absoluteString,@"result":@(YES)}];
         }
     }];
     
     dispatch_group_notify(downLoadGroup, dispatch_get_main_queue(), ^{
         
-        if(completedBlock) completedBlock(resultDict);
+        if(completedBlock) completedBlock(resultArray);
     });
 
 }
@@ -303,6 +310,11 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downloadVideoAndCacheWithURL:(nonnull NSURL *)url completed:(void(^)(BOOL result))completedBlock
 {
+    if(url == nil){
+        if(completedBlock) completedBlock(NO);
+        return;
+    }
+    
     [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
         
         if(error){
@@ -324,34 +336,33 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
 {
-    __block NSMutableDictionary * resultDict = [[NSMutableDictionary alloc] init];
+    if(urlArray.count==0) return;
+    __block NSMutableArray * resultArray = [[NSMutableArray alloc] init];
     dispatch_group_t downLoadGroup = dispatch_group_create();
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
         if(![XHLaunchAdCache checkVideoInCacheWithURL:url])
         {
              dispatch_group_enter(downLoadGroup);
+            
             [self downloadVideoAndCacheWithURL:url completed:^(BOOL result) {
                 
                dispatch_group_leave(downLoadGroup);
-                
-                [resultDict setObject:@(result) forKey:url.absoluteString];
+                [resultArray addObject:@{@"url":url.absoluteString,@"result":@(result)}];
             }];
-            
             
         }else{
             
-            [resultDict setObject:@(YES) forKey:url.absoluteString];
+           [resultArray addObject:@{@"url":url.absoluteString,@"result":@(YES)}];
         }
     }];
     
     dispatch_group_notify(downLoadGroup, dispatch_get_main_queue(), ^{
         
-        if(completedBlock) completedBlock(resultDict);
+        if(completedBlock) completedBlock(resultArray);
     });
 
 }
-
 
 - (NSMutableDictionary *)allDownloadDict {
     if (!_allDownloadDict) {

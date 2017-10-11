@@ -41,6 +41,7 @@
         {
             self.frame = CGRectMake(XH_ScreenW-55,y, 42, 42);
         }
+        /** 方形 */
         else
         {
              self.frame = CGRectMake(XH_ScreenW-80,y, 70, 35);

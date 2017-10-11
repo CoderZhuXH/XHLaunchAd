@@ -88,12 +88,13 @@
     //[self example06];//图片
     //[self example07];//视频
     
-    //7.******如果你想提前缓存图片/视频请调下面这两个接口*****
-    //批量缓存图片
-    //[XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3],[NSURL URLWithString:imageURL4],[NSURL URLWithString:imageURL5]]];
-    //批量缓存视频
-    //[XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]]];
+    //7.******如果你想提前缓存图片/视频请看下面两个示例*****
+    //批量下载并缓存图片
+    //[self batchDownloadImageAndCache];
     
+    //批量下载并缓存视频
+    //[self batchDownloadVideoAndCache];
+
 }
 
 #pragma mark - 图片开屏广告-网络数据-示例
@@ -337,6 +338,39 @@
     ////广告点击打开链接
     videoAdconfiguration.openURLString = @"http://www.it7090.com";
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
+}
+
+#pragma mark - 批量下载并缓存
+/**
+ *  批量下载并缓存图片
+ */
+-(void)batchDownloadImageAndCache
+{
+    [XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3],[NSURL URLWithString:imageURL4],[NSURL URLWithString:imageURL5]] completed:^(NSArray * _Nonnull completedArray) {
+        
+         /** 打印批量下载缓存结果 */
+        
+        //url:图片的url字符串,
+        //result:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
+        NSLog(@"批量下载缓存结果 = %@" ,completedArray);
+    }];
+}
+
+/**
+ *  批量下载并缓存视频
+ */
+-(void)batchDownloadVideoAndCache
+{
+    [XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]] completed:^(NSArray * _Nonnull completedArray) {
+
+      /** 打印批量下载缓存结果 */
+        
+     //url:视频的url字符串,
+     //result:0表示该视频下载失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
+     NSLog(@"批量下载缓存结果 = %@" ,completedArray);
+     
+     }];
+
 }
 #pragma mark - subViews
 -(NSArray<UIView *> *)launchAdSubViews_alreadyView

@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.7.0
-//  发布:2017.10.09
+//  版本:3.7.1
+//  发布:2017.10.11
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -144,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdconfiguration delegate:(nullable id)delegate;
 
-#pragma mark - 如果你需要提前下载并缓存广告图片或视频 请调用下面方法
+#pragma mark -批量下载并缓存
 /**
  *  批量下载并缓存image(异步) - 已缓存的image不会再次下载缓存
  *
@@ -153,10 +153,10 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 
 /**
- 批量下载并缓存image(异步)- 带下载结果回调 - 已缓存的image不会再次下载缓存
+ 批量下载并缓存image,并回调结果(异步)- 已缓存的image不会再次下载缓存
 
  @param urlArray image URL Array
- @param completedBlock 下载结果回调,回调结果为一个字典,key:每个图片的url字符串,value:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
+ @param completedBlock 回调结果为一个字典数组,url:图片的url字符串,result:0表示该图片下载缓存失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
  */
 +(void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
 
@@ -168,10 +168,10 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 
 /**
- 批量下载并缓存video(异步)- 带下载结果回调 - 已缓存的视频不会再次下载缓存
+ 批量下载并缓存视频,并回调结果(异步) - 已缓存的视频不会再次下载缓存
  
  @param urlArray 视频URL Array
- @param completedBlock 下载结果回调,回调结果为一个字典,key:每个图片的url字符串,value:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
+ @param completedBlock 回调结果为一个字典数组,url:视频的url字符串,result:0表示该视频下载缓存失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
  */
 +(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
 

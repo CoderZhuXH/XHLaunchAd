@@ -16,7 +16,7 @@ typedef void(^XHLaunchAdDownloadImageCompletedBlock)(UIImage *_Nullable image, N
 
 typedef void(^XHLaunchAdDownloadVideoCompletedBlock)(NSURL * _Nullable location, NSError * _Nullable error);
 
-typedef void(^XHLaunchAdBatchDownLoadCompletedBlock) (NSDictionary * _Nonnull completedDict);
+typedef void(^XHLaunchAdBatchDownLoadCompletedBlock) (NSArray * _Nonnull completedArray);
 
 
 @protocol XHLaunchAdDownloadDelegate <NSObject>

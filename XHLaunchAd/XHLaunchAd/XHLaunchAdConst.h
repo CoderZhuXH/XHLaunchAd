@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonDigest.h>
 
+//过期提醒
+#define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
+
 #define XHWeakSelf __weak typeof(self) weakSelf = self;
 
 #define XH_ScreenW    [UIScreen mainScreen].bounds.size.width

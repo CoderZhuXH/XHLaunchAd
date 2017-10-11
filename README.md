@@ -3,7 +3,6 @@
 ### 开屏广告、启动广告解决方案-支持静态/动态图片广告/mp4视频广告
 
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://github.com/CoderZhuXH/XHLaunchAd)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/CoderZhuXH/XHLaunchAd)
 [![Version Status](https://img.shields.io/cocoapods/v/XHLaunchAd.svg?style=flat)](http://cocoadocs.org/docsets/XHLaunchAd)
 [![Support](https://img.shields.io/badge/support-iOS%207%2B-brightgreen.svg)](https://github.com/CoderZhuXH/XHLaunchAd)
 [![Pod Platform](https://img.shields.io/cocoapods/p/XHLaunchAd.svg?style=flat)](http://cocoadocs.org/docsets/XHLaunchAd/)
@@ -387,21 +386,39 @@ configuration.customSkipView = [self customSkipView];
 }
 ```
 
-### 5.预缓存接口(如果你需要提前下载并缓存广告图片或视频 请调用下面方法)
+### 5.批量下载缓存接口(如果你需要提前批量下载并缓存广告图片或视频请调用下面方法)
 ```objc
+
 /**
- *  批量下载并缓存image(异步)
+ *  批量下载并缓存image(异步) - 已缓存的image不会再次下载缓存
  *
  *  @param urlArray image URL Array
  */
 +(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 
 /**
- *  批量下载并缓存视频(异步)
+ 批量下载并缓存image,并回调结果(异步)- 已缓存的image不会再次下载缓存
+
+ @param urlArray image URL Array
+ @param completedBlock 回调结果为一个字典数组,url:图片的url字符串,result:0表示该图片下载缓存失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
+ */
++(void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
+
+/**
+ *  批量下载并缓存视频(异步) - 已缓存的视频不会再次下载缓存
  *
  *  @param urlArray 视频URL Array
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
+
+/**
+ 批量下载并缓存视频,并回调结果(异步) - 已缓存的视频不会再次下载缓存
+ 
+ @param urlArray 视频URL Array
+ @param completedBlock 回调结果为一个字典数组,url:视频的url字符串,result:0表示该视频下载缓存失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
+ */
++(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
+
 ```
 
 ### 6.检测是否已缓存
