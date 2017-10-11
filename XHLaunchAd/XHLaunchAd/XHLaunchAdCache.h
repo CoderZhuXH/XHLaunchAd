@@ -11,7 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
+//typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
+typedef void(^SaveCompletionBlock)(BOOL result , NSURL * URL);
 
 @interface XHLaunchAdCache : NSObject
 
@@ -34,20 +35,22 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
 +(NSData *)getCacheImageDataWithURL:(NSURL *)url;
 
 /**
- *  缓存图片
- *
- *  @param data imageData
- *  @param url  图片url
+ 缓存图片
+
+ @param data imageData
+ @param url 图片url
+ @return 缓存结果
  */
 +(BOOL)saveImageData:(NSData *)data imageURL:(NSURL *)url;
 
 /**
- *  缓存图片 - 异步
- *
- *  @param data imageData
- *  @param url  图片url
+ 缓存图片 - 异步
+
+ @param data imageData
+ @param url 图片url
+ @param completedBlock 结果回调
  */
-+(void)async_saveImageData:(NSData *)data imageURL:(NSURL *)url;
++(void)async_saveImageData:(NSData *)data imageURL:(NSURL *)url completed:(nullable SaveCompletionBlock)completedBlock;
 
 /**
  *  检查是否已缓存在该图片
@@ -83,17 +86,18 @@ typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
  @param location 视频路径
  @param url      视频url
 
- @return 视频保存路劲
+ @return 缓存结果
  */
-+(nullable NSURL *)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url;
++(BOOL)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url;
 
 /**
  保存视频到缓存目录 - 异步
 
  @param location 视频路径
- @param url      视频url
+ @param url  视频url
+ @param completedBlock 结果回调
  */
-+(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url;
++(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url completed:(nullable SaveCompletionBlock)completedBlock;;
 
 /**
  *  生成视频路径 for url

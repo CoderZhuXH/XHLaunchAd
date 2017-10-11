@@ -16,6 +16,9 @@ typedef void(^XHLaunchAdDownloadImageCompletedBlock)(UIImage *_Nullable image, N
 
 typedef void(^XHLaunchAdDownloadVideoCompletedBlock)(NSURL * _Nullable location, NSError * _Nullable error);
 
+typedef void(^XHLaunchAdBatchDownLoadCompletedBlock) (NSDictionary * _Nonnull completedDict);
+
+
 @protocol XHLaunchAdDownloadDelegate <NSObject>
 
 - (void)downloadFinishWithURL:(nonnull NSURL *)url;
@@ -44,10 +47,12 @@ typedef void(^XHLaunchAdDownloadVideoCompletedBlock)(NSURL * _Nullable location,
 - (void)downloadImageWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadImageCompletedBlock)completedBlock;
 
 - (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray;
+- (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
 
 - (void)downloadVideoWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock;
 
 - (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray;
+- (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
 
 @end
 

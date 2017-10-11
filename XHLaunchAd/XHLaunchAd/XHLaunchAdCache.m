@@ -26,44 +26,46 @@
     
     NSString *path = [NSString stringWithFormat:@"%@/%@",[self xhLaunchAdCachePath],XHMd5String(url.absoluteString)];
     if (data) {
-        BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
+        BOOL result = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
 
-        if (!isOk) XHLaunchAdLog(@"cache file error for URL: %@", url);
+        if (!result) XHLaunchAdLog(@"cache file error for URL: %@", url);
         
-        return isOk;
+        return result;
     }
     return NO;
 }
-+(void)async_saveImageData:(NSData *)data imageURL:(NSURL *)url
++(void)async_saveImageData:(NSData *)data imageURL:(NSURL *)url completed:(nullable SaveCompletionBlock)completedBlock
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [self saveImageData:data imageURL:url];
+        BOOL result = [self saveImageData:data imageURL:url];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if(completedBlock) completedBlock(result , url);
+        });
     });
 
 }
-+(nullable NSURL *)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url
+
++(BOOL)saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url
 {
     NSString *savePath = [[self xhLaunchAdCachePath] stringByAppendingPathComponent:XHVideoName(url.absoluteString)];
     NSURL *savePathUrl = [NSURL fileURLWithPath:savePath];
-    
     BOOL result =[[NSFileManager defaultManager] moveItemAtURL:location toURL:savePathUrl error:nil];
-    
-    if (result) {
-        
-        return savePathUrl;
-        
-    }else{
-        
-        return nil;
-    }
-}
-+(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url
-{
+    if(!result) XHLaunchAdLog(@"cache file error for URL: %@", url);
+    return  result;
 
+}
++(void)async_saveVideoAtLocation:(NSURL *)location URL:(NSURL *)url completed:(nullable SaveCompletionBlock)completedBlock
+{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [self saveVideoAtLocation:location URL:url];
+       BOOL result = [self saveVideoAtLocation:location URL:url];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if(completedBlock) completedBlock(result , url);
+        });
     });
 
 }

@@ -153,11 +153,27 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
 
 /**
+ 批量下载并缓存image(异步)- 带下载结果回调 - 已缓存的image不会再次下载缓存
+
+ @param urlArray image URL Array
+ @param completedBlock 下载结果回调,回调结果为一个字典,key:每个图片的url字符串,value:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
+ */
++(void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
+
+/**
  *  批量下载并缓存视频(异步) - 已缓存的视频不会再次下载缓存
  *
  *  @param urlArray 视频URL Array
  */
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray;
+
+/**
+ 批量下载并缓存video(异步)- 带下载结果回调 - 已缓存的视频不会再次下载缓存
+ 
+ @param urlArray 视频URL Array
+ @param completedBlock 下载结果回调,回调结果为一个字典,key:每个图片的url字符串,value:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
+ */
++(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock;
 
 #pragma mark - ction
 /**
@@ -199,7 +215,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(NSString *)cacheVideoURLString;
 
-#pragma mark - 缓存相关
+#pragma mark - 缓存/清理相关
 /**
  *  清除XHLaunchAd本地所有缓存(异步)
  */
@@ -215,7 +231,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  清除指定Url除外的图片本地缓存(异步)
  
- @param exceptImageUrlArray 不需要清除缓存的图片Url数组,此url数组的图片缓存将被保留
+ @param exceptImageUrlArray 此url数组的图片缓存将被保留
  */
 +(void)clearDiskCacheExceptImageUrlArray:(NSArray<NSURL *> *)exceptImageUrlArray;
 
@@ -229,7 +245,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  清除指定Url除外的视频本地缓存(异步)
  
- @param exceptVideoUrlArray 不需要清除缓存的视频Url数组,此url数组的视频缓存将被保留
+ @param exceptVideoUrlArray 此url数组的视频缓存将被保留
  */
 +(void)clearDiskCacheExceptVideoUrlArray:(NSArray<NSURL *> *)exceptVideoUrlArray;
 

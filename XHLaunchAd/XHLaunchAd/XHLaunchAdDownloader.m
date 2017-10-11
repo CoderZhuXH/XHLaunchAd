@@ -12,6 +12,9 @@
 #import "XHLaunchAdConst.h"
 
 #pragma mark - XHLaunchAdDownload
+
+
+
 @interface XHLaunchAdDownload()
 
 @property (strong, nonatomic) NSURLSession *session;
@@ -120,7 +123,6 @@ didFinishDownloadingToURL:(NSURL *)location {
 @interface XHLaunchAdVideoDownload()<NSURLSessionDownloadDelegate,NSURLSessionTaskDelegate>
 
 @property (nonatomic, copy ) XHLaunchAdDownloadVideoCompletedBlock completedBlock;
-
 @end
 @implementation XHLaunchAdVideoDownload
 
@@ -206,6 +208,8 @@ didFinishDownloadingToURL:(NSURL *)location {
 @property (strong, nonatomic, nonnull) NSOperationQueue *downloadImageQueue;
 @property (strong, nonatomic, nonnull) NSOperationQueue *downloadVideoQueue;
 @property (strong, nonatomic) NSMutableDictionary *allDownloadDict;
+//@property (nonatomic, strong) NSMutableDictionary *batchSaveImageDict;
+//@property (nonatomic, strong) NSMutableDictionary *batchSaveVideoDict;
 @end
 
 @implementation XHLaunchAdDownloader
@@ -243,22 +247,51 @@ didFinishDownloadingToURL:(NSURL *)location {
     download.delegate = self;
     [self.allDownloadDict setObject:download forKey:XHMd5String(url.absoluteString)];
 }
-
-- (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray
+- (void)downloadImageAndCacheWithURL:(nonnull NSURL *)url completed:(void(^)(BOOL result))completedBlock
 {
+    [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
+       
+        if(error){
+            if(completedBlock) completedBlock(NO);
+        }else{
+            
+            [XHLaunchAdCache async_saveImageData:data imageURL:url completed:^(BOOL result, NSURL * _Nonnull URL) {
+                
+                if(completedBlock) completedBlock(result);
+            }];
+        }
+    }];
+}
+-(void)downLoadImageAndCacheWithURLArray:(NSArray<NSURL *> *)urlArray
+{
+    [self downLoadImageAndCacheWithURLArray:urlArray completed:nil];
+}
+- (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
+{
+    dispatch_group_t downLoadGroup = dispatch_group_create();
+    __block NSMutableDictionary * resultDict = [[NSMutableDictionary alloc] init];
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
-        if(![XHLaunchAdCache checkImageInCacheWithURL:url])
-        {
-            [self downloadImageWithURL:url progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error) {
+        if(![XHLaunchAdCache checkImageInCacheWithURL:url]){
+            dispatch_group_enter(downLoadGroup);
+            
+            [self downloadImageAndCacheWithURL:url completed:^(BOOL result) {
                 
-                [XHLaunchAdCache async_saveImageData:data imageURL:url];
-                
+                dispatch_group_leave(downLoadGroup);
+                [resultDict setObject:@(result) forKey:url.absoluteString];
             }];
             
-        };
+        }else{
+            
+            [resultDict setObject:@(YES) forKey:url.absoluteString];
+        }
     }];
     
+    dispatch_group_notify(downLoadGroup, dispatch_get_main_queue(), ^{
+        
+        if(completedBlock) completedBlock(resultDict);
+    });
+
 }
 - (void)downloadVideoWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock
 {
@@ -268,31 +301,65 @@ didFinishDownloadingToURL:(NSURL *)location {
     download.delegate = self;
     [self.allDownloadDict setObject:download forKey:XHMd5String(url.absoluteString)];
 }
+- (void)downloadVideoAndCacheWithURL:(nonnull NSURL *)url completed:(void(^)(BOOL result))completedBlock
+{
+    [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
+        
+        if(error){
+            
+            if(completedBlock) completedBlock(NO);
+        }
+        else{
+            
+            [XHLaunchAdCache async_saveVideoAtLocation:location URL:url completed:^(BOOL result, NSURL * _Nonnull URL) {
+                
+                if(completedBlock) completedBlock(result);
+            }];
+        }
+    }];
+}
 - (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray
 {
+    [self downLoadVideoAndCacheWithURLArray:urlArray completed:nil];
+}
+- (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
+{
+    __block NSMutableDictionary * resultDict = [[NSMutableDictionary alloc] init];
+    dispatch_group_t downLoadGroup = dispatch_group_create();
     [urlArray enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
         
         if(![XHLaunchAdCache checkVideoInCacheWithURL:url])
         {
-            [self downloadVideoWithURL:url progress:nil completed:^(NSURL * _Nullable location, NSError * _Nullable error) {
+             dispatch_group_enter(downLoadGroup);
+            [self downloadVideoAndCacheWithURL:url completed:^(BOOL result) {
                 
-                if(!error && location) [XHLaunchAdCache async_saveVideoAtLocation:location URL:url];
+               dispatch_group_leave(downLoadGroup);
                 
+                [resultDict setObject:@(result) forKey:url.absoluteString];
             }];
+            
+            
+        }else{
+            
+            [resultDict setObject:@(YES) forKey:url.absoluteString];
         }
-        
     }];
     
+    dispatch_group_notify(downLoadGroup, dispatch_get_main_queue(), ^{
+        
+        if(completedBlock) completedBlock(resultDict);
+    });
+
 }
+
+
 - (NSMutableDictionary *)allDownloadDict {
     if (!_allDownloadDict) {
-        
         _allDownloadDict = [[NSMutableDictionary alloc] init];
     }
     
     return _allDownloadDict;
 }
-
 - (void)downloadFinishWithURL:(NSURL *)url{
     
     [self.allDownloadDict removeObjectForKey:XHMd5String(url.absoluteString)];
