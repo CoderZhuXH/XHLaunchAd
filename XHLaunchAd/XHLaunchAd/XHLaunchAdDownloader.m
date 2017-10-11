@@ -241,11 +241,11 @@ didFinishDownloadingToURL:(NSURL *)location {
 
 - (void)downloadImageWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadImageCompletedBlock)completedBlock
 {
-    
-    if(self.allDownloadDict[XHMd5String(url.absoluteString)]) return;
+    NSString *key = [self keyWithURL:url];
+    if(self.allDownloadDict[key]) return;
     XHLaunchAdImageDownload * download = [[XHLaunchAdImageDownload alloc] initWithURL:url delegateQueue:_downloadImageQueue progress:progressBlock completed:completedBlock];
     download.delegate = self;
-    [self.allDownloadDict setObject:download forKey:XHMd5String(url.absoluteString)];
+    [self.allDownloadDict setObject:download forKey:key];
 }
 - (void)downloadImageAndCacheWithURL:(nonnull NSURL *)url completed:(void(^)(BOOL result))completedBlock
 {
@@ -302,11 +302,12 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downloadVideoWithURL:(nonnull NSURL *)url progress:(nullable XHLaunchAdDownloadProgressBlock)progressBlock completed:(nullable XHLaunchAdDownloadVideoCompletedBlock)completedBlock
 {
-    if(self.allDownloadDict[XHMd5String(url.absoluteString)]) return;
+    NSString *key = [self keyWithURL:url];
+    if(self.allDownloadDict[key]) return;
     
     XHLaunchAdVideoDownload * download = [[XHLaunchAdVideoDownload alloc] initWithURL:url delegateQueue:_downloadVideoQueue progress:progressBlock completed:completedBlock];
     download.delegate = self;
-    [self.allDownloadDict setObject:download forKey:XHMd5String(url.absoluteString)];
+    [self.allDownloadDict setObject:download forKey:key];
 }
 - (void)downloadVideoAndCacheWithURL:(nonnull NSURL *)url completed:(void(^)(BOOL result))completedBlock
 {
@@ -373,8 +374,11 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 - (void)downloadFinishWithURL:(NSURL *)url{
     
-    [self.allDownloadDict removeObjectForKey:XHMd5String(url.absoluteString)];
+    [self.allDownloadDict removeObjectForKey:[self keyWithURL:url]];
 }
-
+-(NSString *)keyWithURL:(NSURL *)url
+{
+    return [XHLaunchAdCache md5String:url.absoluteString];
+}
 @end
 

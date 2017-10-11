@@ -7,9 +7,7 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import <UIKit/UIKit.h>
-#import <CommonCrypto/CommonDigest.h>
 
-//过期提醒
 #define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
 #define XHWeakSelf __weak typeof(self) weakSelf = self;
@@ -19,7 +17,6 @@
 
 #define XH_IPHONEX  ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 
-#define XHVideoName(string) [XHMd5String(string) stringByAppendingString:@".mp4"]
 #define XHISURLString(string)  ([string hasPrefix:@"https://"] || [string hasPrefix:@"http://"]) ? YES:NO
 #define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
 
@@ -28,20 +25,6 @@
 #else
 #define XHLaunchAdLog(...)
 #endif
-
-#define XHMd5String(string)\
-({\
-NSString *md5String = @"";\
-const char *value = [string UTF8String];\
-unsigned char outputBuffer[CC_MD5_DIGEST_LENGTH];\
-CC_MD5(value, (CC_LONG)strlen(value), outputBuffer);\
-NSMutableString *outputString = [[NSMutableString alloc] initWithCapacity:CC_MD5_DIGEST_LENGTH * 2];\
-for(NSInteger count = 0; count < CC_MD5_DIGEST_LENGTH; count++){\
-    [outputString appendFormat:@"%02x",outputBuffer[count]];\
-}\
-md5String = outputString;\
-(md5String);\
-})
 
 #define XHISGIFTypeWithData(data)\
 ({\

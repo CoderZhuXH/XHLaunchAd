@@ -11,7 +11,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-//typedef void(^VideoSaveCompletionBlock)(BOOL result , NSURL * pathURL);
 typedef void(^SaveCompletionBlock)(BOOL result , NSURL * URL);
 
 @interface XHLaunchAdCache : NSObject
@@ -176,6 +175,8 @@ typedef void(^SaveCompletionBlock)(BOOL result , NSURL * URL);
  *  获取XHLaunch本地缓存大小(M)
  */
 +(float)diskCacheSize;
+
++(NSString *)md5String:(NSString *)string;
 
 @end
 
