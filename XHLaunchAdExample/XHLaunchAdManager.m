@@ -90,10 +90,10 @@
     
     //7.******如果你想提前缓存图片/视频请看下面两个示例*****
     //批量下载并缓存图片
-    [self batchDownloadImageAndCache];
+    //[self batchDownloadImageAndCache];
     
     //批量下载并缓存视频
-    [self batchDownloadVideoAndCache];
+    //[self batchDownloadVideoAndCache];
 
 }
 
