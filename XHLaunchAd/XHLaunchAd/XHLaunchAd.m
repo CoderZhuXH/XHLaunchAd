@@ -73,7 +73,7 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [self downLoadImageAndCacheWithURLArray:urlArray completed:nil];
 }
-+ (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
++ (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
 {
     if(urlArray.count==0) return;
     [[XHLaunchAdDownloader sharedDownloader] downLoadImageAndCacheWithURLArray:urlArray completed:completedBlock];
@@ -82,7 +82,7 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [self downLoadVideoAndCacheWithURLArray:urlArray completed:nil];
 }
-+(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
++(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
 {
     if(urlArray.count==0) return;
     [[XHLaunchAdDownloader sharedDownloader] downLoadVideoAndCacheWithURLArray:urlArray completed:completedBlock];

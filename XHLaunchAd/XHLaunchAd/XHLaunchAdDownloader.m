@@ -271,7 +271,7 @@ didFinishDownloadingToURL:(NSURL *)location {
 {
     [self downLoadImageAndCacheWithURLArray:urlArray completed:nil];
 }
-- (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
+- (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
 {
     if(urlArray.count==0) return;
     __block NSMutableArray * resultArray = [[NSMutableArray alloc] init];
@@ -335,7 +335,7 @@ didFinishDownloadingToURL:(NSURL *)location {
 {
     [self downLoadVideoAndCacheWithURLArray:urlArray completed:nil];
 }
-- (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadCompletedBlock)completedBlock
+- (void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
 {
     if(urlArray.count==0) return;
     __block NSMutableArray * resultArray = [[NSMutableArray alloc] init];
