@@ -181,6 +181,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock;
 
 #pragma mark - Action
+
 /**
  *  跳过按钮事件
  */

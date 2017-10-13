@@ -370,7 +370,8 @@ configuration.customSkipView = [self customSkipView];
 
 -(void)skipAction
 {
-    [XHLaunchAd skipAction];
+     //移除广告
+    [XHLaunchAd removeAndAnimated:YES];
 }
 
 /**
@@ -530,7 +531,7 @@ configuration.customSkipView = [self customSkipView];
 /**
  *  广告显示完成
  */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd
+-(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd
 {
     NSLog(@"广告显示完成");
 }

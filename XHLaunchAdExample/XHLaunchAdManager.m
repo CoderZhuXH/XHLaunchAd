@@ -293,13 +293,13 @@
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image11.gif";
     //缓存机制(仅对网络图片有效)
-    imageAdconfiguration.imageOption = XHLaunchAdImageRefreshCached;
+    imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
     //广告点击打开链接
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
-    imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
+    imageAdconfiguration.showFinishAnimate = ShowFinishAnimateFlipFromLeft;
     //广告显示完成动画时间
     imageAdconfiguration.showFinishAnimateTime = 0.8;
     //后台返回时,是否显示广告
