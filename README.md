@@ -229,6 +229,8 @@
     videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
     //视频填充模式
     videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+    //是否只循环播放一次
+    videoAdconfiguration.videoCycleOnce = NO;
     //广告点击打开链接
     videoAdconfiguration.openURLString =  @"http://www.it7090.com";
     //广告显示完成动画
@@ -310,6 +312,8 @@
         videoAdconfiguration.videoNameOrURLString = model.content;
         //视频缩放模式
         videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+        //是否只循环播放一次
+        videoAdconfiguration.videoCycleOnce = NO;
         //广告点击打开链接
         videoAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
