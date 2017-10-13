@@ -86,7 +86,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param launchAd XHLaunchAd
  */
 -(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd;
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;//请使用xhLaunchAdShowFinish:
 
 /**
  如果你想用SDWebImage等框架加载网络广告图片,请实现此代理
@@ -97,6 +96,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd launchAdImageView:(UIImageView *)launchAdImageView URL:(NSURL *)url;
 
+#pragma mark - 过期
+/** 请使用xhLaunchAdShowFinish: */
+-(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
 @end
 
 @interface XHLaunchAd : NSObject
