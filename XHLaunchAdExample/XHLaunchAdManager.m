@@ -218,6 +218,8 @@
         videoAdconfiguration.videoNameOrURLString = model.content;
         //视频缩放模式
         videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+        //是否只循环播放一次
+        videoAdconfiguration.videoCycleOnce = NO;
         //广告点击打开链接
         videoAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
@@ -239,6 +241,7 @@
         [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
         
     } failure:^(NSError *error) {
+        
     }];
     
 }
@@ -256,6 +259,8 @@
     videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
     //视频填充模式
     videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+    //是否只循环播放一次
+    videoAdconfiguration.videoCycleOnce = NO;
     //广告点击打开链接
     videoAdconfiguration.openURLString =  @"http://www.it7090.com";
     //跳过按钮类型
@@ -420,7 +425,8 @@
 //跳过按钮点击事件
 -(void)skipAction
 {
-    [XHLaunchAd skipAction];
+    //移除广告
+    [XHLaunchAd removeAndAnimated:YES];
 }
 #pragma mark - XHLaunchAd delegate - 倒计时回调
 /**
@@ -483,9 +489,9 @@
 /**
  *  广告显示完成
  */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd
+-(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd
 {
-    NSLog(@"广告显示完成");
+     NSLog(@"广告显示完成");
 }
 
 /**

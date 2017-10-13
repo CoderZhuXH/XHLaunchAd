@@ -24,8 +24,10 @@
 @interface XHLaunchAdVideoView : UIView
 
 @property (nonatomic, copy) void(^click)();
-@property (strong, nonatomic) MPMoviePlayerController *adVideoPlayer;
-@property(nonatomic,assign)MPMovieScalingMode adVideoScalingMode;
+@property (strong, nonatomic) MPMoviePlayerController *videoPlayer;
+@property(nonatomic,assign)MPMovieScalingMode videoScalingMode;
+@property (nonatomic, assign) BOOL videoCycleOnce;
+
 -(void)stopVideoPlayer;
 
 @end

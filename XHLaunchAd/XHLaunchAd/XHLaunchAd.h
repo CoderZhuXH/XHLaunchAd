@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.7.1
-//  发布:2017.10.11
+//  版本:3.7.2
+//  发布:2017.10.13
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -81,9 +81,12 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd customSkipView:(UIView *)customSkipView duration:(NSInteger)duration;
 
 /**
- *  广告显示完成
+  广告显示完成
+
+ @param launchAd XHLaunchAd
  */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
+-(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd;
+-(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;//请使用xhLaunchAdShowFinish:
 
 /**
  如果你想用SDWebImage等框架加载网络广告图片,请实现此代理
@@ -158,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param urlArray image URL Array
  @param completedBlock 回调结果为一个字典数组,url:图片的url字符串,result:0表示该图片下载缓存失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
  */
-+(void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock;
++(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock;
 
 /**
  *  批量下载并缓存视频(异步) - 已缓存的视频不会再次下载缓存
@@ -173,13 +176,20 @@ NS_ASSUME_NONNULL_BEGIN
  @param urlArray 视频URL Array
  @param completedBlock 回调结果为一个字典数组,url:视频的url字符串,result:0表示该视频下载缓存失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
  */
-+(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock;
++(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock;
 
 #pragma mark - Action
 /**
  *  跳过按钮事件
  */
-+(void)skipAction;
++(void)skipAction XHLaunchAdDeprecated("请使用removeAndAnimated:");
+
+/**
+ 手动移除广告
+
+ @param animated 是否需要动画
+ */
++(void)removeAndAnimated:(BOOL)animated;
 
 #pragma mark - 是否已缓存
 /**

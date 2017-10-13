@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger,SkipType) {
 @interface XHLaunchAdButton : UIButton
 
 - (instancetype)initWithSkipType:(SkipType)skipType;
--(void)startRoundDispathTimerWithDuration:(CGFloat )duration;
+- (void)startRoundDispathTimerWithDuration:(CGFloat )duration;
 - (void)setTitleWithSkipType:(SkipType)skipType duration:(NSInteger)duration;
 
 @end

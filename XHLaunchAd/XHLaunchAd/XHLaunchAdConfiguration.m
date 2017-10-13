@@ -55,6 +55,8 @@
     configuration.frame = [UIScreen mainScreen].bounds;
     //视频填充模式
     configuration.scalingMode = MPMovieScalingModeAspectFill;
+    //是否只循环播放一次
+    configuration.videoCycleOnce = NO;
     //广告显示完成动画
     configuration.showFinishAnimate =ShowFinishAnimateFadein;
     //显示完成动画时间

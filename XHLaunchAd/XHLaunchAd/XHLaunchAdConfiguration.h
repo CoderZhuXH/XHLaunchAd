@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property(nonatomic,assign)XHLaunchAdImageOptions imageOption;
 
 /**
- 设置GIF动图是否只循环播放一次(仅对动图设置有效)
+ 设置GIF动图是否只循环播放一次(YES:只播放一次,NO:循环播放,default NO,仅对动图设置有效)
  */
 @property (nonatomic, assign) BOOL GIFImageCycleOnce;
 
@@ -129,6 +129,12 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
  *  视频缩放模式(default MPMovieScalingModeAspectFill)
  */
 @property(nonatomic,assign)MPMovieScalingMode scalingMode;
+
+/**
+ 设置视频是否只循环播放一次(YES:只播放一次,NO循环播放,default NO)
+ */
+@property (nonatomic, assign) BOOL videoCycleOnce;
+
 
 +(XHLaunchVideoAdConfiguration *)defaultConfiguration;
 

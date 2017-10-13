@@ -48,7 +48,7 @@
         self.userInteractionEnabled = YES;
         self.frame = [UIScreen mainScreen].bounds;
 
-        [self addSubview:self.adVideoPlayer.view];
+        [self addSubview:self.videoPlayer.view];
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         tapGesture.delegate = self;
@@ -64,40 +64,52 @@
 {
     return YES;
 }
--(void)setAdVideoScalingMode:(MPMovieScalingMode)adVideoScalingMode
+-(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode
 {
-    _adVideoScalingMode = adVideoScalingMode;
-    _adVideoPlayer.scalingMode  = adVideoScalingMode;
+    _videoScalingMode = videoScalingMode;
+    _videoPlayer.scalingMode  = videoScalingMode;
 }
--(MPMoviePlayerController *)adVideoPlayer
+-(MPMoviePlayerController *)videoPlayer
 {
-    if(_adVideoPlayer==nil)
+    if(_videoPlayer==nil)
     {
-        _adVideoPlayer = [[MPMoviePlayerController alloc] init];
-        _adVideoPlayer.shouldAutoplay = YES;
-        [_adVideoPlayer setControlStyle:MPMovieControlStyleNone];
-        _adVideoPlayer.repeatMode = MPMovieRepeatModeNone;
-        _adVideoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
-        _adVideoPlayer.view.frame = [UIScreen mainScreen].bounds;
-        _adVideoPlayer.view.backgroundColor = [UIColor clearColor];
+        _videoPlayer = [[MPMoviePlayerController alloc] init];
+        _videoPlayer.shouldAutoplay = YES;
+        [_videoPlayer setControlStyle:MPMovieControlStyleNone];
+        _videoPlayer.repeatMode = MPMovieRepeatModeOne;
+        _videoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
+        _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
+        _videoPlayer.view.backgroundColor = [UIColor clearColor];
     }
-    return _adVideoPlayer;
+    return _videoPlayer;
     
 }
 -(void)stopVideoPlayer{
 
-    if(_adVideoPlayer==nil) return;
-    [_adVideoPlayer stop];
-    [_adVideoPlayer.view removeFromSuperview];
-    _adVideoPlayer = nil;
+    if(_videoPlayer==nil) return;
+    [_videoPlayer stop];
+    [_videoPlayer.view removeFromSuperview];
+    _videoPlayer = nil;
 
 }
-
+#pragma mark - set
 -(void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
+    _videoPlayer.view.frame = self.frame;
+}
+-(void)setVideoCycleOnce:(BOOL)videoCycleOnce
+{
+    _videoCycleOnce = videoCycleOnce;
     
-    _adVideoPlayer.view.frame = self.frame;
+    if(videoCycleOnce)
+    {
+         _videoPlayer.repeatMode = MPMovieRepeatModeNone;
+    }
+    else
+    {
+         _videoPlayer.repeatMode = MPMovieRepeatModeOne;
+    }
 }
 
 @end

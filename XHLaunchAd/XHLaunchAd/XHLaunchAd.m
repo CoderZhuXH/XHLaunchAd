@@ -73,7 +73,7 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [self downLoadImageAndCacheWithURLArray:urlArray completed:nil];
 }
-+ (void)downLoadImageAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
++ (void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
 {
     if(urlArray.count==0) return;
     [[XHLaunchAdDownloader sharedDownloader] downLoadImageAndCacheWithURLArray:urlArray completed:completedBlock];
@@ -82,16 +82,19 @@ static NSInteger defaultWaitDataDuration = 3;
 {
     [self downLoadVideoAndCacheWithURLArray:urlArray completed:nil];
 }
-+(void)downLoadVideoAndCacheWithURLArray:(nonnull NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
++(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock
 {
     if(urlArray.count==0) return;
     [[XHLaunchAdDownloader sharedDownloader] downLoadVideoAndCacheWithURLArray:urlArray completed:completedBlock];
 }
 +(void)skipAction
 {
-    [[XHLaunchAd shareLaunchAd] adSkipButtonClick];
+    [[XHLaunchAd shareLaunchAd] removeAndAnimated:YES];
 }
-
++(void)removeAndAnimated:(BOOL)animated
+{
+    [[XHLaunchAd shareLaunchAd] removeAndAnimated:animated];
+}
 +(BOOL)checkImageInCacheWithURL:(NSURL *)url
 {
     return [XHLaunchAdCache checkImageInCacheWithURL:url];
@@ -327,7 +330,7 @@ static NSInteger defaultWaitDataDuration = 3;
             
             _skipButton = [[XHLaunchAdButton alloc] initWithSkipType:configuration.skipButtonType];
             _skipButton.hidden = YES;
-            [_skipButton addTarget:self action:@selector(adSkipButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [_skipButton addTarget:self action:@selector(skipButtonClick) forControlEvents:UIControlEventTouchUpInside];
         }
         
         [_window addSubview:_skipButton];
@@ -348,7 +351,8 @@ static NSInteger defaultWaitDataDuration = 3;
     [_window addSubview:_adVideoView];
     /** frame */
     if(configuration.frame.size.width>0&&configuration.frame.size.height>0) _adVideoView.frame = configuration.frame;
-    if(configuration.scalingMode) _adVideoView.adVideoScalingMode = configuration.scalingMode;
+    if(configuration.scalingMode) _adVideoView.videoScalingMode = configuration.scalingMode;
+    _adVideoView.videoCycleOnce = configuration.videoCycleOnce;
     /** video 数据源 */
     if(configuration.videoNameOrURLString.length && XHISURLString(configuration.videoNameOrURLString)){
         
@@ -360,8 +364,8 @@ static NSInteger defaultWaitDataDuration = 3;
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
-            _adVideoView.adVideoPlayer.contentURL = pathURL;
-            [_adVideoView.adVideoPlayer prepareToPlay];
+            _adVideoView.videoPlayer.contentURL = pathURL;
+            [_adVideoView.videoPlayer prepareToPlay];
             
         }else{
             
@@ -393,8 +397,8 @@ static NSInteger defaultWaitDataDuration = 3;
                 if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                     [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
                 }
-                _adVideoView.adVideoPlayer.contentURL = pathURL;;
-                [_adVideoView.adVideoPlayer prepareToPlay];
+                _adVideoView.videoPlayer.contentURL = pathURL;;
+                [_adVideoView.videoPlayer prepareToPlay];
                 
             }else{
                 
@@ -448,9 +452,20 @@ static NSInteger defaultWaitDataDuration = 3;
     [self startWaitDataDispathTiemr];
 }
 #pragma mark - Action
--(void)adSkipButtonClick
+-(void)skipButtonClick
 {
-    [self removeAndAnimate];
+    [self removeAndAnimated:YES];
+}
+-(void)removeAndAnimated:(BOOL)animated
+{
+    if(animated){
+        
+        [self removeAndAnimate];
+    }
+    else{
+    
+        [self removeAndAnimateDefault];
+    }
 }
 -(void)click
 {
@@ -644,6 +659,12 @@ static NSInteger defaultWaitDataDuration = 3;
         
         [self.delegate xhLaunchShowFinish:self];
     }
+    
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAdShowFinish:)]) {
+        
+        [self.delegate xhLaunchAdShowFinish:self];
+    }
+
 }
 
 -(void)removeSubViewsExceptLaunchAdImageView
