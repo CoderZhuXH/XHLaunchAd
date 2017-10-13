@@ -530,7 +530,7 @@ configuration.customSkipView = [self customSkipView];
 /**
  *  广告显示完成
  */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd
+-(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd
 {
     NSLog(@"广告显示完成");
 }
