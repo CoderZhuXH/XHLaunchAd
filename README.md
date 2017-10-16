@@ -361,13 +361,14 @@ configuration.customSkipView = [self customSkipView];
 -(UIView *)customSkipView
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor =[ UIColor clearColor];
-    button.layer.cornerRadius = 3.0;
-    button.layer.borderWidth = 1.0;
-    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.backgroundColor =[UIColor orangeColor];
+    button.layer.cornerRadius = 5.0;
+    button.layer.borderWidth = 1.5;
+    button.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:13];
-    button.frame = CGRectMake(15,[UIScreen mainScreen].bounds.size.height-55, 85, 40);
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
+    CGFloat y = XH_IPHONEX ? 54 : 30;
+    button.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-100,y, 85, 30);
     [button addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
