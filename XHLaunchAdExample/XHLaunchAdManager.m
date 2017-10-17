@@ -101,10 +101,12 @@
 //图片开屏广告 - 网络数据
 -(void)example01
 {
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
-    
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
     
@@ -159,6 +161,9 @@
 //图片开屏广告 - 本地数据
 -(void)example02
 {
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
     //广告停留时间
@@ -192,10 +197,12 @@
 //视频开屏广告 - 网络数据
 -(void)example03
 {
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
-    
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
     
@@ -249,6 +256,9 @@
 //视频开屏广告 - 本地数据
 -(void)example04
 {
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    
     //配置广告数据
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
     //广告停留时间
@@ -283,6 +293,9 @@
     //注意:
     //1.自定义跳过按钮很简单,configuration有一个customSkipView属性.
     //2.自定义一个跳过的view 赋值给configuration.customSkipView属性便可替换默认跳过按钮,如下:
+    
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
@@ -323,6 +336,9 @@
  */
 -(void)example06
 {
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    
     //使用默认配置
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
@@ -336,6 +352,9 @@
  */
 -(void)example07
 {
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    
     //使用默认配置
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];
     //广告视频URLString/或本地视频名(请带上后缀)

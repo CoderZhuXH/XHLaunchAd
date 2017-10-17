@@ -22,12 +22,14 @@
 * 10.支持预缓存图片及视频.
 * 11.支持设置完成动画.
 * 12.支持清除指定资源缓存.
-* 13.等等等...
+* 13.支持LaunchImage 和 LaunchScreen.storyboard.
+* 14.等等等...
 
 ### 技术交流群(群号:537476189)
 
 ### 更新记录:  
 
+*   2017.10.18 -- v3.8.0 -->1.增加对LaunchScreen.storyboard支持,2.修复pod导入编译报错问题...
 *   2017.10.11 -- v3.7.1 -->1.批量缓存接口增加结果回调...
 *   2017.10.09 -- v3.7.0 -->1.增加几种清除缓存的接口,2.增加几种倒计时按钮类型,3.已知问题优化与修复...
 *   2017.09.29 -- v3.6.1 -->1.增加清除指定图片/视频缓存接口,2.优化在iPhoneX上显示效果,3.已知问题优化与修复...
@@ -64,13 +66,17 @@
 
 ## 使用方法
 
-### 1.设置App启动页为LaunchImage,设置方法可百度、谷歌 ,或[戳这里>>>](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/LaunchImageSet/LaunchImageSet.md)
-### 2.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
+### 1.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
 
-### -2.1 添加图片开屏广告-使用本地数据
-#### -2.1.1 使用默认配置快速初始化
+### -1.1 添加图片开屏广告-使用本地数据
+#### -1.1.1 使用默认配置快速初始化
 ```objc
 //1.使用默认配置初始化
+
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+
+    //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image0.jpg";
@@ -79,10 +85,15 @@
     //显示图片开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 ```
-#### -2.1.2自定义配置初始化
+#### -1.1.2自定义配置初始化
 
 ```objc
 //2.自定义配置初始化
+
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+
+    //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
     //广告停留时间
     imageAdconfiguration.duration = 5;
@@ -114,14 +125,17 @@
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self]; 
     
 ```
-### -2.2 添加图片开屏广告-使用网络数据
-#### -2.2.1 使用默认配置快速初始化
+### -1.2 添加图片开屏广告-使用网络数据
+#### -1.2.1 使用默认配置快速初始化
 
 ```objc
+
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+
 	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
-    
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
     
@@ -146,14 +160,16 @@
 
 
 ```
-#### -2.2.2 自定义配置初始化
+#### -1.2.2 自定义配置初始化
 
 ```objc
+
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
 
  	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
-    
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
     
@@ -201,12 +217,15 @@
 
 ```
 
-### -2.3添加视频开屏广告-使用本地数据
-#### -2.3.1 使用默认配置快速初始化
+### -1.3添加视频开屏广告-使用本地数据
+#### -1.3.1 使用默认配置快速初始化
 
 ```objc
 
-	//1.使用默认配置初始化
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+
+    //1.使用默认配置初始化
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
@@ -216,9 +235,13 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 ```
 
-#### -2.3.2 自定义配置初始化
+#### -1.3.2 自定义配置初始化
 
 ```objc   
+
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+
 	//2.自定义配置
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
     //广告停留时间
@@ -249,15 +272,17 @@
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
     
 ```
-### -2.4添加视频开屏广告-使用网络数据
-#### -2.4.1 使用默认配置快速初始化
+### -1.4添加视频开屏广告-使用网络数据
+#### -1.4.1 使用默认配置快速初始化
 
 ```objc
 
-  //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+
+    //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
-    
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
     
@@ -282,14 +307,16 @@
 
 
 ```
-#### -2.4.2 自定义配置初始化
+#### -1.4.2 自定义配置初始化
 
 ```objc
+
+    //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
+    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
 
  	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
-    
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
     [XHLaunchAd setWaitDataDuration:3];
     
@@ -336,7 +363,7 @@
 
 ```
 
-### 3.点击事件
+### 2.点击事件
 ```objc
 /**
  *  广告点击事件 回调
@@ -352,7 +379,7 @@
 }
 
 ```
-### 4.自定义跳过按钮
+### 3.自定义跳过按钮
 ```objc
 //1.XHLaunchImageAdConfiguration 和XHLaunchVideoAdConfiguration 均有一个configuration.customSkipView 属性
 //2.自定义一个skipView 赋值给configuration.customSkipView属性 便可替换默认跳过按钮 如下:
@@ -393,7 +420,7 @@ configuration.customSkipView = [self customSkipView];
 }
 ```
 
-### 5.批量下载缓存接口(如果你需要提前批量下载并缓存广告图片或视频请调用下面方法)
+### 4.批量下载缓存接口(如果你需要提前批量下载并缓存广告图片或视频请调用下面方法)
 ```objc
 
 /**
@@ -428,7 +455,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 6.检测是否已缓存
+### 5.检测是否已缓存
 
 ```objc
 
@@ -452,7 +479,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 7.缓存/清理相关
+### 6.缓存/清理相关
 ```objc
 
 /**
@@ -501,7 +528,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 8.代理方法
+### 7.代理方法
 ```objc
 /**
  *  图片本地读取/或下载完成回调

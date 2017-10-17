@@ -11,7 +11,6 @@
 #import "XHLaunchAdImageView+XHLaunchAdCache.h"
 #import "XHLaunchAdDownloader.h"
 #import "XHLaunchAdCache.h"
-#import "XHLaunchImageView.h"
 #import "FLAnimatedImage.h"
 #import "XHLaunchAdController.h"
 
@@ -22,6 +21,7 @@ typedef NS_ENUM(NSInteger, XHLaunchAdType) {
 };
 
 static NSInteger defaultWaitDataDuration = 3;
+static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 
 @interface XHLaunchAd()
 
@@ -46,6 +46,10 @@ static NSInteger defaultWaitDataDuration = 3;
     launchAd.waitDataDuration = waitDataDuration;
 }
 
++(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource{
+    
+    _launchImagesSource = launchImagesSource;
+}
 +(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration
 {
     return [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:nil];
@@ -221,7 +225,7 @@ static NSInteger defaultWaitDataDuration = 3;
     _window = window;
     
     /** 添加launchImageView */
-    [_window addSubview:[[XHLaunchImageView alloc] init]];
+    [_window addSubview:[[XHLaunchImageView alloc] initWithLaunchImagesSource:_launchImagesSource]];
 }
 
 /**图片*/
@@ -451,6 +455,7 @@ static NSInteger defaultWaitDataDuration = 3;
     /** 数据等待 */
     [self startWaitDataDispathTiemr];
 }
+
 #pragma mark - Action
 -(void)skipButtonClick
 {

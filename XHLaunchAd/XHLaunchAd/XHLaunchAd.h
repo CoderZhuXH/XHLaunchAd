@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.7.3
-//  发布:2017.10.17
+//  版本:3.8.0
+//  发布:2017.10.18
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "XHLaunchAdConfiguration.h"
 #import "XHLaunchAdConst.h"
+#import "XHLaunchImageView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @class XHLaunchAd;
@@ -104,6 +105,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XHLaunchAd : NSObject
 
 @property(nonatomic,assign) id<XHLaunchAdDelegate> delegate;
+
+/**
+ 设置你工程的启动页使用的是LaunchImage还是LaunchScreen(default:LaunchImagesSourceLaunchImage)
+ 注意:请在设置等待数据及配置广告数据前调用此方法
+ @param launchImagesSource launchImagesSource
+ */
++(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource;
 
 /**
  *  设置等待数据源时间(建议值:3)
