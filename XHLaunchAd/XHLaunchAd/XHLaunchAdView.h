@@ -10,8 +10,19 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVKit/AVKit.h>
+
+#if __has_include(<FLAnimatedImage/FLAnimatedImage.h>)
+#import <FLAnimatedImage/FLAnimatedImage.h>
+#else
 #import "FLAnimatedImage.h"
+#endif
+
+#if __has_include(<FLAnimatedImage/FLAnimatedImageView.h>)
+#import <FLAnimatedImage/FLAnimatedImageView.h>
+#else
 #import "FLAnimatedImageView.h"
+#endif
+
 
 #pragma mark - image
 @interface XHLaunchAdImageView : FLAnimatedImageView
