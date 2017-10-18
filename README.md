@@ -66,7 +66,7 @@
 
 ## 使用方法
 
-### 1.在AppDelegate中导入XHLaunchAd.h 头文件,在didFinishLaunchingWithOptions:方法中添加下面代码
+### 1.在didFinishLaunchingWithOptions中或UIApplicationDidFinishLaunching时初始化开屏广告
 
 ### -1.1 添加图片开屏广告-使用本地数据
 #### -1.1.1 使用默认配置快速初始化
