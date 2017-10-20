@@ -8,7 +8,6 @@
 
 #import "XHLaunchAdConfiguration.h"
 
-
 #pragma mark - 公共
 @implementation XHLaunchAdConfiguration
 
@@ -17,8 +16,7 @@
 #pragma mark - 图片广告相关
 @implementation XHLaunchImageAdConfiguration
 
-+(XHLaunchImageAdConfiguration *)defaultConfiguration
-{
++(XHLaunchImageAdConfiguration *)defaultConfiguration{
     //配置广告数据
     XHLaunchImageAdConfiguration *configuration = [XHLaunchImageAdConfiguration new];
     //广告停留时间
@@ -41,12 +39,12 @@
     configuration.showEnterForeground = NO;
     return configuration;
 }
+
 @end
 
 #pragma mark - 视频广告相关
 @implementation XHLaunchVideoAdConfiguration
-+(XHLaunchVideoAdConfiguration *)defaultConfiguration
-{
++(XHLaunchVideoAdConfiguration *)defaultConfiguration{
     //配置广告数据
     XHLaunchVideoAdConfiguration *configuration = [XHLaunchVideoAdConfiguration new];
     //广告停留时间

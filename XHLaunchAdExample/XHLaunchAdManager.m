@@ -37,8 +37,7 @@
 
 @implementation XHLaunchAdManager
 
-+(void)load
-{
++(void)load{
     [self shareManager];
 }
 
@@ -46,29 +45,25 @@
     static XHLaunchAdManager *instance = nil;
     static dispatch_once_t oneToken;
     dispatch_once(&oneToken,^{
-        
         instance = [[XHLaunchAdManager alloc] init];
     });
     return instance;
 }
-- (instancetype)init
-{
+
+- (instancetype)init{
     self = [super init];
     if (self) {
-
-        //在UIApplicationDidFinishLaunching时初始化开屏广告,做到对业务层无干扰
-        //当然你也可以直接在AppDelegate didFinishLaunchingWithOptions方法中初始化
+        //在UIApplicationDidFinishLaunching时初始化开屏广告,做到对业务层无干扰,当然你也可以直接在AppDelegate didFinishLaunchingWithOptions方法中初始化
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            
             //初始化开屏广告
             [self setupXHLaunchAd];
-
         }];
     }
     return self;
 }
--(void)setupXHLaunchAd
-{
+
+-(void)setupXHLaunchAd{
+    
     //1.******图片开屏广告 - 网络数据******
     //[self example01];
 
@@ -99,8 +94,8 @@
 
 #pragma mark - 图片开屏广告-网络数据-示例
 //图片开屏广告 - 网络数据
--(void)example01
-{
+-(void)example01{
+    
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
@@ -144,8 +139,7 @@
         imageAdconfiguration.showEnterForeground = NO;
         
         //图片已缓存 - 显示一个 "已预载" 视图 (可选)
-        if([XHLaunchAd checkImageInCacheWithURL:[NSURL URLWithString:model.content]])
-        {
+        if([XHLaunchAd checkImageInCacheWithURL:[NSURL URLWithString:model.content]]){
             //设置要添加的自定义视图(可选)
             imageAdconfiguration.subViews = [self launchAdSubViews_alreadyView];
             
@@ -157,10 +151,11 @@
     }];
     
 }
+
 #pragma mark - 图片开屏广告-本地数据-示例
 //图片开屏广告 - 本地数据
--(void)example02
-{
+-(void)example02{
+    
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
@@ -195,8 +190,8 @@
 
 #pragma mark - 视频开屏广告-网络数据-示例
 //视频开屏广告 - 网络数据
--(void)example03
-{
+-(void)example03{
+    
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
@@ -238,8 +233,7 @@
         //跳过按钮类型
         videoAdconfiguration.skipButtonType = SkipTypeTimeText;
         //视频已缓存 - 显示一个 "已预载" 视图 (可选)
-        if([XHLaunchAd checkVideoInCacheWithURL:[NSURL URLWithString:model.content]])
-        {
+        if([XHLaunchAd checkVideoInCacheWithURL:[NSURL URLWithString:model.content]]){
             //设置要添加的自定义视图(可选)
             videoAdconfiguration.subViews = [self launchAdSubViews_alreadyView];
             
@@ -252,10 +246,11 @@
     }];
     
 }
+
 #pragma mark - 视频开屏广告-本地数据-示例
 //视频开屏广告 - 本地数据
--(void)example04
-{
+-(void)example04{
+    
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
@@ -288,8 +283,8 @@
     
 }
 #pragma mark - 自定义跳过按钮-示例
--(void)example05
-{
+-(void)example05{
+    
     //注意:
     //1.自定义跳过按钮很简单,configuration有一个customSkipView属性.
     //2.自定义一个跳过的view 赋值给configuration.customSkipView属性便可替换默认跳过按钮,如下:
@@ -330,12 +325,13 @@
     
     
 }
+
 #pragma mark - 使用默认配置快速初始化 - 示例
 /**
  *  图片
  */
--(void)example06
-{
+-(void)example06{
+    
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
@@ -347,11 +343,12 @@
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 }
+
 /**
  *  视频
  */
--(void)example07
-{
+-(void)example07{
+    
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
     
@@ -368,8 +365,8 @@
 /**
  *  批量下载并缓存图片
  */
--(void)batchDownloadImageAndCache
-{
+-(void)batchDownloadImageAndCache{
+    
     [XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3],[NSURL URLWithString:imageURL4],[NSURL URLWithString:imageURL5]] completed:^(NSArray * _Nonnull completedArray) {
         
          /** 打印批量下载缓存结果 */
@@ -383,8 +380,8 @@
 /**
  *  批量下载并缓存视频
  */
--(void)batchDownloadVideoAndCache
-{
+-(void)batchDownloadVideoAndCache{
+    
     [XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]] completed:^(NSArray * _Nonnull completedArray) {
 
       /** 打印批量下载缓存结果 */
@@ -396,9 +393,10 @@
      }];
 
 }
+
 #pragma mark - subViews
--(NSArray<UIView *> *)launchAdSubViews_alreadyView
-{
+-(NSArray<UIView *> *)launchAdSubViews_alreadyView{
+    
     CGFloat y = XH_IPHONEX ? 46:22;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, y, 60, 30)];
     label.text  = @"已预载";
@@ -411,8 +409,9 @@
     return [NSArray arrayWithObject:label];
     
 }
--(NSArray<UIView *> *)launchAdSubViews
-{
+
+-(NSArray<UIView *> *)launchAdSubViews{
+    
     CGFloat y = XH_IPHONEX ? 54 : 30;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-170, y, 60, 30)];
     label.text  = @"subViews";
@@ -425,10 +424,11 @@
     return [NSArray arrayWithObject:label];
     
 }
+
 #pragma mark - customSkipView
 //自定义跳过按钮
--(UIView *)customSkipView
-{
+-(UIView *)customSkipView{
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor =[UIColor orangeColor];
     button.layer.cornerRadius = 5.0;
@@ -441,12 +441,14 @@
     [button addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
+
 //跳过按钮点击事件
--(void)skipAction
-{
+-(void)skipAction{
+    
     //移除广告
     [XHLaunchAd removeAndAnimated:YES];
 }
+
 #pragma mark - XHLaunchAd delegate - 倒计时回调
 /**
  *  倒计时回调
@@ -454,20 +456,20 @@
  *  @param launchAd XHLaunchAd
  *  @param duration 倒计时时间
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd customSkipView:(UIView *)customSkipView duration:(NSInteger)duration
-{
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd customSkipView:(UIView *)customSkipView duration:(NSInteger)duration{
     //设置自定义跳过按钮时间
     UIButton *button = (UIButton *)customSkipView;//此处转换为你之前的类型
     //设置时间
     [button setTitle:[NSString stringWithFormat:@"自定义%lds",duration] forState:UIControlStateNormal];
 }
+
 #pragma mark - XHLaunchAd delegate - 其他
 
 /**
  *  广告点击事件 回调
  */
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
-{
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString{
+    
     NSLog(@"广告点击");
     WebViewController *VC = [[WebViewController alloc] init];
     VC.URLString = openURLString;
@@ -475,6 +477,7 @@
     UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
     [rootVC.myNavigationController pushViewController:VC animated:YES];
 }
+
 /**
  *  图片本地读取/或下载完成回调
  *
@@ -482,34 +485,34 @@
  *  @param image 读取/下载的image
  *  @param imageData 读取/下载的imageData
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(nonnull NSData *)imageData
-{
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(nonnull NSData *)imageData{
     NSLog(@"图片下载完成/或本地图片读取完成回调");
 }
+
 /**
  *  视频本地读取/或下载完成回调
  *
  *  @param launchAd XHLaunchAd
  *  @param pathURL  视频保存在本地的path
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadFinish:(NSURL *)pathURL
-{
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadFinish:(NSURL *)pathURL{
+    
     NSLog(@"video下载/加载完成/保存path = %@",pathURL.absoluteString);
 }
 
 /**
  *  视频下载进度回调
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadProgress:(float)progress total:(unsigned long long)total current:(unsigned long long)current
-{
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadProgress:(float)progress total:(unsigned long long)total current:(unsigned long long)current{
     NSLog(@"总大小=%lld,已下载大小=%lld,下载进度=%f",total,current,progress);
     
 }
+
 /**
  *  广告显示完成
  */
--(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd
-{
+-(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd{
+    
      NSLog(@"广告显示完成");
 }
 

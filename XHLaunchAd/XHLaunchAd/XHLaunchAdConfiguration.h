@@ -19,22 +19,16 @@ static CGFloat const showFinishAnimateTimeDefault = 0.8;
 
 /** 显示完成动画类型 */
 typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
-    
     /** 无动画 */
     ShowFinishAnimateNone = 1,
-    
     /** 普通淡入(default) */
     ShowFinishAnimateFadein = 2,
-    
     /** 放大淡入 */
     ShowFinishAnimateLite = 3,
-    
     /** 左右翻转(类似网易云音乐) */
     ShowFinishAnimateFlipFromLeft = 4,
-    
     /** 下上翻转 */
     ShowFinishAnimateFlipFromBottom = 5,
-    
     /** 向上翻页 */
     ShowFinishAnimateCurlUp = 6,
 };

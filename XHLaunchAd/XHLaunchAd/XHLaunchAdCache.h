@@ -176,6 +176,8 @@ typedef void(^SaveCompletionBlock)(BOOL result , NSURL * URL);
  */
 +(float)diskCacheSize;
 
+#pragma mark - other
+
 +(NSString *)md5String:(NSString *)string;
 
 @end

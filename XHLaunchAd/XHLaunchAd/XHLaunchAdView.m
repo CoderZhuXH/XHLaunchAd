@@ -13,11 +13,9 @@
 @end
 @implementation XHLaunchAdImageView
 
-- (id)init
-{
+- (id)init{
     self = [super init];
     if (self) {
-        
         self.userInteractionEnabled = YES;
         self.frame = [UIScreen mainScreen].bounds;
         self.layer.masksToBounds = YES;
@@ -26,8 +24,8 @@
     }
     return self;
 }
--(void)tap:(UIGestureRecognizer *)gestureRecognizer
-{
+
+-(void)tap:(UIGestureRecognizer *)gestureRecognizer{
     if(self.click) self.click();
 }
 
@@ -40,39 +38,34 @@
 
 @implementation XHLaunchAdVideoView
 
-- (instancetype)init
-{
+- (instancetype)init{
     self = [super init];
     if (self) {
-        
         self.userInteractionEnabled = YES;
         self.frame = [UIScreen mainScreen].bounds;
-
         [self addSubview:self.videoPlayer.view];
-        
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         tapGesture.delegate = self;
         [self addGestureRecognizer:tapGesture];
     }
     return self;
 }
--(void)tap:(UIGestureRecognizer *)gestureRecognizer
-{
+
+-(void)tap:(UIGestureRecognizer *)gestureRecognizer{
      if(self.click) self.click();
 }
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return YES;
 }
--(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode
-{
+
+-(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode{
     _videoScalingMode = videoScalingMode;
     _videoPlayer.scalingMode  = videoScalingMode;
 }
--(MPMoviePlayerController *)videoPlayer
-{
-    if(_videoPlayer==nil)
-    {
+
+-(MPMoviePlayerController *)videoPlayer{
+    if(_videoPlayer==nil){
         _videoPlayer = [[MPMoviePlayerController alloc] init];
         _videoPlayer.shouldAutoplay = YES;
         [_videoPlayer setControlStyle:MPMovieControlStyleNone];
@@ -82,32 +75,26 @@
         _videoPlayer.view.backgroundColor = [UIColor clearColor];
     }
     return _videoPlayer;
-    
 }
--(void)stopVideoPlayer{
 
+-(void)stopVideoPlayer{
     if(_videoPlayer==nil) return;
     [_videoPlayer stop];
     [_videoPlayer.view removeFromSuperview];
     _videoPlayer = nil;
-
 }
+
 #pragma mark - set
--(void)setFrame:(CGRect)frame
-{
+-(void)setFrame:(CGRect)frame{
     [super setFrame:frame];
     _videoPlayer.view.frame = self.frame;
 }
--(void)setVideoCycleOnce:(BOOL)videoCycleOnce
-{
+
+-(void)setVideoCycleOnce:(BOOL)videoCycleOnce{
     _videoCycleOnce = videoCycleOnce;
-    
-    if(videoCycleOnce)
-    {
+    if(videoCycleOnce){
          _videoPlayer.repeatMode = MPMovieRepeatModeNone;
-    }
-    else
-    {
+    }else{
          _videoPlayer.repeatMode = MPMovieRepeatModeOne;
     }
 }

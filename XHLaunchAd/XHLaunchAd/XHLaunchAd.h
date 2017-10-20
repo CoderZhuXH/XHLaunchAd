@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.8.0
-//  发布:2017.10.18
+//  版本:3.8.1
+//  发布:2017.10.20
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -25,9 +25,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @class XHLaunchAd;
-
 @protocol XHLaunchAdDelegate <NSObject>
-
 @optional
 
 /**
@@ -89,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd;
 
 /**
- 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理
+ 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理,注意:实现此方法后,图片缓存将不受XHLaunchAd管理
 
  @param launchAd          XHLaunchAd
  @param launchAdImageView launchAdImageView

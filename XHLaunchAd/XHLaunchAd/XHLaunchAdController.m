@@ -14,9 +14,7 @@
 
 @implementation XHLaunchAdController
 
--(BOOL)shouldAutorotate
-{
+-(BOOL)shouldAutorotate{
     return NO;
 }
-
 @end

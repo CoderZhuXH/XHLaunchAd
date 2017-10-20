@@ -10,9 +10,7 @@
 
 /** 启动图来源 */
 typedef NS_ENUM(NSInteger,LaunchImagesSource){
-    
     LaunchImagesSourceLaunchImage = 1,//LaunchAdImage (default)
-    
     LaunchImagesSourceLaunchScreen = 2,//LaunchScreen.storyboard
 };
 
