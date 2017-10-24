@@ -52,7 +52,6 @@
 *	2016.08.18 -- v2.1.0 -->API微调,增加设置跳过按钮类型选项.<br>
 *	2016.08.16 -- v2.0 -->1.修复显示广告前RootViewController闪现bug; 2.API重构,增强实用性.<br>
 *	2016.07.18 -- v1.2 -->增加对GIF动态广告的支持.<br>
-*	2016.07.07 -- v1.1.4 -->优化.<br>
 *	2016.07.02 -- v1.1.2 -->增加设置缓存机制选项.<br>
 *	2016.06.17 -- v1.1 -->增加倒计时/跳过按钮.<br>
 *	2016.06.13 -- v1.0
@@ -362,6 +361,49 @@
 
 
 ```
+
+#### -1.5.0 显示完成动画支持以下效果
+
+```objc
+
+/** 显示完成动画类型 */
+typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
+    /** 无动画 */
+    ShowFinishAnimateNone = 1,
+    /** 普通淡入(default) */
+    ShowFinishAnimateFadein = 2,
+    /** 放大淡入 */
+    ShowFinishAnimateLite = 3,
+    /** 左右翻转(类似网易云音乐) */
+    ShowFinishAnimateFlipFromLeft = 4,
+    /** 下上翻转 */
+    ShowFinishAnimateFlipFromBottom = 5,
+    /** 向上翻页 */
+    ShowFinishAnimateCurlUp = 6,
+};
+
+```
+
+#### -1.6.0 跳过按钮支持以下类型
+
+```objc
+
+/** 跳过按钮类型 */
+typedef NS_ENUM(NSInteger,SkipType) {
+    SkipTypeNone      = 1,//无
+    /** 方形 */
+    SkipTypeTime      = 2,//方形:倒计时
+    SkipTypeText      = 3,//方形:跳过
+    SkipTypeTimeText  = 4,//方形:倒计时+跳过 (default)
+    /** 圆形 */
+    SkipTypeRoundTime = 5,//圆形:倒计时
+    SkipTypeRoundText = 6,//圆形:跳过
+    SkipTypeRoundProgressTime = 7,//圆形:进度圈+倒计时
+    SkipTypeRoundProgressText = 8,//圆形:进度圈+跳过
+};
+
+```
+
 
 ### 2.点击事件
 ```objc
