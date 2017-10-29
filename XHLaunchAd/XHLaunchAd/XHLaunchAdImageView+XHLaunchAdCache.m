@@ -41,15 +41,17 @@
     if(!url) return;
     XHWeakSelf
     [[XHLaunchAdImageManager sharedManager] loadImageWithURL:url options:options progress:nil completed:^(UIImage * _Nullable image,  NSData *_Nullable imageData, NSError * _Nullable error, NSURL * _Nullable imageURL) {
-        if(XHISGIFTypeWithData(imageData)){
-            weakSelf.image = nil;
-            weakSelf.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
-            weakSelf.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
-                if(GIFImageCycleOnce) [weakSelf stopAnimating];
-            };
-        }else{
-            weakSelf.image = image;
-            weakSelf.animatedImage = nil;
+        if(!error){
+            if(XHISGIFTypeWithData(imageData)){
+                weakSelf.image = nil;
+                weakSelf.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                weakSelf.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
+                    if(GIFImageCycleOnce) [weakSelf stopAnimating];
+                };
+            }else{
+                weakSelf.image = image;
+                weakSelf.animatedImage = nil;
+            }
         }
         if(completedBlock) completedBlock(image,imageData,error,imageURL);
     }];

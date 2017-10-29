@@ -485,7 +485,7 @@
  *  @param image 读取/下载的image
  *  @param imageData 读取/下载的imageData
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(nonnull NSData *)imageData{
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(NSData *)imageData{
     NSLog(@"图片下载完成/或本地图片读取完成回调");
 }
 

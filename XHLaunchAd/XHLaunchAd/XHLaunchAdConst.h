@@ -21,7 +21,7 @@
 #define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
 
 #ifdef DEBUG
-#define XHLaunchAdLog(...) NSLog(__VA_ARGS__)
+#define XHLaunchAdLog(FORMAT, ...) fprintf(stderr,"%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 #else
 #define XHLaunchAdLog(...)
 #endif

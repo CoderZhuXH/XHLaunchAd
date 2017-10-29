@@ -216,11 +216,15 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
             if(!configuration.imageOption) configuration.imageOption = XHLaunchAdImageDefault;
             XHWeakSelf
             [adImageView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil GIFImageCycleOnce:configuration.GIFImageCycleOnce options:configuration.imageOption completed:^(UIImage *image,NSData *imageData,NSError *error,NSURL *url){
-                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
-                    [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
-                }
-                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:imageData:)]) {
-                    [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image imageData:imageData];
+                if(!error){
+                    if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
+                        [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
+                    }
+                    if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:imageData:)]) {
+                        [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image imageData:imageData];
+                    }
+                }else{
+                    //下载错误
                 }
             }];
             if(configuration.imageOption == XHLaunchAdImageCacheInBackground){
@@ -305,8 +309,10 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
                     [weakSelf.delegate xhLaunchAd:self videoDownLoadProgress:current/(float)total total:total current:current];
                 }
             }  completed:^(NSURL * _Nullable location, NSError * _Nullable error){
-                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]){
-                    [weakSelf.delegate xhLaunchAd:self videoDownLoadFinish:location];
+                if(!error){
+                    if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]){
+                        [weakSelf.delegate xhLaunchAd:self videoDownLoadFinish:location];
+                    }
                 }
             }];
             /***视频缓存,提前显示完成 */
