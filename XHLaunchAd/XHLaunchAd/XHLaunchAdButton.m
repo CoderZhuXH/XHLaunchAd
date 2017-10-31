@@ -32,9 +32,7 @@
     if (self) {
         
         _skipType = skipType;
-        
         CGFloat y = XH_IPHONEX ? 44 : 20;
-        
         //环形
         if(skipType == SkipTypeRoundTime || skipType ==SkipTypeRoundText || skipType == SkipTypeRoundProgressTime || skipType == SkipTypeRoundProgressText){
             self.frame = CGRectMake(XH_ScreenW-55,y, 42, 42);

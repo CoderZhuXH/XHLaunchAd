@@ -29,6 +29,7 @@
 
 ### 更新记录:  
 
+*   2017.11.1 -- v3.8.2 -->1.优化、已知问题修复...
 *   2017.10.18 -- v3.8.0 -->1.增加对LaunchScreen.storyboard支持,2.修复pod导入编译报错问题...
 *   2017.10.11 -- v3.7.1 -->1.批量缓存接口增加结果回调...
 *   2017.10.09 -- v3.7.0 -->1.增加几种清除缓存的接口,2.增加几种倒计时按钮类型,3.已知问题优化与修复...
@@ -73,7 +74,7 @@
 //1.使用默认配置初始化
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
@@ -90,7 +91,7 @@
 //2.自定义配置初始化
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
@@ -130,7 +131,7 @@
 ```objc
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
 	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
@@ -164,7 +165,7 @@
 ```objc
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
  	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
@@ -222,7 +223,7 @@
 ```objc
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
     //1.使用默认配置初始化
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];
@@ -239,7 +240,7 @@
 ```objc   
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
 	//2.自定义配置
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
@@ -277,7 +278,7 @@
 ```objc
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
@@ -311,7 +312,7 @@
 ```objc
 
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchImagesSource:LaunchImagesSourceLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
  	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示

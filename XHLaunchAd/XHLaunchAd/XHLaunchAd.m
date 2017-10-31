@@ -20,8 +20,7 @@ typedef NS_ENUM(NSInteger, XHLaunchAdType) {
 };
 
 static NSInteger defaultWaitDataDuration = 3;
-static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
-
+static  SourceType _sourceType = SourceTypeLaunchImage;
 @interface XHLaunchAd()
 
 @property(nonatomic,assign)XHLaunchAdType launchAdType;
@@ -34,7 +33,6 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 @property(nonatomic,copy)dispatch_source_t waitDataTimer;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
 @property (nonatomic, assign) BOOL detailPageShowing;
-
 @end
 
 @implementation XHLaunchAd
@@ -43,9 +41,8 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     XHLaunchAd *launchAd = [XHLaunchAd shareLaunchAd];
     launchAd.waitDataDuration = waitDataDuration;
 }
-
-+(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource{
-    _launchImagesSource = launchImagesSource;
++(void)setLaunchSourceType:(SourceType)sourceType{
+    _sourceType = sourceType;
 }
 
 +(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration{
@@ -87,11 +84,6 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     if(urlArray.count==0) return;
     [[XHLaunchAdDownloader sharedDownloader] downLoadVideoAndCacheWithURLArray:urlArray completed:completedBlock];
 }
-
-+(void)skipAction{
-    [[XHLaunchAd shareLaunchAd] removeAndAnimated:YES];
-}
-
 +(void)removeAndAnimated:(BOOL)animated{
     [[XHLaunchAd shareLaunchAd] removeAndAnimated:animated];
 }
@@ -137,6 +129,25 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 
 +(NSString *)cacheVideoURLString{
     return [XHLaunchAdCache getCacheVideoUrl];
+}
+
+#pragma mark - 过期
+/** 请使用removeAndAnimated: */
++(void)skipAction{
+    [[XHLaunchAd shareLaunchAd] removeAndAnimated:YES];
+}
+/** 请使用setLaunchSourceType: */
++(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource{
+    switch (launchImagesSource) {
+        case LaunchImagesSourceLaunchImage:
+            _sourceType = SourceTypeLaunchImage;
+            break;
+        case LaunchImagesSourceLaunchScreen:
+            _sourceType = SourceTypeLaunchScreen;
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - private
@@ -195,11 +206,12 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     window.alpha = 1;
     _window = window;
     /** 添加launchImageView */
-    [_window addSubview:[[XHLaunchImageView alloc] initWithLaunchImagesSource:_launchImagesSource]];
+    [_window addSubview:[[XHLaunchImageView alloc] initWithSourceType:_sourceType]];
 }
 
 /**图片*/
 -(void)setupImageAdForConfiguration:(XHLaunchImageAdConfiguration *)configuration{
+    if(_window == nil) return;
     [self removeSubViewsExceptLaunchAdImageView];
     XHLaunchAdImageView *adImageView = [[XHLaunchAdImageView alloc] init];
     [_window addSubview:adImageView];
@@ -285,8 +297,11 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 
 /**视频*/
 -(void)setupVideoAdForConfiguration:(XHLaunchVideoAdConfiguration *)configuration{
+    if(_window ==nil) return;
     [self removeSubViewsExceptLaunchAdImageView];
-    if(_adVideoView == nil) _adVideoView = [[XHLaunchAdVideoView alloc] init];
+    if(!_adVideoView){
+        _adVideoView = [[XHLaunchAdVideoView alloc] init];
+    }
     [_window addSubview:_adVideoView];
     /** frame */
     if(configuration.frame.size.width>0&&configuration.frame.size.height>0) _adVideoView.frame = configuration.frame;
@@ -415,13 +430,13 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     NSTimeInterval period = 1.0;
     dispatch_source_set_timer(_waitDataTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_waitDataTimer, ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(duration==0){
-                DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
+        if(duration==0){
+            DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [self removeAndAnimateDefault]; return ;
-            }
-            duration--;
-        });
+            });
+        }
+        duration--;
     });
     dispatch_resume(_waitDataTimer);
 }
