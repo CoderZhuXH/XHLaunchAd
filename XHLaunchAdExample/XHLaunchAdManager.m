@@ -469,7 +469,7 @@
  */
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString{
     
-    NSLog(@"广告点击");
+    NSLog(@"广告点击事件");
     WebViewController *VC = [[WebViewController alloc] init];
     VC.URLString = openURLString;
     //此处不要直接取keyWindow
@@ -514,6 +514,7 @@
     
      NSLog(@"广告显示完成");
 }
+
 
 /**
  如果你想用SDWebImage等框架加载网络广告图片,请实现此代理(实现此方法后,图片缓存将不受XHLaunchAd管理)

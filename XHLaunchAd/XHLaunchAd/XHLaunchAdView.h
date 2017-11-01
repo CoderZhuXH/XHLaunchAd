@@ -27,14 +27,14 @@
 #pragma mark - image
 @interface XHLaunchAdImageView : FLAnimatedImageView
 
-@property (nonatomic, copy) void(^click)(void);
+@property (nonatomic, copy) void(^click)(CGPoint point);
 
 @end
 
 #pragma mark - video
 @interface XHLaunchAdVideoView : UIView
 
-@property (nonatomic, copy) void(^click)(void);
+@property (nonatomic, copy) void(^click)(CGPoint point);
 @property (strong, nonatomic) MPMoviePlayerController *videoPlayer;
 @property(nonatomic,assign)MPMovieScalingMode videoScalingMode;
 @property (nonatomic, assign) BOOL videoCycleOnce;

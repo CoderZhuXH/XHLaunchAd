@@ -26,7 +26,8 @@
 }
 
 -(void)tap:(UIGestureRecognizer *)gestureRecognizer{
-    if(self.click) self.click();
+    CGPoint point = [gestureRecognizer locationInView:self];
+    if(self.click) self.click(point);
 }
 
 @end
@@ -52,7 +53,8 @@
 }
 
 -(void)tap:(UIGestureRecognizer *)gestureRecognizer{
-     if(self.click) self.click();
+    CGPoint point = [gestureRecognizer locationInView:self];
+    if(self.click) self.click(point);
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{

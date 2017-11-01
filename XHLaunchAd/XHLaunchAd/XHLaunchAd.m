@@ -33,6 +33,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 @property(nonatomic,copy)dispatch_source_t waitDataTimer;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
 @property (nonatomic, assign) BOOL detailPageShowing;
+@property(nonatomic,assign) CGPoint clickPoint;
+
+
 @end
 
 @implementation XHLaunchAd
@@ -274,8 +277,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     /** customView */
     if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
     XHWeakSelf
-    adImageView.click = ^(){
-        [weakSelf click];
+    adImageView.click = ^(CGPoint point) {
+        [weakSelf clickAndPoint:point];
     };
 }
 
@@ -356,8 +359,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     /** customView */
     if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
     XHWeakSelf
-    _adVideoView.click = ^(){
-        [weakSelf click];
+    _adVideoView.click = ^(CGPoint point) {
+        [weakSelf clickAndPoint:point];
     };
 }
 
@@ -400,7 +403,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     }
 }
 
--(void)click{
+-(void)clickAndPoint:(CGPoint)point{
+    self.clickPoint = point;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
