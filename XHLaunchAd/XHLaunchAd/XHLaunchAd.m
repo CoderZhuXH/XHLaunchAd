@@ -406,9 +406,14 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 -(void)clickAndPoint:(CGPoint)point{
     self.clickPoint = point;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
-    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
-        [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:clickPoint:)] && configuration.openURLString.length) {
+        [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString clickPoint:point];
         [self removeAndAnimateDefault];
+    }else{
+        if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
+            [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
+            [self removeAndAnimateDefault];
+        }
     }
 }
 
@@ -437,7 +442,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         if(duration==0){
             DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self removeAndAnimateDefault]; return ;
+                [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdWaitDataDurationArriveNotification object:nil];
+                [self removeAndAnimateDefault];
+                return ;
             });
         }
         duration--;

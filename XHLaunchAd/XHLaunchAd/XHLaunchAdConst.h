@@ -68,6 +68,7 @@ view = nil;\
 UIKIT_EXTERN NSString *const XHCacheImageUrlStringKey;
 UIKIT_EXTERN NSString *const XHCacheVideoUrlStringKey;
 
+UIKIT_EXTERN NSString *const XHLaunchAdWaitDataDurationArriveNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageWillShowNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageShowFinishNotification;
 
