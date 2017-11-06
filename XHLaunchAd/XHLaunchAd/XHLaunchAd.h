@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
 
 /**
- *  广告点击 - 并回调点击位置(此方法与上面方法无本质区别,只是多回调一个参数[点击位置],二者实现其一即可,注意:若两者都实现,只有次方法会被执行)
+ *  广告点击 - 并回调点击位置(此方法与上面方法无本质区别,只是多回调一个参数[点击位置],二者实现其一即可,注意:若两者都实现,只有此方法会被执行)
 
  *  @param launchAd launchAd
  *  @param openURLString 打开页面地址
