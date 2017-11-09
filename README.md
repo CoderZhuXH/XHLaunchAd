@@ -61,8 +61,8 @@
 
 ### 静态/动态广告-图片/视频广告
 
-![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot00.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot01.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot02.gif)
-![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot04.gif) ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot05.gif)  ![image](https://github.com/CoderZhuXH/XHLaunchAd/blob/master/ScreenShot/ScreenShot06.gif)
+![](/ScreenShot/ScreenShot00.gif) ![](/ScreenShot/ScreenShot01.gif) ![](/ScreenShot/ScreenShot02.gif)
+![](/ScreenShot/ScreenShot04.gif) ![](/ScreenShot/ScreenShot05.gif)  ![](/ScreenShot/ScreenShot06.gif)
 
 ## 使用方法
 
