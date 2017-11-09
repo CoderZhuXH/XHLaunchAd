@@ -16,20 +16,21 @@
 #import "WebViewController.h"
 
 /** 以下连接供测试使用 */
+
 /** 静态图 */
-#define imageURL1 @"http://c.hiphotos.baidu.com/image/pic/item/4d086e061d950a7b78c4e5d703d162d9f2d3c934.jpg"
-#define imageURL2 @"http://d.hiphotos.baidu.com/image/pic/item/f7246b600c3387444834846f580fd9f9d72aa034.jpg"
-#define imageURL3 @"http://d.hiphotos.baidu.com/image/pic/item/64380cd7912397dd624a32175082b2b7d0a287f6.jpg"
-#define imageURL4 @"http://d.hiphotos.baidu.com/image/pic/item/14ce36d3d539b60071473204e150352ac75cb7f3.jpg"
+#define imageURL1 @"http://yun.it7090.com/image/XHLaunchAd/pic01.jpg"
+#define imageURL2 @"http://yun.it7090.com/image/XHLaunchAd/pic02.jpg"
+#define imageURL3 @"http://yun.it7090.com/image/XHLaunchAd/pic03.jpg"
+#define imageURL4 @"http://yun.it7090.com/image/XHLaunchAd/pic04.jpg"
 
 /** 动态图 */
-#define imageURL5 @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"
-#define imageURL6 @"http://p1.bqimg.com/567571/4ce1a4c844b09201.gif"
+#define imageURL5 @"http://yun.it7090.com/image/XHLaunchAd/pic05.gif"
+#define imageURL6 @"http://yun.it7090.com/image/XHLaunchAd/pic06.gif"
 
 /** 视频链接 */
-#define videoURL1 @"http://ohnzw6ag6.bkt.clouddn.com/video0.mp4"
-#define videoURL2  @"http://120.25.226.186:32812/resources/videos/minion_01.mp4"
-#define videoURL3 @"http://ohnzw6ag6.bkt.clouddn.com/video1.mp4"
+#define videoURL1 @"http://yun.it7090.com/video/XHLaunchAd/video01.mp4"
+#define videoURL2 @"http://yun.it7090.com/video/XHLaunchAd/video02.mp4"
+#define videoURL3 @"http://yun.it7090.com/video/XHLaunchAd/video03.mp4"
 
 @interface XHLaunchAdManager()<XHLaunchAdDelegate>
 
@@ -116,7 +117,7 @@
         //广告停留时间
         imageAdconfiguration.duration = model.duration;
         //广告frame
-        imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
+        imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8);
         //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
         imageAdconfiguration.imageNameOrURLString = model.content;
         //设置GIF动图是否只循环播放一次(仅对动图设置有效)
@@ -125,7 +126,7 @@
         //为告展示效果更好,可设置为XHLaunchAdImageCacheInBackground,先缓存,下次显示
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
         //图片填充模式
-        imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
+        imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill;
         //广告点击打开链接
         imageAdconfiguration.openURLString = model.openUrl;
         //广告显示完成动画
@@ -163,13 +164,13 @@
     //广告停留时间
     imageAdconfiguration.duration = 5;
     //广告frame
-    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
+    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = @"image2.jpg";
     //设置GIF动图是否只循环播放一次(仅对动图设置有效)
     imageAdconfiguration.GIFImageCycleOnce = NO;
     //图片填充模式
-    imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
+    imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill;
     //广告点击打开链接
     imageAdconfiguration.openURLString = @"http://www.it7090.com";
     //广告显示完成动画
@@ -213,7 +214,7 @@
         //广告停留时间
         videoAdconfiguration.duration = model.duration;
         //广告frame
-        videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/model.width*model.height);
+        videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         //广告视频URLString/或本地视频名(请带上后缀)
         //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
