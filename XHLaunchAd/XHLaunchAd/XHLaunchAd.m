@@ -443,7 +443,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdWaitDataDurationArriveNotification object:nil];
-                [self removeAndAnimateDefault];
+                [self remove];
                 return ;
             });
         }
