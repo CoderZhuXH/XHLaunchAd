@@ -409,9 +409,8 @@ typedef NS_ENUM(NSInteger,SkipType) {
 
 ### 2.点击事件
 ```objc
-
 /**
-广告点击事件回调
+广告点击事件代理方法
 */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
 
@@ -581,7 +580,7 @@ configuration.customSkipView = [self customSkipView];
 
 ```
 
-### 7.代理方法
+### 7.其它代理方法
 ```objc
 /**
  *  图片本地读取/或下载完成回调
@@ -643,7 +642,7 @@ configuration.customSkipView = [self customSkipView];
 ####    2.为什么我启动的时候会先进入根控制器后,再显示广告页面?
 *   请确认下,你在请求广告数据之前,是否有调用`[XHLaunchAd setWaitDataDuration:3];`方法设置数据等待时间
 
-####    3.为什么有时候我会卡在启动广告页面(偶现)?
+####    3.为什么有时候我会卡在启动广告页面不动(偶现)?
 *   此情况多出现在网络环境差时,请检查你程序启动时,有没有掉用同步方法或同步请求,(例如:环信SDK同步登录等),
 *   XHLaunchAd采用GCD定时器,不受主线程阻塞影响,但是GCD倒计时到后,广告移除实在主线程中进行的.
 
