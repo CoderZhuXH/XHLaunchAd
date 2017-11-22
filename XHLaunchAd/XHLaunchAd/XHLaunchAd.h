@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.8.4
-//  发布:2017.11.14
+//  版本:3.9.0
+//  发布:2017.11.22
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -29,29 +29,13 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
- *  广告点击
- *
- *  @param launchAd      launchAd
- *  @param openURLString  打开页面地址
- */
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
+ 广告点击
 
-/**
- *  广告点击 - 并回调点击位置(此方法与上面方法无本质区别,只是多回调一个参数[点击位置],二者实现其一即可,注意:若两者都实现,只有此方法会被执行)
-
- *  @param launchAd launchAd
- *  @param openURLString 打开页面地址
- *  @param clickPoint 点击位置
+ @param launchAd launchAd
+ @param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)
+ @param clickPoint 点击位置
  */
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint;
-
-/**
- *  图片本地读取/或下载完成回调
- *
- *  @param launchAd  XHLaunchAd
- *  @param image 读取/下载的image
- */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image;
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
 
 /**
  *  图片本地读取/或下载完成回调
@@ -104,9 +88,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd launchAdImageView:(UIImageView *)launchAdImageView URL:(NSURL *)url;
 
-#pragma mark - 过期
-/** 请使用xhLaunchAdShowFinish: */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
+
+#pragma mark - 过期-XHLaunchAdDelegate
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenPageModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenPageModel:clickPoint:");
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image XHLaunchAdDeprecated("请使用xhLaunchAd:imageDownLoadFinish:imageData:");
+-(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd XHLaunchAdDeprecated("请使用xhLaunchAdShowFinish:");
+
 @end
 
 @interface XHLaunchAd : NSObject
@@ -283,9 +271,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSString *)xhLaunchAdCachePath;
 
 #pragma mark - 过期
-/** 请使用removeAndAnimated: */
 +(void)skipAction XHLaunchAdDeprecated("请使用removeAndAnimated:");
-/** 请使用setLaunchSourceType: */
 +(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource XHLaunchAdDeprecated("请使用setLaunchSourceType:");
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
+#define XHLaunchAdDeprecated(instead) __attribute__((deprecated(instead)))
 
 #define XHWeakSelf __weak typeof(self) weakSelf = self;
 
@@ -72,5 +72,5 @@ UIKIT_EXTERN NSString *const XHLaunchAdWaitDataDurationArriveNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageWillShowNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageShowFinishNotification;
 
-
+UIKIT_EXTERN BOOL XHLaunchAdPrefersHomeIndicatorAutoHidden;
 

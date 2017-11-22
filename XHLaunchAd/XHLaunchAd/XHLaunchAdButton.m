@@ -11,6 +11,10 @@
 
 /** Progress颜色 */
 #define RoundProgressColor  [UIColor whiteColor]
+/** 背景色 */
+#define BackgroundColor [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]
+/** 字体颜色 */
+#define FontColor  [UIColor whiteColor]
 
 #define SkipTitle @"跳过"
 /** 倒计时单位 */
@@ -72,13 +76,11 @@
                 break;
             case SkipTypeRoundProgressTime:{
                 [self addSubview:self.timeLab];
-                self.timeLab.backgroundColor = [UIColor clearColor];
                 [self.timeLab.layer addSublayer:self.roundLayer];
             }
                 break;
             case SkipTypeRoundProgressText:{
                 [self addSubview:self.timeLab];
-                self.timeLab.backgroundColor = [UIColor clearColor];
                 [self.timeLab.layer addSublayer:self.roundLayer];
             }
                 break;
@@ -92,8 +94,8 @@
 -(UILabel *)timeLab{
     if(_timeLab ==  nil){
         _timeLab = [[UILabel alloc] initWithFrame:self.bounds];
-        _timeLab.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-        _timeLab.textColor = [UIColor whiteColor];
+        _timeLab.textColor = FontColor;
+        _timeLab.backgroundColor = BackgroundColor;
         _timeLab.layer.masksToBounds = YES;
         _timeLab.textAlignment = NSTextAlignmentCenter;
         _timeLab.font = [UIFont systemFontOfSize:13.5];
@@ -105,7 +107,7 @@
 -(CAShapeLayer *)roundLayer{
     if(_roundLayer==nil){
         _roundLayer = [CAShapeLayer layer];
-        _roundLayer.fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4].CGColor;
+        _roundLayer.fillColor = BackgroundColor.CGColor;
         _roundLayer.strokeColor = RoundProgressColor.CGColor;
         _roundLayer.lineCap = kCALineCapRound;
         _roundLayer.lineJoin = kCALineJoinRound;

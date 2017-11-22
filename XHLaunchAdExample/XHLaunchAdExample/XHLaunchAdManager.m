@@ -9,7 +9,6 @@
 
 #import "XHLaunchAdManager.h"
 #import "XHLaunchAd.h"
-#import "AppDelegate.h"
 #import "Network.h"
 #import "LaunchAdModel.h"
 #import "UIViewController+Nav.h"
@@ -67,7 +66,7 @@
     
     //1.******图片开屏广告 - 网络数据******
     //[self example01];
-
+    
     //2.******图片开屏广告 - 本地数据******
     [self example02];
     
@@ -90,7 +89,7 @@
     
     //批量下载并缓存视频
     //[self batchDownloadVideoAndCache];
-
+    
 }
 
 #pragma mark - 图片开屏广告-网络数据-示例
@@ -127,8 +126,8 @@
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
         //图片填充模式
         imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill;
-        //广告点击打开链接
-        imageAdconfiguration.openURLString = model.openUrl;
+        //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+        imageAdconfiguration.openModel = model.openUrl;
         //广告显示完成动画
         imageAdconfiguration.showFinishAnimate =ShowFinishAnimateLite;
         //广告显示完成动画时间
@@ -157,7 +156,7 @@
 -(void)example02{
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
@@ -171,8 +170,8 @@
     imageAdconfiguration.GIFImageCycleOnce = NO;
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill;
-    //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.it7090.com";
+    //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+    imageAdconfiguration.openModel = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate =ShowFinishAnimateFlipFromLeft;
     //广告显示完成动画时间
@@ -193,7 +192,7 @@
 -(void)example03{
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-      [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
     //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
@@ -222,8 +221,8 @@
         videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
         //是否只循环播放一次
         videoAdconfiguration.videoCycleOnce = NO;
-        //广告点击打开链接
-        videoAdconfiguration.openURLString = model.openUrl;
+        //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+        videoAdconfiguration.openModel = model.openUrl;
         //广告显示完成动画
         videoAdconfiguration.showFinishAnimate =ShowFinishAnimateFadein;
         //广告显示完成动画时间
@@ -252,7 +251,7 @@
 -(void)example04{
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-      [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //配置广告数据
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
@@ -266,8 +265,8 @@
     videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
     //是否只循环播放一次
     videoAdconfiguration.videoCycleOnce = NO;
-    //广告点击打开链接
-    videoAdconfiguration.openURLString =  @"http://www.it7090.com";
+    //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+    videoAdconfiguration.openModel =  @"http://www.it7090.com";
     //跳过按钮类型
     videoAdconfiguration.skipButtonType = SkipTypeRoundProgressTime;
     //广告显示完成动画
@@ -290,7 +289,7 @@
     //2.自定义一个跳过的view 赋值给configuration.customSkipView属性便可替换默认跳过按钮,如下:
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //配置广告数据
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
@@ -304,8 +303,8 @@
     imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
     //图片填充模式
     imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
-    //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.it7090.com";
+    //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+    imageAdconfiguration.openModel = @"http://www.it7090.com";
     //广告显示完成动画
     imageAdconfiguration.showFinishAnimate = ShowFinishAnimateFlipFromLeft;
     //广告显示完成动画时间
@@ -339,8 +338,8 @@
     XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration defaultConfiguration];
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
     imageAdconfiguration.imageNameOrURLString = imageURL3;
-    //广告点击打开链接
-    imageAdconfiguration.openURLString = @"http://www.it7090.com";
+    //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+    imageAdconfiguration.openModel = @"http://www.it7090.com";
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
 }
 
@@ -356,8 +355,8 @@
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration defaultConfiguration];
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
-    ////广告点击打开链接
-    videoAdconfiguration.openURLString = @"http://www.it7090.com";
+    //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
+    videoAdconfiguration.openModel = @"http://www.it7090.com";
     [XHLaunchAd videoAdWithVideoAdConfiguration:videoAdconfiguration delegate:self];
 }
 
@@ -369,7 +368,7 @@
     
     [XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3],[NSURL URLWithString:imageURL4],[NSURL URLWithString:imageURL5]] completed:^(NSArray * _Nonnull completedArray) {
         
-         /** 打印批量下载缓存结果 */
+        /** 打印批量下载缓存结果 */
         
         //url:图片的url字符串,
         //result:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
@@ -383,15 +382,15 @@
 -(void)batchDownloadVideoAndCache{
     
     [XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]] completed:^(NSArray * _Nonnull completedArray) {
-
-      /** 打印批量下载缓存结果 */
         
-     //url:视频的url字符串,
-     //result:0表示该视频下载失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
-     NSLog(@"批量下载缓存结果 = %@" ,completedArray);
-     
-     }];
-
+        /** 打印批量下载缓存结果 */
+        
+        //url:视频的url字符串,
+        //result:0表示该视频下载失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
+        NSLog(@"批量下载缓存结果 = %@" ,completedArray);
+        
+    }];
+    
 }
 
 #pragma mark - subViews
@@ -464,18 +463,23 @@
 }
 
 #pragma mark - XHLaunchAd delegate - 其他
-
 /**
- *  广告点击事件 回调
+ 广告点击事件回调
  */
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString{
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
     
     NSLog(@"广告点击事件");
+    /**
+     openModel即配置广告数据设置的点击广告时打开页面参数
+     */
+    
     WebViewController *VC = [[WebViewController alloc] init];
-    VC.URLString = openURLString;
+    NSString *urlString = (NSString *)openModel;
+    VC.URLString = urlString;
     //此处不要直接取keyWindow
     UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
     [rootVC.myNavigationController pushViewController:VC animated:YES];
+    
 }
 
 /**
@@ -513,12 +517,11 @@
  */
 -(void)xhLaunchAdShowFinish:(XHLaunchAd *)launchAd{
     
-     NSLog(@"广告显示完成");
+    NSLog(@"广告显示完成");
 }
 
-
 /**
- 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理(实现此方法后,图片缓存将不受XHLaunchAd管理)
+ 如果你想用SDWebImage等框架加载网络广告图片,请实现此代理(注意:实现此方法后,图片缓存将不受XHLaunchAd管理)
  
  @param launchAd          XHLaunchAd
  @param launchAdImageView launchAdImageView

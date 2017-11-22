@@ -34,20 +34,16 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
 @property (nonatomic, assign) BOOL detailPageShowing;
 @property(nonatomic,assign) CGPoint clickPoint;
-
-
 @end
 
 @implementation XHLaunchAd
-
++(void)setLaunchSourceType:(SourceType)sourceType{
+    _sourceType = sourceType;
+}
 +(void)setWaitDataDuration:(NSInteger )waitDataDuration{
     XHLaunchAd *launchAd = [XHLaunchAd shareLaunchAd];
     launchAd.waitDataDuration = waitDataDuration;
 }
-+(void)setLaunchSourceType:(SourceType)sourceType{
-    _sourceType = sourceType;
-}
-
 +(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration{
     return [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:nil];
 }
@@ -232,9 +228,12 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             XHWeakSelf
             [adImageView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil GIFImageCycleOnce:configuration.GIFImageCycleOnce options:configuration.imageOption completed:^(UIImage *image,NSData *imageData,NSError *error,NSURL *url){
                 if(!error){
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
                     if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
                         [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
                     }
+#pragma clang diagnostic pop
                     if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:imageData:)]) {
                         [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image imageData:imageData];
                     }
@@ -264,9 +263,12 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                 adImageView.animatedImage = nil;
                 adImageView.image = [UIImage imageWithData:data];
             }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self imageDownLoadFinish:[UIImage imageWithData:data]];
             }
+#pragma clang diagnostic pop
         }else{
             XHLaunchAdLog(@"未设置广告图片");
         }
@@ -399,21 +401,27 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     if(animated){
         [self removeAndAnimate];
     }else{
-        [self removeAndAnimateDefault];
+        [self remove];
     }
 }
 
 -(void)clickAndPoint:(CGPoint)point{
     self.clickPoint = point;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
+        [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
+        [self removeAndAnimateDefault];
+    }
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:clickPoint:)] && configuration.openURLString.length) {
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString clickPoint:point];
         [self removeAndAnimateDefault];
-    }else{
-        if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
-            [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
-            [self removeAndAnimateDefault];
-        }
+    }
+#pragma clang diagnostic pop
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenModel:clickPoint:)] && configuration.openModel) {
+        [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
+        [self removeAndAnimateDefault];
     }
 }
 
@@ -561,9 +569,13 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     }];
     _window.hidden = YES;
     _window = nil;
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if ([self.delegate respondsToSelector:@selector(xhLaunchShowFinish:)]) {
         [self.delegate xhLaunchShowFinish:self];
     }
+#pragma clang diagnostic pop
     if ([self.delegate respondsToSelector:@selector(xhLaunchAdShowFinish:)]) {
         [self.delegate xhLaunchAdShowFinish:self];
     }
