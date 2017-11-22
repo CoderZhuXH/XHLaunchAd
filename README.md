@@ -644,7 +644,7 @@ configuration.customSkipView = [self customSkipView];
 
 ####    3.为什么有时候我会卡在启动广告页面不动(偶现)?
 *   此情况多出现在网络环境差时,请检查你程序启动时,有没有掉用同步方法或同步请求,(例如:环信SDK同步登录等),
-*   XHLaunchAd采用GCD定时器,不受主线程阻塞影响,但是GCD倒计时到后,广告移除实在主线程中进行的.
+*   XHLaunchAd采用GCD定时器,不受主线程阻塞影响,但更新UI是在主线程中进行的.
 
 
 ##  依赖
