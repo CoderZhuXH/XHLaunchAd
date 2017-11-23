@@ -90,8 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark - 过期-XHLaunchAdDelegate
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenPageModel:clickPoint:");
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenPageModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenModel:clickPoint:");
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image XHLaunchAdDeprecated("请使用xhLaunchAd:imageDownLoadFinish:imageData:");
 -(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd XHLaunchAdDeprecated("请使用xhLaunchAdShowFinish:");
 
