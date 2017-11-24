@@ -68,9 +68,9 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property (nonatomic,assign) BOOL showEnterForeground;
 
 /**
- *  点击打开页面地址<已过期,请使用openPageModel>
+ *  点击打开页面地址(请使用openModel,点击事件代理方法请对应使用xhLaunchAd:clickAndOpenModel:clickPoint:)
  */
-@property(nonatomic,copy)NSString *openURLString XHLaunchAdDeprecated("请使用openModel");
+@property(nonatomic,copy)NSString *openURLString XHLaunchAdDeprecated("请使用openModel,点击事件代理方法请对应使用xhLaunchAd:clickAndOpenModel:clickPoint:");
 
 /**
  *  点击打开页面参数
