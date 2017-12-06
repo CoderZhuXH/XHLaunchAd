@@ -16,18 +16,18 @@
 @implementation XHLaunchImageView
 
 #pragma mark - private
-- (instancetype)initWithLaunchImagesSource:(LaunchImagesSource)source{
+- (instancetype)initWithSourceType:(SourceType)sourceType{
     self = [super init];
     if (self) {
         self.frame = [UIScreen mainScreen].bounds;
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor whiteColor];
-        switch (source) {
-            case LaunchImagesSourceLaunchImage:{
+        switch (sourceType) {
+            case SourceTypeLaunchImage:{
                 self.image = [self imageFromLaunchImage];
             }
                 break;
-            case LaunchImagesSourceLaunchScreen:{
+            case SourceTypeLaunchScreen:{
                 self.image = [self imageFromLaunchScreen];
             }
                 break;

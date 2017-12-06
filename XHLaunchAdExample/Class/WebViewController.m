@@ -47,7 +47,8 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"←" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height-64)];
+    CGFloat navbarHeight = [UIApplication sharedApplication].statusBarFrame.size.height + 44;
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, navbarHeight, self.view.bounds.size.width, self.view.bounds.size.height-navbarHeight)];
     self.webView.scrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:self.webView];
     
@@ -57,7 +58,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:(self.URLString)]];
     [self.webView loadRequest:request];
     
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 62, self.view.bounds.size.width, 2)];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, navbarHeight-2, self.view.bounds.size.width, 2)];
     self.progressView.progressViewStyle = UIProgressViewStyleBar;
     self.progressView.progressTintColor = [UIColor blackColor];
     [self.navigationController.view addSubview:self.progressView];

@@ -29,19 +29,19 @@
 		4B6CF22B1D0E902800F76B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B6CF22A1D0E902800F76B47 /* Assets.xcassets */; };
 		4B6CF23E1D0E904900F76B47 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CF2371D0E904900F76B47 /* ViewController.m */; };
 		4BF7C69A1D6EE13000F1E5BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF7C6981D6EE13000F1E5BE /* LaunchScreen.storyboard */; };
-		608F512A1F6FB67A00C414CE /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F510F1F6FB67A00C414CE /* FLAnimatedImage.m */; };
-		608F512B1F6FB67A00C414CE /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51111F6FB67A00C414CE /* FLAnimatedImageView.m */; };
-		608F512D1F6FB67A00C414CE /* XHLaunchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51151F6FB67A00C414CE /* XHLaunchAd.m */; };
-		608F512E1F6FB67A00C414CE /* XHLaunchAdButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51171F6FB67A00C414CE /* XHLaunchAdButton.m */; };
-		608F512F1F6FB67A00C414CE /* XHLaunchAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51191F6FB67A00C414CE /* XHLaunchAdCache.m */; };
-		608F51301F6FB67A00C414CE /* XHLaunchAdConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F511B1F6FB67A00C414CE /* XHLaunchAdConfiguration.m */; };
-		608F51311F6FB67A00C414CE /* XHLaunchAdConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F511D1F6FB67A00C414CE /* XHLaunchAdConst.m */; };
-		608F51321F6FB67A00C414CE /* XHLaunchAdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F511F1F6FB67A00C414CE /* XHLaunchAdController.m */; };
-		608F51331F6FB67A00C414CE /* XHLaunchAdDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51211F6FB67A00C414CE /* XHLaunchAdDownloader.m */; };
-		608F51341F6FB67A00C414CE /* XHLaunchAdImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51231F6FB67A00C414CE /* XHLaunchAdImageManager.m */; };
-		608F51351F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51251F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.m */; };
-		608F51361F6FB67A00C414CE /* XHLaunchAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51271F6FB67A00C414CE /* XHLaunchAdView.m */; };
-		608F51371F6FB67A00C414CE /* XHLaunchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F51291F6FB67A00C414CE /* XHLaunchImageView.m */; };
+		609041751FB53C1500E4EBA6 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6090415B1FB53C1500E4EBA6 /* FLAnimatedImage.m */; };
+		609041761FB53C1500E4EBA6 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6090415D1FB53C1500E4EBA6 /* FLAnimatedImageView.m */; };
+		609041771FB53C1500E4EBA6 /* XHLaunchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041601FB53C1500E4EBA6 /* XHLaunchAd.m */; };
+		609041781FB53C1500E4EBA6 /* XHLaunchAdButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041621FB53C1500E4EBA6 /* XHLaunchAdButton.m */; };
+		609041791FB53C1500E4EBA6 /* XHLaunchAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041641FB53C1500E4EBA6 /* XHLaunchAdCache.m */; };
+		6090417A1FB53C1500E4EBA6 /* XHLaunchAdConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041661FB53C1500E4EBA6 /* XHLaunchAdConfiguration.m */; };
+		6090417B1FB53C1500E4EBA6 /* XHLaunchAdConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041681FB53C1500E4EBA6 /* XHLaunchAdConst.m */; };
+		6090417C1FB53C1500E4EBA6 /* XHLaunchAdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6090416A1FB53C1500E4EBA6 /* XHLaunchAdController.m */; };
+		6090417D1FB53C1500E4EBA6 /* XHLaunchAdDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6090416C1FB53C1500E4EBA6 /* XHLaunchAdDownloader.m */; };
+		6090417E1FB53C1500E4EBA6 /* XHLaunchAdImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6090416E1FB53C1500E4EBA6 /* XHLaunchAdImageManager.m */; };
+		6090417F1FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041701FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.m */; };
+		609041801FB53C1500E4EBA6 /* XHLaunchAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041721FB53C1500E4EBA6 /* XHLaunchAdView.m */; };
+		609041811FB53C1500E4EBA6 /* XHLaunchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 609041741FB53C1500E4EBA6 /* XHLaunchImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,32 +76,32 @@
 		4B6CF2361D0E904900F76B47 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4B6CF2371D0E904900F76B47 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4BF7C6991D6EE13000F1E5BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		608F510E1F6FB67A00C414CE /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
-		608F510F1F6FB67A00C414CE /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
-		608F51101F6FB67A00C414CE /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
-		608F51111F6FB67A00C414CE /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
-		608F51141F6FB67A00C414CE /* XHLaunchAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAd.h; sourceTree = "<group>"; };
-		608F51151F6FB67A00C414CE /* XHLaunchAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAd.m; sourceTree = "<group>"; };
-		608F51161F6FB67A00C414CE /* XHLaunchAdButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdButton.h; sourceTree = "<group>"; };
-		608F51171F6FB67A00C414CE /* XHLaunchAdButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdButton.m; sourceTree = "<group>"; };
-		608F51181F6FB67A00C414CE /* XHLaunchAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdCache.h; sourceTree = "<group>"; };
-		608F51191F6FB67A00C414CE /* XHLaunchAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdCache.m; sourceTree = "<group>"; };
-		608F511A1F6FB67A00C414CE /* XHLaunchAdConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdConfiguration.h; sourceTree = "<group>"; };
-		608F511B1F6FB67A00C414CE /* XHLaunchAdConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdConfiguration.m; sourceTree = "<group>"; };
-		608F511C1F6FB67A00C414CE /* XHLaunchAdConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdConst.h; sourceTree = "<group>"; };
-		608F511D1F6FB67A00C414CE /* XHLaunchAdConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdConst.m; sourceTree = "<group>"; };
-		608F511E1F6FB67A00C414CE /* XHLaunchAdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdController.h; sourceTree = "<group>"; };
-		608F511F1F6FB67A00C414CE /* XHLaunchAdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdController.m; sourceTree = "<group>"; };
-		608F51201F6FB67A00C414CE /* XHLaunchAdDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdDownloader.h; sourceTree = "<group>"; };
-		608F51211F6FB67A00C414CE /* XHLaunchAdDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdDownloader.m; sourceTree = "<group>"; };
-		608F51221F6FB67A00C414CE /* XHLaunchAdImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdImageManager.h; sourceTree = "<group>"; };
-		608F51231F6FB67A00C414CE /* XHLaunchAdImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdImageManager.m; sourceTree = "<group>"; };
-		608F51241F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XHLaunchAdImageView+XHLaunchAdCache.h"; sourceTree = "<group>"; };
-		608F51251F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XHLaunchAdImageView+XHLaunchAdCache.m"; sourceTree = "<group>"; };
-		608F51261F6FB67A00C414CE /* XHLaunchAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdView.h; sourceTree = "<group>"; };
-		608F51271F6FB67A00C414CE /* XHLaunchAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdView.m; sourceTree = "<group>"; };
-		608F51281F6FB67A00C414CE /* XHLaunchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchImageView.h; sourceTree = "<group>"; };
-		608F51291F6FB67A00C414CE /* XHLaunchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchImageView.m; sourceTree = "<group>"; };
+		6090415A1FB53C1500E4EBA6 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		6090415B1FB53C1500E4EBA6 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		6090415C1FB53C1500E4EBA6 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		6090415D1FB53C1500E4EBA6 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		6090415F1FB53C1500E4EBA6 /* XHLaunchAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAd.h; sourceTree = "<group>"; };
+		609041601FB53C1500E4EBA6 /* XHLaunchAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAd.m; sourceTree = "<group>"; };
+		609041611FB53C1500E4EBA6 /* XHLaunchAdButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdButton.h; sourceTree = "<group>"; };
+		609041621FB53C1500E4EBA6 /* XHLaunchAdButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdButton.m; sourceTree = "<group>"; };
+		609041631FB53C1500E4EBA6 /* XHLaunchAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdCache.h; sourceTree = "<group>"; };
+		609041641FB53C1500E4EBA6 /* XHLaunchAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdCache.m; sourceTree = "<group>"; };
+		609041651FB53C1500E4EBA6 /* XHLaunchAdConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdConfiguration.h; sourceTree = "<group>"; };
+		609041661FB53C1500E4EBA6 /* XHLaunchAdConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdConfiguration.m; sourceTree = "<group>"; };
+		609041671FB53C1500E4EBA6 /* XHLaunchAdConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdConst.h; sourceTree = "<group>"; };
+		609041681FB53C1500E4EBA6 /* XHLaunchAdConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdConst.m; sourceTree = "<group>"; };
+		609041691FB53C1500E4EBA6 /* XHLaunchAdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdController.h; sourceTree = "<group>"; };
+		6090416A1FB53C1500E4EBA6 /* XHLaunchAdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdController.m; sourceTree = "<group>"; };
+		6090416B1FB53C1500E4EBA6 /* XHLaunchAdDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdDownloader.h; sourceTree = "<group>"; };
+		6090416C1FB53C1500E4EBA6 /* XHLaunchAdDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdDownloader.m; sourceTree = "<group>"; };
+		6090416D1FB53C1500E4EBA6 /* XHLaunchAdImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdImageManager.h; sourceTree = "<group>"; };
+		6090416E1FB53C1500E4EBA6 /* XHLaunchAdImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdImageManager.m; sourceTree = "<group>"; };
+		6090416F1FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XHLaunchAdImageView+XHLaunchAdCache.h"; sourceTree = "<group>"; };
+		609041701FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XHLaunchAdImageView+XHLaunchAdCache.m"; sourceTree = "<group>"; };
+		609041711FB53C1500E4EBA6 /* XHLaunchAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAdView.h; sourceTree = "<group>"; };
+		609041721FB53C1500E4EBA6 /* XHLaunchAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdView.m; sourceTree = "<group>"; };
+		609041731FB53C1500E4EBA6 /* XHLaunchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchImageView.h; sourceTree = "<group>"; };
+		609041741FB53C1500E4EBA6 /* XHLaunchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,8 +174,8 @@
 			children = (
 				4B63D26B1DF2DDAD00FA2520 /* Source */,
 				4B6CF2351D0E904900F76B47 /* Class */,
+				609041571FB53C1500E4EBA6 /* XHLaunchAd */,
 				4B6CF2231D0E902800F76B47 /* XHLaunchAdExample */,
-				608F510B1F6FB67A00C414CE /* XHLaunchAd */,
 				4B6CF2221D0E902800F76B47 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,59 +225,60 @@
 			path = Class;
 			sourceTree = "<group>";
 		};
-		608F510B1F6FB67A00C414CE /* XHLaunchAd */ = {
+		609041571FB53C1500E4EBA6 /* XHLaunchAd */ = {
 			isa = PBXGroup;
 			children = (
-				608F510C1F6FB67A00C414CE /* Lib */,
-				608F51131F6FB67A00C414CE /* XHLaunchAd */,
+				609041581FB53C1500E4EBA6 /* Lib */,
+				6090415E1FB53C1500E4EBA6 /* XHLaunchAd */,
 			);
-			path = XHLaunchAd;
+			name = XHLaunchAd;
+			path = ../XHLaunchAd;
 			sourceTree = "<group>";
 		};
-		608F510C1F6FB67A00C414CE /* Lib */ = {
+		609041581FB53C1500E4EBA6 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				608F510D1F6FB67A00C414CE /* FLAnimatedImage */,
+				609041591FB53C1500E4EBA6 /* FLAnimatedImage */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
 		};
-		608F510D1F6FB67A00C414CE /* FLAnimatedImage */ = {
+		609041591FB53C1500E4EBA6 /* FLAnimatedImage */ = {
 			isa = PBXGroup;
 			children = (
-				608F510E1F6FB67A00C414CE /* FLAnimatedImage.h */,
-				608F510F1F6FB67A00C414CE /* FLAnimatedImage.m */,
-				608F51101F6FB67A00C414CE /* FLAnimatedImageView.h */,
-				608F51111F6FB67A00C414CE /* FLAnimatedImageView.m */,
+				6090415A1FB53C1500E4EBA6 /* FLAnimatedImage.h */,
+				6090415B1FB53C1500E4EBA6 /* FLAnimatedImage.m */,
+				6090415C1FB53C1500E4EBA6 /* FLAnimatedImageView.h */,
+				6090415D1FB53C1500E4EBA6 /* FLAnimatedImageView.m */,
 			);
 			path = FLAnimatedImage;
 			sourceTree = "<group>";
 		};
-		608F51131F6FB67A00C414CE /* XHLaunchAd */ = {
+		6090415E1FB53C1500E4EBA6 /* XHLaunchAd */ = {
 			isa = PBXGroup;
 			children = (
-				608F51141F6FB67A00C414CE /* XHLaunchAd.h */,
-				608F51151F6FB67A00C414CE /* XHLaunchAd.m */,
-				608F51161F6FB67A00C414CE /* XHLaunchAdButton.h */,
-				608F51171F6FB67A00C414CE /* XHLaunchAdButton.m */,
-				608F51181F6FB67A00C414CE /* XHLaunchAdCache.h */,
-				608F51191F6FB67A00C414CE /* XHLaunchAdCache.m */,
-				608F511A1F6FB67A00C414CE /* XHLaunchAdConfiguration.h */,
-				608F511B1F6FB67A00C414CE /* XHLaunchAdConfiguration.m */,
-				608F511C1F6FB67A00C414CE /* XHLaunchAdConst.h */,
-				608F511D1F6FB67A00C414CE /* XHLaunchAdConst.m */,
-				608F511E1F6FB67A00C414CE /* XHLaunchAdController.h */,
-				608F511F1F6FB67A00C414CE /* XHLaunchAdController.m */,
-				608F51201F6FB67A00C414CE /* XHLaunchAdDownloader.h */,
-				608F51211F6FB67A00C414CE /* XHLaunchAdDownloader.m */,
-				608F51221F6FB67A00C414CE /* XHLaunchAdImageManager.h */,
-				608F51231F6FB67A00C414CE /* XHLaunchAdImageManager.m */,
-				608F51241F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.h */,
-				608F51251F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.m */,
-				608F51261F6FB67A00C414CE /* XHLaunchAdView.h */,
-				608F51271F6FB67A00C414CE /* XHLaunchAdView.m */,
-				608F51281F6FB67A00C414CE /* XHLaunchImageView.h */,
-				608F51291F6FB67A00C414CE /* XHLaunchImageView.m */,
+				6090415F1FB53C1500E4EBA6 /* XHLaunchAd.h */,
+				609041601FB53C1500E4EBA6 /* XHLaunchAd.m */,
+				609041611FB53C1500E4EBA6 /* XHLaunchAdButton.h */,
+				609041621FB53C1500E4EBA6 /* XHLaunchAdButton.m */,
+				609041631FB53C1500E4EBA6 /* XHLaunchAdCache.h */,
+				609041641FB53C1500E4EBA6 /* XHLaunchAdCache.m */,
+				609041651FB53C1500E4EBA6 /* XHLaunchAdConfiguration.h */,
+				609041661FB53C1500E4EBA6 /* XHLaunchAdConfiguration.m */,
+				609041671FB53C1500E4EBA6 /* XHLaunchAdConst.h */,
+				609041681FB53C1500E4EBA6 /* XHLaunchAdConst.m */,
+				609041691FB53C1500E4EBA6 /* XHLaunchAdController.h */,
+				6090416A1FB53C1500E4EBA6 /* XHLaunchAdController.m */,
+				6090416B1FB53C1500E4EBA6 /* XHLaunchAdDownloader.h */,
+				6090416C1FB53C1500E4EBA6 /* XHLaunchAdDownloader.m */,
+				6090416D1FB53C1500E4EBA6 /* XHLaunchAdImageManager.h */,
+				6090416E1FB53C1500E4EBA6 /* XHLaunchAdImageManager.m */,
+				6090416F1FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.h */,
+				609041701FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.m */,
+				609041711FB53C1500E4EBA6 /* XHLaunchAdView.h */,
+				609041721FB53C1500E4EBA6 /* XHLaunchAdView.m */,
+				609041731FB53C1500E4EBA6 /* XHLaunchImageView.h */,
+				609041741FB53C1500E4EBA6 /* XHLaunchImageView.m */,
 			);
 			path = XHLaunchAd;
 			sourceTree = "<group>";
@@ -308,7 +309,7 @@
 		4B6CF2191D0E902800F76B47 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = CoderZhuXH;
 				TargetAttributes = {
 					4B6CF2201D0E902800F76B47 = {
@@ -364,27 +365,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				608F51301F6FB67A00C414CE /* XHLaunchAdConfiguration.m in Sources */,
+				6090417A1FB53C1500E4EBA6 /* XHLaunchAdConfiguration.m in Sources */,
 				4B5C5C291D8118A700C18148 /* WebViewController.m in Sources */,
-				608F51351F6FB67A00C414CE /* XHLaunchAdImageView+XHLaunchAdCache.m in Sources */,
-				608F51371F6FB67A00C414CE /* XHLaunchImageView.m in Sources */,
+				6090417F1FB53C1500E4EBA6 /* XHLaunchAdImageView+XHLaunchAdCache.m in Sources */,
+				609041811FB53C1500E4EBA6 /* XHLaunchImageView.m in Sources */,
 				4B6CF23E1D0E904900F76B47 /* ViewController.m in Sources */,
-				608F512D1F6FB67A00C414CE /* XHLaunchAd.m in Sources */,
+				609041771FB53C1500E4EBA6 /* XHLaunchAd.m in Sources */,
 				4B1BBA961DF44C1D00E7839E /* LaunchAdModel.m in Sources */,
-				608F51321F6FB67A00C414CE /* XHLaunchAdController.m in Sources */,
-				608F51311F6FB67A00C414CE /* XHLaunchAdConst.m in Sources */,
-				608F51341F6FB67A00C414CE /* XHLaunchAdImageManager.m in Sources */,
+				6090417C1FB53C1500E4EBA6 /* XHLaunchAdController.m in Sources */,
+				6090417B1FB53C1500E4EBA6 /* XHLaunchAdConst.m in Sources */,
+				6090417E1FB53C1500E4EBA6 /* XHLaunchAdImageManager.m in Sources */,
 				4B6CF2291D0E902800F76B47 /* AppDelegate.m in Sources */,
-				608F51361F6FB67A00C414CE /* XHLaunchAdView.m in Sources */,
-				608F51331F6FB67A00C414CE /* XHLaunchAdDownloader.m in Sources */,
-				608F512E1F6FB67A00C414CE /* XHLaunchAdButton.m in Sources */,
-				608F512F1F6FB67A00C414CE /* XHLaunchAdCache.m in Sources */,
+				609041801FB53C1500E4EBA6 /* XHLaunchAdView.m in Sources */,
+				6090417D1FB53C1500E4EBA6 /* XHLaunchAdDownloader.m in Sources */,
+				609041781FB53C1500E4EBA6 /* XHLaunchAdButton.m in Sources */,
+				609041791FB53C1500E4EBA6 /* XHLaunchAdCache.m in Sources */,
 				4B6CF2261D0E902800F76B47 /* main.m in Sources */,
 				0C6E81B41EB9763F005F61C1 /* XHLaunchAdManager.m in Sources */,
 				0C6E81BC1EB986C3005F61C1 /* UIViewController+Nav.m in Sources */,
-				608F512B1F6FB67A00C414CE /* FLAnimatedImageView.m in Sources */,
+				609041761FB53C1500E4EBA6 /* FLAnimatedImageView.m in Sources */,
 				4B27845F1DF545EA00417DB2 /* Network.m in Sources */,
-				608F512A1F6FB67A00C414CE /* FLAnimatedImage.m in Sources */,
+				609041751FB53C1500E4EBA6 /* FLAnimatedImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,14 +412,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -457,14 +464,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

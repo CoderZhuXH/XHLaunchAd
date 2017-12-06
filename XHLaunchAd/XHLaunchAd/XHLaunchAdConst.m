@@ -11,5 +11,8 @@
 NSString *const XHCacheImageUrlStringKey = @"XHCacheImageUrlStringKey";
 NSString *const XHCacheVideoUrlStringKey = @"XHCacheVideoUrlStringKey";
 
+NSString *const XHLaunchAdWaitDataDurationArriveNotification = @"XHLaunchAdWaitDataDurationArriveNotification";
 NSString *const XHLaunchAdDetailPageWillShowNotification = @"XHLaunchAdDetailPageWillShowNotification";
 NSString *const XHLaunchAdDetailPageShowFinishNotification = @"XHLaunchAdDetailPageShowFinishNotification";
+
+BOOL XHLaunchAdPrefersHomeIndicatorAutoHidden = NO;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define XHLaunchAdDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
+#define XHLaunchAdDeprecated(instead) __attribute__((deprecated(instead)))
 
 #define XHWeakSelf __weak typeof(self) weakSelf = self;
 
@@ -21,7 +21,7 @@
 #define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
 
 #ifdef DEBUG
-#define XHLaunchAdLog(...) NSLog(__VA_ARGS__)
+#define XHLaunchAdLog(FORMAT, ...) fprintf(stderr,"%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 #else
 #define XHLaunchAdLog(...)
 #endif
@@ -68,8 +68,9 @@ view = nil;\
 UIKIT_EXTERN NSString *const XHCacheImageUrlStringKey;
 UIKIT_EXTERN NSString *const XHCacheVideoUrlStringKey;
 
+UIKIT_EXTERN NSString *const XHLaunchAdWaitDataDurationArriveNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageWillShowNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageShowFinishNotification;
 
-
+UIKIT_EXTERN BOOL XHLaunchAdPrefersHomeIndicatorAutoHidden;
 

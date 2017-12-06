@@ -9,13 +9,18 @@
 #import <UIKit/UIKit.h>
 
 /** 启动图来源 */
+typedef NS_ENUM(NSInteger,SourceType) {
+    SourceTypeLaunchImage = 1,//LaunchImage(default)
+    SourceTypeLaunchScreen = 2,//LaunchScreen.storyboard
+};
+
 typedef NS_ENUM(NSInteger,LaunchImagesSource){
-    LaunchImagesSourceLaunchImage = 1,//LaunchAdImage (default)
-    LaunchImagesSourceLaunchScreen = 2,//LaunchScreen.storyboard
+    LaunchImagesSourceLaunchImage = 1,
+    LaunchImagesSourceLaunchScreen = 2,
 };
 
 @interface XHLaunchImageView : UIImageView
 
-- (instancetype)initWithLaunchImagesSource:(LaunchImagesSource)source;
+- (instancetype)initWithSourceType:(SourceType)sourceType;
 
 @end

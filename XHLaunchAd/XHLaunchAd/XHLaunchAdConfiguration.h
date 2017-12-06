@@ -11,6 +11,7 @@
 #import "XHLaunchAdButton.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "XHLaunchAdImageManager.h"
+#import "XHLaunchAdConst.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -67,9 +68,14 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property (nonatomic,assign) BOOL showEnterForeground;
 
 /**
- *  点击打开页面地址
+ *  点击打开页面地址(请使用openModel,点击事件代理方法请对应使用xhLaunchAd:clickAndOpenModel:clickPoint:)
  */
-@property(nonatomic,copy)NSString *openURLString;
+@property(nonatomic,copy)NSString *openURLString XHLaunchAdDeprecated("请使用openModel,点击事件代理方法请对应使用xhLaunchAd:clickAndOpenModel:clickPoint:");
+
+/**
+ *  点击打开页面参数
+ */
+@property (nonatomic, strong) id openModel;
 
 /**
  *  自定义跳过按钮(若定义此视图,将会自定替换系统跳过按钮)

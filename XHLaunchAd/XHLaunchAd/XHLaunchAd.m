@@ -20,8 +20,7 @@ typedef NS_ENUM(NSInteger, XHLaunchAdType) {
 };
 
 static NSInteger defaultWaitDataDuration = 3;
-static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
-
+static  SourceType _sourceType = SourceTypeLaunchImage;
 @interface XHLaunchAd()
 
 @property(nonatomic,assign)XHLaunchAdType launchAdType;
@@ -34,20 +33,17 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 @property(nonatomic,copy)dispatch_source_t waitDataTimer;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
 @property (nonatomic, assign) BOOL detailPageShowing;
-
+@property(nonatomic,assign) CGPoint clickPoint;
 @end
 
 @implementation XHLaunchAd
-
++(void)setLaunchSourceType:(SourceType)sourceType{
+    _sourceType = sourceType;
+}
 +(void)setWaitDataDuration:(NSInteger )waitDataDuration{
     XHLaunchAd *launchAd = [XHLaunchAd shareLaunchAd];
     launchAd.waitDataDuration = waitDataDuration;
 }
-
-+(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource{
-    _launchImagesSource = launchImagesSource;
-}
-
 +(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration{
     return [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:nil];
 }
@@ -87,11 +83,6 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     if(urlArray.count==0) return;
     [[XHLaunchAdDownloader sharedDownloader] downLoadVideoAndCacheWithURLArray:urlArray completed:completedBlock];
 }
-
-+(void)skipAction{
-    [[XHLaunchAd shareLaunchAd] removeAndAnimated:YES];
-}
-
 +(void)removeAndAnimated:(BOOL)animated{
     [[XHLaunchAd shareLaunchAd] removeAndAnimated:animated];
 }
@@ -137,6 +128,25 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 
 +(NSString *)cacheVideoURLString{
     return [XHLaunchAdCache getCacheVideoUrl];
+}
+
+#pragma mark - 过期
+/** 请使用removeAndAnimated: */
++(void)skipAction{
+    [[XHLaunchAd shareLaunchAd] removeAndAnimated:YES];
+}
+/** 请使用setLaunchSourceType: */
++(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource{
+    switch (launchImagesSource) {
+        case LaunchImagesSourceLaunchImage:
+            _sourceType = SourceTypeLaunchImage;
+            break;
+        case LaunchImagesSourceLaunchScreen:
+            _sourceType = SourceTypeLaunchScreen;
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - private
@@ -195,11 +205,12 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     window.alpha = 1;
     _window = window;
     /** 添加launchImageView */
-    [_window addSubview:[[XHLaunchImageView alloc] initWithLaunchImagesSource:_launchImagesSource]];
+    [_window addSubview:[[XHLaunchImageView alloc] initWithSourceType:_sourceType]];
 }
 
 /**图片*/
 -(void)setupImageAdForConfiguration:(XHLaunchImageAdConfiguration *)configuration{
+    if(_window == nil) return;
     [self removeSubViewsExceptLaunchAdImageView];
     XHLaunchAdImageView *adImageView = [[XHLaunchAdImageView alloc] init];
     [_window addSubview:adImageView];
@@ -216,11 +227,18 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
             if(!configuration.imageOption) configuration.imageOption = XHLaunchAdImageDefault;
             XHWeakSelf
             [adImageView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil GIFImageCycleOnce:configuration.GIFImageCycleOnce options:configuration.imageOption completed:^(UIImage *image,NSData *imageData,NSError *error,NSURL *url){
-                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
-                    [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
-                }
-                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:imageData:)]) {
-                    [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image imageData:imageData];
+                if(!error){
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+                    if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
+                        [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image];
+                    }
+#pragma clang diagnostic pop
+                    if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:imageData:)]) {
+                        [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image imageData:imageData];
+                    }
+                }else{
+                    //下载错误
                 }
             }];
             if(configuration.imageOption == XHLaunchAdImageCacheInBackground){
@@ -245,9 +263,12 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
                 adImageView.animatedImage = nil;
                 adImageView.image = [UIImage imageWithData:data];
             }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self imageDownLoadFinish:[UIImage imageWithData:data]];
             }
+#pragma clang diagnostic pop
         }else{
             XHLaunchAdLog(@"未设置广告图片");
         }
@@ -258,8 +279,8 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     /** customView */
     if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
     XHWeakSelf
-    adImageView.click = ^(){
-        [weakSelf click];
+    adImageView.click = ^(CGPoint point) {
+        [weakSelf clickAndPoint:point];
     };
 }
 
@@ -281,8 +302,11 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
 
 /**视频*/
 -(void)setupVideoAdForConfiguration:(XHLaunchVideoAdConfiguration *)configuration{
+    if(_window ==nil) return;
     [self removeSubViewsExceptLaunchAdImageView];
-    if(_adVideoView == nil) _adVideoView = [[XHLaunchAdVideoView alloc] init];
+    if(!_adVideoView){
+        _adVideoView = [[XHLaunchAdVideoView alloc] init];
+    }
     [_window addSubview:_adVideoView];
     /** frame */
     if(configuration.frame.size.width>0&&configuration.frame.size.height>0) _adVideoView.frame = configuration.frame;
@@ -305,8 +329,10 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
                     [weakSelf.delegate xhLaunchAd:self videoDownLoadProgress:current/(float)total total:total current:current];
                 }
             }  completed:^(NSURL * _Nullable location, NSError * _Nullable error){
-                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]){
-                    [weakSelf.delegate xhLaunchAd:self videoDownLoadFinish:location];
+                if(!error){
+                    if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]){
+                        [weakSelf.delegate xhLaunchAd:self videoDownLoadFinish:location];
+                    }
                 }
             }];
             /***视频缓存,提前显示完成 */
@@ -335,8 +361,8 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     /** customView */
     if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
     XHWeakSelf
-    _adVideoView.click = ^(){
-        [weakSelf click];
+    _adVideoView.click = ^(CGPoint point) {
+        [weakSelf clickAndPoint:point];
     };
 }
 
@@ -375,14 +401,26 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     if(animated){
         [self removeAndAnimate];
     }else{
-        [self removeAndAnimateDefault];
+        [self remove];
     }
 }
 
--(void)click{
+-(void)clickAndPoint:(CGPoint)point{
+    self.clickPoint = point;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
+        [self removeAndAnimateDefault];
+    }
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:clickPoint:)] && configuration.openURLString.length) {
+        [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString clickPoint:point];
+        [self removeAndAnimateDefault];
+    }
+#pragma clang diagnostic pop
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenModel:clickPoint:)] && configuration.openModel) {
+        [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
         [self removeAndAnimateDefault];
     }
 }
@@ -409,13 +447,15 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     NSTimeInterval period = 1.0;
     dispatch_source_set_timer(_waitDataTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_waitDataTimer, ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(duration==0){
-                DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
-                [self removeAndAnimateDefault]; return ;
-            }
-            duration--;
-        });
+        if(duration==0){
+            DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdWaitDataDurationArriveNotification object:nil];
+                [self remove];
+                return ;
+            });
+        }
+        duration--;
     });
     dispatch_resume(_waitDataTimer);
 }
@@ -529,9 +569,13 @@ static LaunchImagesSource _launchImagesSource = LaunchImagesSourceLaunchImage;
     }];
     _window.hidden = YES;
     _window = nil;
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if ([self.delegate respondsToSelector:@selector(xhLaunchShowFinish:)]) {
         [self.delegate xhLaunchShowFinish:self];
     }
+#pragma clang diagnostic pop
     if ([self.delegate respondsToSelector:@selector(xhLaunchAdShowFinish:)]) {
         [self.delegate xhLaunchAdShowFinish:self];
     }

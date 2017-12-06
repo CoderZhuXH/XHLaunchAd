@@ -84,11 +84,13 @@ didFinishDownloadingToURL:(NSURL *)location {
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     if (error){
-        XHLaunchAdLog(@"error=%@",error);
-        if (_completedBlock) {
-            _completedBlock(nil,nil, error);
-        }
-        _completedBlock = nil;
+        XHLaunchAdLog(@"error = %@",error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_completedBlock) {
+                _completedBlock(nil,nil, error);
+            }
+            _completedBlock = nil;
+        });
     }
 }
 
@@ -136,7 +138,7 @@ didFinishDownloadingToURL:(NSURL *)location {
     NSError *error=nil;
     NSURL *toURL = [NSURL fileURLWithPath:[XHLaunchAdCache videoPathWithURL:self.url]];
     [[NSFileManager defaultManager] copyItemAtURL:location toURL:toURL error:&error];
-    if(error)  XHLaunchAdLog(@"error=%@",error);
+    if(error)  XHLaunchAdLog(@"error = %@",error);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_completedBlock) {
             if(!error){
@@ -165,11 +167,14 @@ didFinishDownloadingToURL:(NSURL *)location {
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    if (error) {
-        if (_completedBlock) {
-            _completedBlock(nil, error);
-        }
-        _completedBlock = nil;
+    if (error){
+        XHLaunchAdLog(@"error = %@",error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_completedBlock) {
+                _completedBlock(nil, error);
+            }
+            _completedBlock = nil;
+        });
     }
 }
 @end

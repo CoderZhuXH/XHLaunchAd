@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.8.1
-//  发布:2017.10.20
+//  版本:3.9.1
+//  发布:2017.11.24
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -29,20 +29,13 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
- *  广告点击
- *
- *  @param launchAd      launchAd
- *  @param openURLString  打开页面地址
- */
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString;
+ 广告点击
 
-/**
- *  图片本地读取/或下载完成回调
- *
- *  @param launchAd  XHLaunchAd
- *  @param image 读取/下载的image
+ @param launchAd launchAd
+ @param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)
+ @param clickPoint 点击位置
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image;
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
 
 /**
  *  图片本地读取/或下载完成回调
@@ -95,9 +88,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd launchAdImageView:(UIImageView *)launchAdImageView URL:(NSURL *)url;
 
-#pragma mark - 过期
-/** 请使用xhLaunchAdShowFinish: */
--(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd;
+
+#pragma mark - 过期-XHLaunchAdDelegate
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenModel:clickPoint:");
+-(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image XHLaunchAdDeprecated("请使用xhLaunchAd:imageDownLoadFinish:imageData:");
+-(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd XHLaunchAdDeprecated("请使用xhLaunchAdShowFinish:");
+
 @end
 
 @interface XHLaunchAd : NSObject
@@ -105,11 +102,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign) id<XHLaunchAdDelegate> delegate;
 
 /**
- 设置你工程的启动页使用的是LaunchImage还是LaunchScreen(default:LaunchImagesSourceLaunchImage)
+ 设置你工程的启动页使用的是LaunchImage还是LaunchScreen(default:SourceTypeLaunchImage)
  注意:请在设置等待数据及配置广告数据前调用此方法
- @param launchImagesSource launchImagesSource
+ @param sourceType sourceType
  */
-+(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource;
++(void)setLaunchSourceType:(SourceType)sourceType;
 
 /**
  *  设置等待数据源时间(建议值:3)
@@ -187,11 +184,6 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)downLoadVideoAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray completed:(nullable XHLaunchAdBatchDownLoadAndCacheCompletedBlock)completedBlock;
 
 #pragma mark - Action
-
-/**
- *  跳过按钮事件
- */
-+(void)skipAction XHLaunchAdDeprecated("请使用removeAndAnimated:");
 
 /**
  手动移除广告
@@ -277,6 +269,10 @@ NS_ASSUME_NONNULL_BEGIN
  *  缓存路径
  */
 +(NSString *)xhLaunchAdCachePath;
+
+#pragma mark - 过期
++(void)skipAction XHLaunchAdDeprecated("请使用removeAndAnimated:");
++(void)setLaunchImagesSource:(LaunchImagesSource)launchImagesSource XHLaunchAdDeprecated("请使用setLaunchSourceType:");
 
 @end
 NS_ASSUME_NONNULL_END

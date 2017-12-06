@@ -7,6 +7,7 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdController.h"
+#import "XHLaunchAdConst.h"
 
 @interface XHLaunchAdController ()
 
@@ -17,4 +18,9 @@
 -(BOOL)shouldAutorotate{
     return NO;
 }
+
+-(BOOL)prefersHomeIndicatorAutoHidden{
+    return XHLaunchAdPrefersHomeIndicatorAutoHidden;
+}
+
 @end
