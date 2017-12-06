@@ -18,6 +18,7 @@
     if (self) {
         self.userInteractionEnabled = YES;
         self.frame = [UIScreen mainScreen].bounds;
+        self.clipsToBounds = YES;
         self.layer.masksToBounds = YES;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [self addGestureRecognizer:tapGesture];
