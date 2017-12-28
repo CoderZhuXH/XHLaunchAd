@@ -257,7 +257,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                 adImageView.image = nil;
                 __weak typeof(adImageView) w_adImageView = adImageView;
                 adImageView.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
-                    if(configuration.GIFImageCycleOnce) [w_adImageView stopAnimating];
+                    if(configuration.GIFImageCycleOnce){
+                        [w_adImageView stopAnimating];
+                        XHLaunchAdLog(@"GIF不循环,播放完成");
+                        [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdGIFImageCycleOnceFinishNotification object:nil];
+                    }
                 };
             }else{
                 adImageView.animatedImage = nil;

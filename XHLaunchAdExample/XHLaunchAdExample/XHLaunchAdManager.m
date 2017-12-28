@@ -86,13 +86,12 @@
     /** 7.如果你想提前批量缓存图片/视频请看下面两个示例 */
     //[self batchDownloadImageAndCache]; //批量下载并缓存图片
     //[self batchDownloadVideoAndCache]; //批量下载并缓存视频
-
+    
 }
 
 #pragma mark - 图片开屏广告-网络数据-示例
 //图片开屏广告 - 网络数据
 -(void)example01{
-    
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
