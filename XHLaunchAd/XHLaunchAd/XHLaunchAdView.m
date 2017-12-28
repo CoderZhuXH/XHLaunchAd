@@ -74,8 +74,6 @@
         _videoPlayer.repeatMode = MPMovieRepeatModeOne;
         _videoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
-        _videoPlayer.view.backgroundColor = [UIColor whiteColor];
-        _videoPlayer.backgroundView.backgroundColor = [UIColor whiteColor];
     }
     return _videoPlayer;
 }

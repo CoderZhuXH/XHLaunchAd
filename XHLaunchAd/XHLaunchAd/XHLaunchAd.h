@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.9.1
-//  发布:2017.11.24
+//  版本:3.9.2
+//  发布:2017.12.28
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -133,6 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return XHLaunchAd
  */
 +(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration delegate:(nullable id)delegate;
+
 /**
  *  视频开屏广告数据配置
  *

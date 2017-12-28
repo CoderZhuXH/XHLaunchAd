@@ -14,7 +14,6 @@
 @end
 
 @implementation XHLaunchImageView
-
 #pragma mark - private
 - (instancetype)initWithSourceType:(SourceType)sourceType{
     self = [super init];
