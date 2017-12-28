@@ -7,10 +7,12 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdView.h"
+#import "XHLaunchAdConst.h"
 
 @interface XHLaunchAdImageView ()
 
 @end
+
 @implementation XHLaunchAdImageView
 
 - (id)init{
@@ -38,7 +40,9 @@
 @end
 
 @implementation XHLaunchAdVideoView
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (instancetype)init{
     self = [super init];
     if (self) {
@@ -94,9 +98,13 @@
 -(void)setVideoCycleOnce:(BOOL)videoCycleOnce{
     _videoCycleOnce = videoCycleOnce;
     if(videoCycleOnce){
-         _videoPlayer.repeatMode = MPMovieRepeatModeNone;
+         _videoPlayer.repeatMode = MPMovieRepeatModeNone;//不重复播放,播放一次
+        [[NSNotificationCenter defaultCenter] addObserverForName:MPMoviePlayerPlaybackDidFinishNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            XHLaunchAdLog(@"video不循环,播放完成");
+            [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdVideoCycleOnceFinishNotification object:nil];
+        }];
     }else{
-         _videoPlayer.repeatMode = MPMovieRepeatModeOne;
+         _videoPlayer.repeatMode = MPMovieRepeatModeOne;//循环播放
     }
 }
 
