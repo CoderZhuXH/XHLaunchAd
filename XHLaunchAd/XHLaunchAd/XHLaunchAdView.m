@@ -61,26 +61,48 @@
     return YES;
 }
 
+
 -(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode{
     _videoScalingMode = videoScalingMode;
-    _videoPlayer.scalingMode  = videoScalingMode;
+    switch (_videoScalingMode) {
+        case MPMovieScalingModeNone:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        }
+            break;
+        case MPMovieScalingModeAspectFit:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        }
+            break;
+        case MPMovieScalingModeAspectFill:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        }
+            break;
+        case MPMovieScalingModeFill:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResize;
+        }
+            break;
+        default:
+            break;
+    }
 }
 
--(MPMoviePlayerController *)videoPlayer{
+-(AVPlayerViewController *)videoPlayer{
     if(_videoPlayer==nil){
-        _videoPlayer = [[MPMoviePlayerController alloc] init];
-        _videoPlayer.shouldAutoplay = YES;
-        [_videoPlayer setControlStyle:MPMovieControlStyleNone];
-        _videoPlayer.repeatMode = MPMovieRepeatModeOne;
-        _videoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
+        _videoPlayer = [[AVPlayerViewController alloc] init];
+//        _videoPlayer.shouldAutoplay = YES;
+        _videoPlayer.showsPlaybackControls = NO;
+        _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
+        //注册通知
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(runLoopTheMovie:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+
     }
     return _videoPlayer;
 }
 
 -(void)stopVideoPlayer{
     if(_videoPlayer==nil) return;
-    [_videoPlayer stop];
+    [_videoPlayer.player pause];
     [_videoPlayer.view removeFromSuperview];
     _videoPlayer = nil;
 }
@@ -91,13 +113,26 @@
     _videoPlayer.view.frame = self.frame;
 }
 
--(void)setVideoCycleOnce:(BOOL)videoCycleOnce{
-    _videoCycleOnce = videoCycleOnce;
-    if(videoCycleOnce){
-         _videoPlayer.repeatMode = MPMovieRepeatModeNone;
+- (void)setContentURL:(NSURL *)contentURL {
+    _contentURL = contentURL;
+    AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:contentURL options:nil];
+    AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+    self.videoPlayer.player = [AVPlayer playerWithPlayerItem:playerItem];
+}
+
+#pragma mark - notification
+- (void)runLoopTheMovie:(NSNotification *)notification{
+    if(_videoCycleOnce){
+        //注册的通知  可以自动把 AVPlayerItem 对象传过来，只要接收一下就OK
+        [(AVPlayerItem *)[notification object] seekToTime:kCMTimeZero];
+        [self.videoPlayer.player play];
     }else{
-         _videoPlayer.repeatMode = MPMovieRepeatModeOne;
+
     }
+}
+
+-(void)removeNotification{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

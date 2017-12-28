@@ -320,8 +320,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
-            _adVideoView.videoPlayer.contentURL = pathURL;
-            [_adVideoView.videoPlayer prepareToPlay];
+            _adVideoView.contentURL = pathURL;
+            [_adVideoView.videoPlayer.player play];
         }else{
             XHWeakSelf
             [[XHLaunchAdDownloader sharedDownloader] downloadVideoWithURL:[NSURL URLWithString:configuration.videoNameOrURLString] progress:^(unsigned long long total, unsigned long long current) {
@@ -346,8 +346,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                 if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                     [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
                 }
-                _adVideoView.videoPlayer.contentURL = pathURL;;
-                [_adVideoView.videoPlayer prepareToPlay];
+                _adVideoView.contentURL = pathURL;
+                [_adVideoView.videoPlayer.player play];
             }else{
                 XHLaunchAdLog(@"Error:广告视频未找到,请检查名称是否有误!");
             }
