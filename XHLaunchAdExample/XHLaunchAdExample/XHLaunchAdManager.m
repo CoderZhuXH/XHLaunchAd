@@ -68,13 +68,13 @@
     //[self example01];
     
     /** 2.图片开屏广告 - 本地数据 */
-    //[self example02];
+    [self example02];
     
     /** 3.视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行) */
     //[self example03];
     
     /** 4.视频开屏广告 - 本地数据 */
-    [self example04];
+    //[self example04];
     
     /** 5.如需自定义跳过按钮,请看这个示例 */
     //[self example05];
