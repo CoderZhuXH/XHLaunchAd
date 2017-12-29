@@ -85,7 +85,7 @@
 }
 
 +(NSString *)videoPathWithFileName:(NSString *)videoFileName{
-    if(videoFileName.length<=0) return nil;
+    if(videoFileName.length==0) return nil;
     return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:[self videoNameWithURL:[NSURL URLWithString:videoFileName]]];
 }
 
@@ -259,6 +259,7 @@
     } else {
         [self addDoNotBackupAttribute:path];
     }
+    XHLaunchAdLog(@"XHLaunchAdCachePath = %@",path);
 }
 
 + (void)addDoNotBackupAttribute:(NSString *)path {

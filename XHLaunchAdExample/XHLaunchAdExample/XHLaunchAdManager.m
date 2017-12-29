@@ -214,7 +214,7 @@
         //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
         //视频缩放模式
-        videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+        videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
         //是否只循环播放一次
         videoAdconfiguration.videoCycleOnce = NO;
         //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
@@ -247,7 +247,7 @@
 -(void)example04{
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchScreen];
     
     //配置广告数据
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
@@ -256,9 +256,9 @@
     //广告frame
     videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
-    videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
+    videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
     //视频填充模式
-    videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+    videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
     //是否只循环播放一次
     videoAdconfiguration.videoCycleOnce = NO;
     //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
@@ -497,7 +497,7 @@
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadFinish:(NSURL *)pathURL{
     
-    NSLog(@"video下载/加载完成/保存path = %@",pathURL.absoluteString);
+    NSLog(@"video下载/加载完成 path = %@",pathURL.absoluteString);
 }
 
 /**

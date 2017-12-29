@@ -37,6 +37,7 @@
 @property (nonatomic, copy) void(^click)(CGPoint point);
 @property (nonatomic, strong) AVPlayerViewController *videoPlayer;
 @property (nonatomic, assign) MPMovieScalingMode videoScalingMode;
+@property (nonatomic, assign) AVLayerVideoGravity videoGravity;
 @property (nonatomic, assign) BOOL videoCycleOnce;
 @property (nonatomic, strong) NSURL *contentURL;
 
