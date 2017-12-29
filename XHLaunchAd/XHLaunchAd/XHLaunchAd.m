@@ -332,8 +332,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
-            _adVideoView.videoPlayer.contentURL = pathURL;
-            [_adVideoView.videoPlayer prepareToPlay];
+            _adVideoView.contentURL = pathURL;
+            [_adVideoView.videoPlayer.player play];
         }else{
             XHWeakSelf
             [[XHLaunchAdDownloader sharedDownloader] downloadVideoWithURL:[NSURL URLWithString:configuration.videoNameOrURLString] progress:^(unsigned long long total, unsigned long long current) {
@@ -352,14 +352,21 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         }
     }else{
         if(configuration.videoNameOrURLString.length){
-            NSString *path = [[NSBundle mainBundle]pathForResource:configuration.videoNameOrURLString ofType:nil];
-            if(path.length){
-                NSURL *pathURL = [NSURL fileURLWithPath:path];
+            NSURL *pathURL = [[NSURL alloc] initFileURLWithPath:[XHLaunchAdCache videoPathWithFileName:configuration.videoNameOrURLString]];
+            /***检测本地视频是否在沙盒缓存文件夹中 */
+            if ([XHLaunchAdCache checkVideoInCacheWithFileName:configuration.videoNameOrURLString] == NO) {
+                    /***如果不在沙盒文件夹中则将其复制一份到沙盒缓存文件夹中/下次直接取缓存文件夹文件,加快文件查找速度 */
+                    NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:configuration.videoNameOrURLString withExtension:nil];
+                    [[NSFileManager defaultManager] copyItemAtURL:bundleURL toURL:pathURL error:nil];
+                    pathURL = bundleURL;
+                }
+            if(pathURL){
                 if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                     [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
                 }
-                _adVideoView.videoPlayer.contentURL = pathURL;;
-                [_adVideoView.videoPlayer prepareToPlay];
+                _adVideoView.contentURL = pathURL;
+                [_adVideoView.videoPlayer.player play];
+                
             }else{
                 XHLaunchAdLog(@"Error:广告视频未找到,请检查名称是否有误!");
             }
@@ -395,7 +402,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 -(void)setVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdConfiguration{
     _videoAdConfiguration = videoAdConfiguration;
     _launchAdType = XHLaunchAdTypeVideo;
-    [self setupVideoAdForConfiguration:videoAdConfiguration];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CGFLOAT_MIN * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setupVideoAdForConfiguration:videoAdConfiguration];
+    });
 }
 
 -(void)setWaitDataDuration:(NSInteger)waitDataDuration{
