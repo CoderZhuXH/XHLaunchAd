@@ -8,6 +8,7 @@
 
 #import "XHLaunchAdView.h"
 #import "XHLaunchAdConst.h"
+#import "XHLaunchImageView.h"
 
 @interface XHLaunchAdImageView ()
 
@@ -40,9 +41,7 @@
 @end
 
 @implementation XHLaunchAdVideoView
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+
 - (instancetype)init{
     self = [super init];
     if (self) {
@@ -97,9 +96,14 @@
         _videoPlayer.showsPlaybackControls = NO;
         _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
+<<<<<<< 9a27554d4469a6f20976fad4a04129ceb1213de6
         //注册通知
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(runLoopTheMovie:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 
+=======
+        _videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
+        _videoPlayer.view.backgroundColor = [UIColor clearColor];
+>>>>>>> Fix bug
     }
     return _videoPlayer;
 }
