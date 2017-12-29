@@ -92,18 +92,12 @@
 -(AVPlayerViewController *)videoPlayer{
     if(_videoPlayer==nil){
         _videoPlayer = [[AVPlayerViewController alloc] init];
-//        _videoPlayer.shouldAutoplay = YES;
         _videoPlayer.showsPlaybackControls = NO;
         _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
-<<<<<<< 9a27554d4469a6f20976fad4a04129ceb1213de6
         //注册通知
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(runLoopTheMovie:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-
-=======
-        _videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         _videoPlayer.view.backgroundColor = [UIColor clearColor];
->>>>>>> Fix bug
     }
     return _videoPlayer;
 }
