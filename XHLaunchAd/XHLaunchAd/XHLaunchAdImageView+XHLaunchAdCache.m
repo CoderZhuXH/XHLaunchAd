@@ -46,7 +46,11 @@
                 weakSelf.image = nil;
                 weakSelf.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 weakSelf.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
-                    if(GIFImageCycleOnce) [weakSelf stopAnimating];
+                    if(GIFImageCycleOnce){
+                       [weakSelf stopAnimating];
+                        XHLaunchAdLog(@"GIF不循环,播放完成");
+                       [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdGIFImageCycleOnceFinishNotification object:nil];
+                    }
                 };
             }else{
                 weakSelf.image = image;

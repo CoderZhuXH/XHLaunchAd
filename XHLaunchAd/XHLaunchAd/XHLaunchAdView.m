@@ -7,10 +7,12 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdView.h"
+#import "XHLaunchAdConst.h"
 
 @interface XHLaunchAdImageView ()
 
 @end
+
 @implementation XHLaunchAdImageView
 
 - (id)init{
@@ -38,7 +40,9 @@
 @end
 
 @implementation XHLaunchAdVideoView
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (instancetype)init{
     self = [super init];
     if (self) {
@@ -126,8 +130,6 @@
         //注册的通知  可以自动把 AVPlayerItem 对象传过来，只要接收一下就OK
         [(AVPlayerItem *)[notification object] seekToTime:kCMTimeZero];
         [self.videoPlayer.player play];
-    }else{
-
     }
 }
 

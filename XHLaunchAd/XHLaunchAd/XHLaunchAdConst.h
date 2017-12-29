@@ -71,6 +71,12 @@ UIKIT_EXTERN NSString *const XHCacheVideoUrlStringKey;
 UIKIT_EXTERN NSString *const XHLaunchAdWaitDataDurationArriveNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageWillShowNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdDetailPageShowFinishNotification;
+/** GIFImageCycleOnce = YES(GIF不循环)时, GIF动图播放完成通知 */
+UIKIT_EXTERN NSString *const XHLaunchAdGIFImageCycleOnceFinishNotification;
+/** videoCycleOnce = YES(视频不循环时) ,video播放完成通知 */
+UIKIT_EXTERN NSString *const XHLaunchAdVideoCycleOnceFinishNotification;
 
 UIKIT_EXTERN BOOL XHLaunchAdPrefersHomeIndicatorAutoHidden;
+
+
 
