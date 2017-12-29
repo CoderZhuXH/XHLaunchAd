@@ -340,9 +340,16 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         }
     }else{
         if(configuration.videoNameOrURLString.length){
-            NSString *path = [[NSBundle mainBundle]pathForResource:configuration.videoNameOrURLString ofType:nil];
-            if(path.length){
-                NSURL *pathURL = [NSURL fileURLWithPath:path];
+            
+            NSURL *pathURL = [[NSURL alloc] initFileURLWithPath:[XHLaunchAdCache videoPathWithFileName:configuration.videoNameOrURLString]];
+            /***检测本地视频是否在沙盒缓存文件夹中 */
+            if ([XHLaunchAdCache checkVideoInCacheWithFileName:configuration.videoNameOrURLString] == NO) {
+                /***如果不在沙盒文件夹中则将其复制一份到沙盒缓存文件夹中/下次直接取缓存文件夹文件,加快文件查找速度 */
+                NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:configuration.videoNameOrURLString withExtension:nil];
+                [[NSFileManager defaultManager] copyItemAtURL:bundleURL toURL:pathURL error:nil];
+                pathURL = bundleURL;
+            }
+            if(pathURL){
                 if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                     [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
                 }
