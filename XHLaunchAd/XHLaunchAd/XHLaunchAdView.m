@@ -8,6 +8,7 @@
 
 #import "XHLaunchAdView.h"
 #import "XHLaunchAdConst.h"
+#import "XHLaunchImageView.h"
 
 @interface XHLaunchAdImageView ()
 
@@ -40,9 +41,7 @@
 @end
 
 @implementation XHLaunchAdVideoView
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+
 - (instancetype)init{
     self = [super init];
     if (self) {
@@ -78,6 +77,8 @@
         _videoPlayer.repeatMode = MPMovieRepeatModeOne;
         _videoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
+        _videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
+        _videoPlayer.view.backgroundColor = [UIColor clearColor];
     }
     return _videoPlayer;
 }
@@ -99,10 +100,6 @@
     _videoCycleOnce = videoCycleOnce;
     if(videoCycleOnce){
          _videoPlayer.repeatMode = MPMovieRepeatModeNone;//不重复播放,播放一次
-        [[NSNotificationCenter defaultCenter] addObserverForName:MPMoviePlayerPlaybackDidFinishNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            XHLaunchAdLog(@"video不循环,播放完成");
-            [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdVideoCycleOnceFinishNotification object:nil];
-        }];
     }else{
          _videoPlayer.repeatMode = MPMovieRepeatModeOne;//循环播放
     }
