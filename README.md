@@ -29,7 +29,7 @@
 
 ### 更新记录:  
 
-*   2017.12.29 -- v3.9.4 -->1.替换视频播放控制器为AVPlayerViewController 2.解决/优化在线程阻塞的情况下视频播放加载慢的问题...  
+*   2017.12.29 -- v3.9.4 -->1.替换视频播放控制器为AVPlayerViewController 2.解决/优化在线程阻塞的情况下视频播放加载慢的问题 3.注意:此次更新后XHLaunchAd支持iOS8及以上版本,不在支持iOS7
 *   2017.11.22 -- v3.9.0 -->1.新增部分代理方法,部分旧的代理方法做过期处理,2.几处优化...
 *   2017.11.14 -- v3.8.4 -->1.版本优化,2.bug fix...
 *   2017.10.18 -- v3.8.0 -->1.增加对LaunchScreen.storyboard支持,2.修复pod导入编译报错问题...
@@ -253,7 +253,7 @@
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
     //视频填充模式
-    videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+    videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
     //是否只循环播放一次
     videoAdconfiguration.videoCycleOnce = NO;
      //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
@@ -339,8 +339,8 @@
         //广告视频URLString/或本地视频名(请带上后缀)
         //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
-        //视频缩放模式
-        videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+        //视频填充模式
+        videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
         //是否只循环播放一次
         videoAdconfiguration.videoCycleOnce = NO;
          //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
@@ -417,9 +417,10 @@ typedef NS_ENUM(NSInteger,SkipType) {
 
     NSLog(@"广告点击事件");
 
-    /**
-    openModel即配置广告数据设置的点击广告时打开页面参数
-    */
+    /** openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel) */
+     
+    if(openModel==nil) return;
+
     NSString *urlString = (NSString *)openModel;
 
     //此处跳转页面
@@ -667,7 +668,7 @@ configuration.customSkipView = [self customSkipView];
 *   3.如果在使用过程中遇到BUG，希望你能Issues我，谢谢（或者尝试下载最新的代码看看BUG修复没有）
 
 ##  系统要求
-*   该项目最低支持 iOS 7.0 和 Xcode 7.0
+*   该项目最低支持 iOS 8.0 和 Xcode 8.0
 
 ##  许可证
 XHLaunchAd 使用 MIT 许可证，详情见 LICENSE 文件
