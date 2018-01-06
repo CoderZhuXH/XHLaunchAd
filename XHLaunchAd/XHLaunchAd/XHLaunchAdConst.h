@@ -75,7 +75,8 @@ UIKIT_EXTERN NSString *const XHLaunchAdDetailPageShowFinishNotification;
 UIKIT_EXTERN NSString *const XHLaunchAdGIFImageCycleOnceFinishNotification;
 /** videoCycleOnce = YES(视频不循环时) ,video播放完成通知 */
 UIKIT_EXTERN NSString *const XHLaunchAdVideoCycleOnceFinishNotification;
-
+/** 视频播放失败通知 */
+UIKIT_EXTERN NSString *const XHLaunchAdVideoPlayFailedNotification;
 UIKIT_EXTERN BOOL XHLaunchAdPrefersHomeIndicatorAutoHidden;
 
 

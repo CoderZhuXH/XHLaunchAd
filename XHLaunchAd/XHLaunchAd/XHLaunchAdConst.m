@@ -16,5 +16,7 @@ NSString *const XHLaunchAdDetailPageWillShowNotification = @"XHLaunchAdDetailPag
 NSString *const XHLaunchAdDetailPageShowFinishNotification = @"XHLaunchAdDetailPageShowFinishNotification";
 NSString *const XHLaunchAdGIFImageCycleOnceFinishNotification = @"XHLaunchAdGIFImageCycleOnceFinishNotification";
 NSString *const XHLaunchAdVideoCycleOnceFinishNotification = @"XHLaunchAdVideoCycleOnceFinishNotification";
+NSString *const XHLaunchAdVideoPlayFailedNotification = @"XHLaunchAdVideoPlayFailedNotification";
 
 BOOL XHLaunchAdPrefersHomeIndicatorAutoHidden = NO;
+

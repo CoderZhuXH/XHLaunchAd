@@ -37,12 +37,13 @@
 
 #pragma mark - videoAdView
 @interface XHLaunchAdVideoView ()<UIGestureRecognizerDelegate>
-
+@property (nonatomic, strong) AVPlayerItem *playerItem;
 @end
 
 @implementation XHLaunchAdVideoView
 
 -(void)dealloc{
+    [self.playerItem removeObserver:self forKeyPath:@"status"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -97,7 +98,13 @@
     }
     return _videoPlayer;
 }
-
+#pragma mark - KVO
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSInteger newStatus = ((NSNumber *)change[@"new"]).integerValue;
+    if (newStatus == AVPlayerItemStatusFailed) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdVideoPlayFailedNotification object:_contentURL ?: nil];
+    }
+}
 #pragma mark - set
 -(void)setFrame:(CGRect)frame{
     [super setFrame:frame];
@@ -109,6 +116,9 @@
     AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:contentURL options:nil];
     AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
     self.videoPlayer.player = [AVPlayer playerWithPlayerItem:playerItem];
+    // 监听播放失败
+    [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    self.playerItem = playerItem;
 }
 -(void)setVideoGravity:(AVLayerVideoGravity)videoGravity{
     _videoGravity = videoGravity;
