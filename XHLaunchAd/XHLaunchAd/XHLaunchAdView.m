@@ -77,6 +77,8 @@
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
         _videoPlayer.view.backgroundColor = [UIColor whiteColor];
         _videoPlayer.backgroundView.backgroundColor = [UIColor whiteColor];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
     }
     return _videoPlayer;
 }
@@ -85,6 +87,7 @@
     if(_videoPlayer==nil) return;
     [_videoPlayer stop];
     [_videoPlayer.view removeFromSuperview];
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     _videoPlayer = nil;
 }
 
