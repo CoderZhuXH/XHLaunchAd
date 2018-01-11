@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 @property(nonatomic,assign)MPMovieScalingMode scalingMode XHLaunchAdDeprecated("请使用videoGravity");
 
 /** 视频缩放模式(default AVLayerVideoGravityResizeAspectFill) */
-@property (nonatomic, assign) AVLayerVideoGravity  videoGravity;
+@property (nonatomic, copy) AVLayerVideoGravity videoGravity;
 
 /** 设置视频是否只循环播放一次(YES:只播放一次,NO循环播放,default NO) */
 @property (nonatomic, assign) BOOL videoCycleOnce;
