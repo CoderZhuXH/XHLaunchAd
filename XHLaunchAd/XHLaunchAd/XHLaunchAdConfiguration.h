@@ -73,11 +73,11 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 #pragma mark - 图片广告相关
 @interface XHLaunchImageAdConfiguration : XHLaunchAdConfiguration
 
-/** 图片广告缩放模式(default UIViewContentModeScaleToFill) */
-@property(nonatomic,assign)UIViewContentMode contentMode;
-
 /** image本地图片名(jpg/gif图片请带上扩展名)或网络图片URL string */
 @property(nonatomic,copy)NSString *imageNameOrURLString;
+
+/** 图片广告缩放模式(default UIViewContentModeScaleToFill) */
+@property(nonatomic,assign)UIViewContentMode contentMode;
 
 /** 缓存机制(default XHLaunchImageDefault) */
 @property(nonatomic,assign)XHLaunchAdImageOptions imageOption;
@@ -103,6 +103,9 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 
 /** 设置视频是否只循环播放一次(YES:只播放一次,NO循环播放,default NO) */
 @property (nonatomic, assign) BOOL videoCycleOnce;
+
+/** 是否关闭音频(default NO) */
+@property (nonatomic, assign) BOOL muted;
 
 +(XHLaunchVideoAdConfiguration *)defaultConfiguration;
 

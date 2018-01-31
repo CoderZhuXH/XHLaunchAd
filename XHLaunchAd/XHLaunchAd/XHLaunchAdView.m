@@ -81,7 +81,7 @@
     //需要循环播放
     if(!_videoCycleOnce){
         [(AVPlayerItem *)[notification object] seekToTime:kCMTimeZero];
-        [self.videoPlayer.player play];//重播
+        [_videoPlayer.player play];//重播
     }
 }
 #pragma mark - lazy
@@ -108,11 +108,15 @@
     _contentURL = contentURL;
     AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:contentURL options:nil];
     AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
-    self.videoPlayer.player = [AVPlayer playerWithPlayerItem:playerItem];
+    _videoPlayer.player = [AVPlayer playerWithPlayerItem:playerItem];
 }
 -(void)setVideoGravity:(AVLayerVideoGravity)videoGravity{
     _videoGravity = videoGravity;
     _videoPlayer.videoGravity = videoGravity;
+}
+-(void)setMuted:(BOOL)muted{
+    _muted = muted;
+    _videoPlayer.player.muted = muted;
 }
 -(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode{
     _videoScalingMode = videoScalingMode;

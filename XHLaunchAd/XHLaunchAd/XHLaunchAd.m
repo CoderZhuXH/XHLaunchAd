@@ -337,6 +337,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
             _adVideoView.contentURL = pathURL;
+            _adVideoView.muted = configuration.muted;
             [_adVideoView.videoPlayer.player play];
         }else{
             XHWeakSelf
@@ -375,6 +376,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                     [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
                 }
                 _adVideoView.contentURL = pathURL;
+                _adVideoView.muted = configuration.muted;
                 [_adVideoView.videoPlayer.player play];
                 
             }else{
