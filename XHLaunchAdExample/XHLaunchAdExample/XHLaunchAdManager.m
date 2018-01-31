@@ -67,14 +67,14 @@
     /** 1.图片开屏广告 - 网络数据 */
     //[self example01];
     
-    /** 2.图片开屏广告 - 本地数据 */
-    [self example02];
+    //2.******图片开屏广告 - 本地数据******
+    //[self example02];
     
-    /** 3.视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行) */
+    //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行)******
     //[self example03];
-    
+
     /** 4.视频开屏广告 - 本地数据 */
-    //[self example04];
+    [self example04];
     
     /** 5.如需自定义跳过按钮,请看这个示例 */
     //[self example05];
@@ -213,6 +213,8 @@
         //广告视频URLString/或本地视频名(请带上后缀)
         //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
+        //是否关闭音频
+        videoAdconfiguration.muted = NO;
         //视频缩放模式
         videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
         //是否只循环播放一次
@@ -247,7 +249,7 @@
 -(void)example04{
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
-    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchScreen];
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //配置广告数据
     XHLaunchVideoAdConfiguration *videoAdconfiguration = [XHLaunchVideoAdConfiguration new];
@@ -257,6 +259,8 @@
     videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
+    //是否关闭音频
+    videoAdconfiguration.muted = NO;
     //视频填充模式
     videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
     //是否只循环播放一次

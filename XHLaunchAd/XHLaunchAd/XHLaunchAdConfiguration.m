@@ -63,6 +63,8 @@
     configuration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     configuration.showEnterForeground = NO;
+    //是否静音播放
+    configuration.muted = NO;
     return configuration;
 }
 @end
