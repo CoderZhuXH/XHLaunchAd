@@ -33,10 +33,10 @@
 }
 
 -(void)xh_setImageWithURL:(nonnull NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(XHLaunchAdImageOptions)options completed:(nullable XHExternalCompletionBlock)completedBlock{
-    [self xh_setImageWithURL:url placeholderImage:placeholder GIFImageCycleOnce:NO options:options completed:completedBlock];
+    [self xh_setImageWithURL:url placeholderImage:placeholder GIFImageCycleOnce:NO options:options GIFImageCycleOnceFinish:nil completed:completedBlock ];
 }
 
-- (void)xh_setImageWithURL:(nonnull NSURL *)url placeholderImage:(nullable UIImage *)placeholder GIFImageCycleOnce:(BOOL)GIFImageCycleOnce options:(XHLaunchAdImageOptions)options completed:(nullable XHExternalCompletionBlock)completedBlock{
+- (void)xh_setImageWithURL:(nonnull NSURL *)url placeholderImage:(nullable UIImage *)placeholder GIFImageCycleOnce:(BOOL)GIFImageCycleOnce options:(XHLaunchAdImageOptions)options GIFImageCycleOnceFinish:(void(^_Nullable)(void))cycleOnceFinishBlock completed:(nullable XHExternalCompletionBlock)completedBlock {
     if(placeholder) self.image = placeholder;
     if(!url) return;
     XHWeakSelf
@@ -46,7 +46,11 @@
                 weakSelf.image = nil;
                 weakSelf.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 weakSelf.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
-                    if(GIFImageCycleOnce) [weakSelf stopAnimating];
+                    if(GIFImageCycleOnce){
+                       [weakSelf stopAnimating];
+                        XHLaunchAdLog(@"GIF不循环,播放完成");
+                        if(cycleOnceFinishBlock) cycleOnceFinishBlock();
+                    }
                 };
             }else{
                 weakSelf.image = image;

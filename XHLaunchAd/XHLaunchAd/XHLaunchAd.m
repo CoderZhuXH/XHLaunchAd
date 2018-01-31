@@ -226,7 +226,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         }else{
             if(!configuration.imageOption) configuration.imageOption = XHLaunchAdImageDefault;
             XHWeakSelf
-            [adImageView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil GIFImageCycleOnce:configuration.GIFImageCycleOnce options:configuration.imageOption completed:^(UIImage *image,NSData *imageData,NSError *error,NSURL *url){
+            [adImageView xh_setImageWithURL:[NSURL URLWithString:configuration.imageNameOrURLString] placeholderImage:nil GIFImageCycleOnce:configuration.GIFImageCycleOnce options:configuration.imageOption GIFImageCycleOnceFinish:^{
+                //GIF不循环,播放完成
+                [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdGIFImageCycleOnceFinishNotification object:nil userInfo:@{@"imageNameOrURLString":configuration.imageNameOrURLString}];
+                
+            } completed:^(UIImage *image,NSData *imageData,NSError *error,NSURL *url){
                 if(!error){
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
@@ -237,8 +241,6 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                     if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:imageDownLoadFinish:imageData:)]) {
                         [weakSelf.delegate xhLaunchAd:self imageDownLoadFinish:image imageData:imageData];
                     }
-                }else{
-                    //下载错误
                 }
             }];
             if(configuration.imageOption == XHLaunchAdImageCacheInBackground){
@@ -257,7 +259,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                 adImageView.image = nil;
                 __weak typeof(adImageView) w_adImageView = adImageView;
                 adImageView.loopCompletionBlock = ^(NSUInteger loopCountRemaining) {
-                    if(configuration.GIFImageCycleOnce) [w_adImageView stopAnimating];
+                    if(configuration.GIFImageCycleOnce){
+                        [w_adImageView stopAnimating];
+                        XHLaunchAdLog(@"GIF不循环,播放完成");
+                        [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdGIFImageCycleOnceFinishNotification object:@{@"imageNameOrURLString":configuration.imageNameOrURLString}];
+                    }
                 };
             }else{
                 adImageView.animatedImage = nil;
@@ -310,8 +316,18 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     [_window addSubview:_adVideoView];
     /** frame */
     if(configuration.frame.size.width>0&&configuration.frame.size.height>0) _adVideoView.frame = configuration.frame;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if(configuration.scalingMode) _adVideoView.videoScalingMode = configuration.scalingMode;
+#pragma clang diagnostic pop
+    if(configuration.videoGravity) _adVideoView.videoGravity = configuration.videoGravity;
     _adVideoView.videoCycleOnce = configuration.videoCycleOnce;
+    if(configuration.videoCycleOnce){
+        [[NSNotificationCenter defaultCenter] addObserverForName:AVPlayerItemDidPlayToEndTimeNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            XHLaunchAdLog(@"video不循环,播放完成");
+            [[NSNotificationCenter defaultCenter] postNotificationName:XHLaunchAdVideoCycleOnceFinishNotification object:nil userInfo:@{@"videoNameOrURLString":configuration.videoNameOrURLString}];
+        }];
+    }
     /** video 数据源 */
     if(configuration.videoNameOrURLString.length && XHISURLString(configuration.videoNameOrURLString)){
         [XHLaunchAdCache async_saveVideoUrl:configuration.videoNameOrURLString];
@@ -320,8 +336,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                 [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
             }
-            _adVideoView.videoPlayer.contentURL = pathURL;
-            [_adVideoView.videoPlayer prepareToPlay];
+            _adVideoView.contentURL = pathURL;
+            _adVideoView.muted = configuration.muted;
+            [_adVideoView.videoPlayer.player play];
         }else{
             XHWeakSelf
             [[XHLaunchAdDownloader sharedDownloader] downloadVideoWithURL:[NSURL URLWithString:configuration.videoNameOrURLString] progress:^(unsigned long long total, unsigned long long current) {
@@ -340,14 +357,28 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         }
     }else{
         if(configuration.videoNameOrURLString.length){
-            NSString *path = [[NSBundle mainBundle]pathForResource:configuration.videoNameOrURLString ofType:nil];
-            if(path.length){
-                NSURL *pathURL = [NSURL fileURLWithPath:path];
+            NSURL *pathURL = nil;
+            NSURL *cachePathURL = [[NSURL alloc] initFileURLWithPath:[XHLaunchAdCache videoPathWithFileName:configuration.videoNameOrURLString]];
+             //若本地视频未在沙盒缓存文件夹中
+            if (![XHLaunchAdCache checkVideoInCacheWithFileName:configuration.videoNameOrURLString]) {
+                /***如果不在沙盒文件夹中则将其复制一份到沙盒缓存文件夹中/下次直接取缓存文件夹文件,加快文件查找速度 */
+                NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:configuration.videoNameOrURLString withExtension:nil];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [[NSFileManager defaultManager] copyItemAtURL:bundleURL toURL:cachePathURL error:nil];
+                });
+                pathURL = bundleURL;
+            }else{
+                pathURL = cachePathURL;
+            }
+            
+            if(pathURL){
                 if ([self.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadFinish:)]) {
                     [self.delegate xhLaunchAd:self videoDownLoadFinish:pathURL];
                 }
-                _adVideoView.videoPlayer.contentURL = pathURL;;
-                [_adVideoView.videoPlayer prepareToPlay];
+                _adVideoView.contentURL = pathURL;
+                _adVideoView.muted = configuration.muted;
+                [_adVideoView.videoPlayer.player play];
+                
             }else{
                 XHLaunchAdLog(@"Error:广告视频未找到,请检查名称是否有误!");
             }
@@ -383,7 +414,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 -(void)setVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdConfiguration{
     _videoAdConfiguration = videoAdConfiguration;
     _launchAdType = XHLaunchAdTypeVideo;
-    [self setupVideoAdForConfiguration:videoAdConfiguration];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CGFLOAT_MIN * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setupVideoAdForConfiguration:videoAdConfiguration];
+    });
 }
 
 -(void)setWaitDataDuration:(NSInteger)waitDataDuration{
@@ -410,16 +443,16 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)] && configuration.openURLString.length) {
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)]) {
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString];
         [self removeAndAnimateDefault];
     }
-    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:clickPoint:)] && configuration.openURLString.length) {
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:clickPoint:)]) {
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString clickPoint:point];
         [self removeAndAnimateDefault];
     }
 #pragma clang diagnostic pop
-    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenModel:clickPoint:)] && configuration.openModel) {
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenModel:clickPoint:)]) {
         [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
         [self removeAndAnimateDefault];
     }
@@ -560,9 +593,10 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     DISPATCH_SOURCE_CANCEL_SAFE(_skipTimer)
     REMOVE_FROM_SUPERVIEW_SAFE(_skipButton)
     if(_launchAdType==XHLaunchAdTypeVideo){
-        if(_adVideoView==nil) return;
-        [_adVideoView stopVideoPlayer];
-        REMOVE_FROM_SUPERVIEW_SAFE(_adVideoView)
+        if(_adVideoView){
+            [_adVideoView stopVideoPlayer];
+            REMOVE_FROM_SUPERVIEW_SAFE(_adVideoView)
+        }
     }
     [_window.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         REMOVE_FROM_SUPERVIEW_SAFE(obj)
@@ -588,5 +622,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         }
     }];
 }
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end

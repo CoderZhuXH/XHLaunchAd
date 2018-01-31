@@ -64,38 +64,34 @@
 
 -(void)setupXHLaunchAd{
     
-    //1.******图片开屏广告 - 网络数据******
+    /** 1.图片开屏广告 - 网络数据 */
     //[self example01];
     
     //2.******图片开屏广告 - 本地数据******
-    //[self example02];
+    [self example02];
     
     //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行)******
-    [self example03];
-    
-    //4.******视频开屏广告 - 本地数据******
+    //[self example03];
+
+    /** 4.视频开屏广告 - 本地数据 */
     //[self example04];
     
-    //5.******如需自定义跳过按钮,请看这个示例******
+    /** 5.如需自定义跳过按钮,请看这个示例 */
     //[self example05];
     
-    //6.******使用默认配置快速初始化,请看下面两个示例******
+    /** 6.使用默认配置快速初始化,请看下面两个示例 */
     //[self example06];//图片
     //[self example07];//视频
     
-    //7.******如果你想提前缓存图片/视频请看下面两个示例*****
-    //批量下载并缓存图片
-    //[self batchDownloadImageAndCache];
-    
-    //批量下载并缓存视频
-    //[self batchDownloadVideoAndCache];
+    /** 7.如果你想提前批量缓存图片/视频请看下面两个示例 */
+    //[self batchDownloadImageAndCache]; //批量下载并缓存图片
+    //[self batchDownloadVideoAndCache]; //批量下载并缓存视频
     
 }
 
 #pragma mark - 图片开屏广告-网络数据-示例
 //图片开屏广告 - 网络数据
 -(void)example01{
-    
     
     //设置你工程的启动页使用的是:LaunchImage 还是 LaunchScreen.storyboard(不设置默认:LaunchImage)
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
@@ -217,8 +213,10 @@
         //广告视频URLString/或本地视频名(请带上后缀)
         //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
+        //是否关闭音频
+        videoAdconfiguration.muted = NO;
         //视频缩放模式
-        videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+        videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
         //是否只循环播放一次
         videoAdconfiguration.videoCycleOnce = NO;
         //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
@@ -260,9 +258,11 @@
     //广告frame
     videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
-    videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
+    videoAdconfiguration.videoNameOrURLString = @"video0.mp4";
+    //是否关闭音频
+    videoAdconfiguration.muted = NO;
     //视频填充模式
-    videoAdconfiguration.scalingMode = MPMovieScalingModeAspectFill;
+    videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
     //是否只循环播放一次
     videoAdconfiguration.videoCycleOnce = NO;
     //广告点击打开页面参数(openModel可为NSString,模型,字典等任意类型)
@@ -322,7 +322,6 @@
     //显示开屏广告
     [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
     
-    
 }
 
 #pragma mark - 使用默认配置快速初始化 - 示例
@@ -372,7 +371,7 @@
         
         //url:图片的url字符串,
         //result:0表示该图片下载失败,1表示该图片下载并缓存完成或本地缓存中已有该图片
-        NSLog(@"批量下载缓存结果 = %@" ,completedArray);
+        NSLog(@"批量下载缓存图片结果 = %@" ,completedArray);
     }];
 }
 
@@ -387,7 +386,7 @@
         
         //url:视频的url字符串,
         //result:0表示该视频下载失败,1表示该视频下载并缓存完成或本地缓存中已有该视频
-        NSLog(@"批量下载缓存结果 = %@" ,completedArray);
+        NSLog(@"批量下载缓存视频结果 = %@" ,completedArray);
         
     }];
     
@@ -469,9 +468,9 @@
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
     
     NSLog(@"广告点击事件");
-    /**
-     openModel即配置广告数据设置的点击广告时打开页面参数
-     */
+    
+    /** openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel) */
+     if(openModel==nil) return;
     
     WebViewController *VC = [[WebViewController alloc] init];
     NSString *urlString = (NSString *)openModel;
@@ -490,6 +489,7 @@
  *  @param imageData 读取/下载的imageData
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image imageData:(NSData *)imageData{
+    
     NSLog(@"图片下载完成/或本地图片读取完成回调");
 }
 
@@ -501,15 +501,15 @@
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadFinish:(NSURL *)pathURL{
     
-    NSLog(@"video下载/加载完成/保存path = %@",pathURL.absoluteString);
+    NSLog(@"video下载/加载完成 path = %@",pathURL.absoluteString);
 }
 
 /**
  *  视频下载进度回调
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd videoDownLoadProgress:(float)progress total:(unsigned long long)total current:(unsigned long long)current{
-    NSLog(@"总大小=%lld,已下载大小=%lld,下载进度=%f",total,current,progress);
     
+    NSLog(@"总大小=%lld,已下载大小=%lld,下载进度=%f",total,current,progress);
 }
 
 /**

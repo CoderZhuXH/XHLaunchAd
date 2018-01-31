@@ -6,15 +6,17 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.9.1
-//  发布:2017.11.24
+//  版本:3.9.6
+//  发布:2018.01.31
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
 //  Email:it7090@163.com
 //  新浪微博:朱晓辉Allen
-
 //  GitHub:https://github.com/CoderZhuXH
+//  简书:https://www.jianshu.com/u/acf1a1f12e0f
+//  掘金:https://juejin.im/user/59b50d3cf265da066d331a06
+
 //  使用说明:https://github.com/CoderZhuXH/XHLaunchAd/blob/master/README.md
 
 #import <Foundation/Foundation.h>
@@ -133,6 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return XHLaunchAd
  */
 +(XHLaunchAd *)imageAdWithImageAdConfiguration:(XHLaunchImageAdConfiguration *)imageAdconfiguration delegate:(nullable id)delegate;
+
 /**
  *  视频开屏广告数据配置
  *

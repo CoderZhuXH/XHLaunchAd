@@ -52,7 +52,7 @@
     //广告frame
     configuration.frame = [UIScreen mainScreen].bounds;
     //视频填充模式
-    configuration.scalingMode = MPMovieScalingModeAspectFill;
+    configuration.videoGravity = AVLayerVideoGravityResizeAspectFill;
     //是否只循环播放一次
     configuration.videoCycleOnce = NO;
     //广告显示完成动画
@@ -63,6 +63,8 @@
     configuration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     configuration.showEnterForeground = NO;
+    //是否静音播放
+    configuration.muted = NO;
     return configuration;
 }
 @end

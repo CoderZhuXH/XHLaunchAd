@@ -72,6 +72,15 @@ typedef void(^SaveCompletionBlock)(BOOL result , NSURL * URL);
 +(BOOL)checkVideoInCacheWithURL:(NSURL *)url;
 
 /**
+ *  检查是否已缓存该视频(仅限于本地视频读取使用)
+ *
+ *  @param videoFileName 本地视频文件名称
+ *
+ *  @return BOOL
+ */
++(BOOL)checkVideoInCacheWithFileName:(NSString *)videoFileName;
+
+/**
  *  获取缓存视频路径
  *
  *  @param url 视频链接url
@@ -102,6 +111,11 @@ typedef void(^SaveCompletionBlock)(BOOL result , NSURL * URL);
  *  生成视频路径 for url
  */
 +(NSString *)videoPathWithURL:(NSURL *)url;
+
+/**
+ *  生成视频路径 for videoFileName(仅限于本地视频读取使用)
+ */
++(NSString *)videoPathWithFileName:(NSString *)videoFileName;
 
 #pragma mark - url缓存
 /**

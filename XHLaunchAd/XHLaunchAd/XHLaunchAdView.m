@@ -7,10 +7,13 @@
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
 #import "XHLaunchAdView.h"
+#import "XHLaunchAdConst.h"
+#import "XHLaunchImageView.h"
 
 @interface XHLaunchAdImageView ()
 
 @end
+
 @implementation XHLaunchAdImageView
 
 - (id)init{
@@ -18,7 +21,6 @@
     if (self) {
         self.userInteractionEnabled = YES;
         self.frame = [UIScreen mainScreen].bounds;
-        self.clipsToBounds = YES;
         self.layer.masksToBounds = YES;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [self addGestureRecognizer:tapGesture];
@@ -40,10 +42,15 @@
 
 @implementation XHLaunchAdVideoView
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)init{
     self = [super init];
     if (self) {
         self.userInteractionEnabled = YES;
+        self.backgroundColor = [UIColor clearColor];
         self.frame = [UIScreen mainScreen].bounds;
         [self addSubview:self.videoPlayer.view];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
@@ -62,33 +69,37 @@
     return YES;
 }
 
--(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode{
-    _videoScalingMode = videoScalingMode;
-    _videoPlayer.scalingMode  = videoScalingMode;
+#pragma mark - Action
+-(void)stopVideoPlayer{
+    if(_videoPlayer==nil) return;
+    [_videoPlayer.player pause];
+    [_videoPlayer.view removeFromSuperview];
+    _videoPlayer = nil;
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
 
--(MPMoviePlayerController *)videoPlayer{
+- (void)runLoopTheMovie:(NSNotification *)notification{
+    //需要循环播放
+    if(!_videoCycleOnce){
+        [(AVPlayerItem *)[notification object] seekToTime:kCMTimeZero];
+        [_videoPlayer.player play];//重播
+    }
+}
+#pragma mark - lazy
+-(AVPlayerViewController *)videoPlayer{
     if(_videoPlayer==nil){
-        _videoPlayer = [[MPMoviePlayerController alloc] init];
-        _videoPlayer.shouldAutoplay = YES;
-        [_videoPlayer setControlStyle:MPMovieControlStyleNone];
-        _videoPlayer.repeatMode = MPMovieRepeatModeOne;
-        _videoPlayer.scalingMode  = MPMovieScalingModeAspectFill;
+        _videoPlayer = [[AVPlayerViewController alloc] init];
+        _videoPlayer.showsPlaybackControls = NO;
+        _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
-        _videoPlayer.view.backgroundColor = [UIColor whiteColor];
-        _videoPlayer.backgroundView.backgroundColor = [UIColor whiteColor];
+        _videoPlayer.view.backgroundColor = [UIColor clearColor];
+        //注册通知控制是否循环播放
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runLoopTheMovie:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
     }
     return _videoPlayer;
-}
-
--(void)stopVideoPlayer{
-    if(_videoPlayer==nil) return;
-    [_videoPlayer stop];
-    [_videoPlayer.view removeFromSuperview];
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-    _videoPlayer = nil;
 }
 
 #pragma mark - set
@@ -97,12 +108,41 @@
     _videoPlayer.view.frame = self.frame;
 }
 
--(void)setVideoCycleOnce:(BOOL)videoCycleOnce{
-    _videoCycleOnce = videoCycleOnce;
-    if(videoCycleOnce){
-         _videoPlayer.repeatMode = MPMovieRepeatModeNone;
-    }else{
-         _videoPlayer.repeatMode = MPMovieRepeatModeOne;
+- (void)setContentURL:(NSURL *)contentURL {
+    _contentURL = contentURL;
+    AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:contentURL options:nil];
+    AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+    _videoPlayer.player = [AVPlayer playerWithPlayerItem:playerItem];
+}
+-(void)setVideoGravity:(AVLayerVideoGravity)videoGravity{
+    _videoGravity = videoGravity;
+    _videoPlayer.videoGravity = videoGravity;
+}
+-(void)setMuted:(BOOL)muted{
+    _muted = muted;
+    _videoPlayer.player.muted = muted;
+}
+-(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode{
+    _videoScalingMode = videoScalingMode;
+    switch (_videoScalingMode) {
+        case MPMovieScalingModeNone:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        }
+            break;
+        case MPMovieScalingModeAspectFit:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        }
+            break;
+        case MPMovieScalingModeAspectFill:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        }
+            break;
+        case MPMovieScalingModeFill:{
+            _videoPlayer.videoGravity = AVLayerVideoGravityResize;
+        }
+            break;
+        default:
+            break;
     }
 }
 

@@ -35,9 +35,12 @@
 @interface XHLaunchAdVideoView : UIView
 
 @property (nonatomic, copy) void(^click)(CGPoint point);
-@property (strong, nonatomic) MPMoviePlayerController *videoPlayer;
-@property(nonatomic,assign)MPMovieScalingMode videoScalingMode;
+@property (nonatomic, strong) AVPlayerViewController *videoPlayer;
+@property (nonatomic, assign) MPMovieScalingMode videoScalingMode;
+@property (nonatomic, assign) AVLayerVideoGravity videoGravity;
 @property (nonatomic, assign) BOOL videoCycleOnce;
+@property (nonatomic, assign) BOOL muted;
+@property (nonatomic, strong) NSURL *contentURL;
 
 -(void)stopVideoPlayer;
 

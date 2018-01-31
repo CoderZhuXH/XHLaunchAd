@@ -84,12 +84,22 @@
     return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:[self videoNameWithURL:url]];
 }
 
++(NSString *)videoPathWithFileName:(NSString *)videoFileName{
+    if(videoFileName.length==0) return nil;
+    return [[self xhLaunchAdCachePath] stringByAppendingPathComponent:[self videoNameWithURL:[NSURL URLWithString:videoFileName]]];
+}
+
+
 +(BOOL)checkImageInCacheWithURL:(NSURL *)url{
     return [[NSFileManager defaultManager] fileExistsAtPath:[self imagePathWithURL:url]];
 }
 
 +(BOOL)checkVideoInCacheWithURL:(NSURL *)url{
     return [[NSFileManager defaultManager] fileExistsAtPath:[self videoPathWithURL:url]];
+}
+
++(BOOL)checkVideoInCacheWithFileName:(NSString *)videoFileName{
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self videoPathWithFileName:videoFileName]];
 }
 
 +(void)checkDirectory:(NSString *)path {
@@ -249,6 +259,7 @@
     } else {
         [self addDoNotBackupAttribute:path];
     }
+    XHLaunchAdLog(@"XHLaunchAdCachePath = %@",path);
 }
 
 + (void)addDoNotBackupAttribute:(NSString *)path {

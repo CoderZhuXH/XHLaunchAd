@@ -18,6 +18,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     NSLog(@"进入首页");
 }
 - (void)viewDidLoad {

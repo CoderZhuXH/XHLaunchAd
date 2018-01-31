@@ -16,10 +16,12 @@
 @implementation XHLaunchAdController
 
 -(BOOL)shouldAutorotate{
+    
     return NO;
 }
 
 -(BOOL)prefersHomeIndicatorAutoHidden{
+    
     return XHLaunchAdPrefersHomeIndicatorAutoHidden;
 }
 
