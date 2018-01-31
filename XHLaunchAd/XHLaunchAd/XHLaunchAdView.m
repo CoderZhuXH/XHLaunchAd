@@ -95,7 +95,6 @@
         _videoPlayer.view.backgroundColor = [UIColor clearColor];
         //注册通知控制是否循环播放
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runLoopTheMovie:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
     }
