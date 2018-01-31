@@ -29,6 +29,7 @@
 
 ### 更新记录:  
 
+*   2018.01.31 -- v3.9.6 -->1.添加视频广告静音属性(muted),2.显示视频广告时暂停其它APP音频播放显示完恢复,3.增加视频播放失败通知
 *   2018.01.11 -- v3.9.5 -->1.修复videoGravity修饰符错误bug...
 *   2017.12.29 -- v3.9.4 -->1.替换视频播放控制器为AVPlayerViewController 2.解决/优化在线程阻塞的情况下视频播放加载慢的问题 3.注意:此次更新后XHLaunchAd支持iOS8及以上版本,不在支持iOS7...
 *   2017.11.22 -- v3.9.0 -->1.新增部分代理方法,部分旧的代理方法做过期处理,2.几处优化...
@@ -253,6 +254,8 @@
     videoAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     //广告视频URLString/或本地视频名(请带上后缀)
     videoAdconfiguration.videoNameOrURLString = @"video1.mp4";
+    //是否关闭音频
+    videoAdconfiguration.muted = NO;
     //视频填充模式
     videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
     //是否只循环播放一次
@@ -340,6 +343,8 @@
         //广告视频URLString/或本地视频名(请带上后缀)
         //注意:视频广告只支持先缓存,下次显示(看效果请二次运行)
         videoAdconfiguration.videoNameOrURLString = model.content;
+        //是否关闭音频
+        videoAdconfiguration.muted = NO;
         //视频填充模式
         videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
         //是否只循环播放一次
