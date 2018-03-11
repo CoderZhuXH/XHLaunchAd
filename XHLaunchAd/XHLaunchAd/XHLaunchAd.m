@@ -166,6 +166,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             [self setupLaunchAdEnterForeground];
         }];
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            [self removeOnly];
+        }];
         [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageWillShowNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             _detailPageShowing = YES;
         }];
@@ -359,7 +362,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         if(configuration.videoNameOrURLString.length){
             NSURL *pathURL = nil;
             NSURL *cachePathURL = [[NSURL alloc] initFileURLWithPath:[XHLaunchAdCache videoPathWithFileName:configuration.videoNameOrURLString]];
-             //若本地视频未在沙盒缓存文件夹中
+            //若本地视频未在沙盒缓存文件夹中
             if (![XHLaunchAdCache checkVideoInCacheWithFileName:configuration.videoNameOrURLString]) {
                 /***如果不在沙盒文件夹中则将其复制一份到沙盒缓存文件夹中/下次直接取缓存文件夹文件,加快文件查找速度 */
                 NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:configuration.videoNameOrURLString withExtension:nil];
@@ -587,8 +590,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         [self remove];
     }];
 }
-
--(void)remove{
+-(void)removeOnly{
     DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer)
     DISPATCH_SOURCE_CANCEL_SAFE(_skipTimer)
     REMOVE_FROM_SUPERVIEW_SAFE(_skipButton)
@@ -598,12 +600,17 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             REMOVE_FROM_SUPERVIEW_SAFE(_adVideoView)
         }
     }
-    [_window.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        REMOVE_FROM_SUPERVIEW_SAFE(obj)
-    }];
-    _window.hidden = YES;
-    _window = nil;
-    
+    if(_window){
+        [_window.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            REMOVE_FROM_SUPERVIEW_SAFE(obj)
+        }];
+        _window.hidden = YES;
+        _window = nil;
+    }
+}
+
+-(void)remove{
+    [self removeOnly];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if ([self.delegate respondsToSelector:@selector(xhLaunchShowFinish:)]) {
