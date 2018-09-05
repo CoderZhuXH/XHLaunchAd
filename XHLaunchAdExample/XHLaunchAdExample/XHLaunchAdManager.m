@@ -17,19 +17,14 @@
 /** 以下连接供测试使用 */
 
 /** 静态图 */
-#define imageURL1 @"http://yun.it7090.com/image/XHLaunchAd/pic01.jpg"
-#define imageURL2 @"http://yun.it7090.com/image/XHLaunchAd/pic02.jpg"
-#define imageURL3 @"http://yun.it7090.com/image/XHLaunchAd/pic03.jpg"
-#define imageURL4 @"http://yun.it7090.com/image/XHLaunchAd/pic04.jpg"
+#define imageURL1 @"http://yun.it7090.com/image/XHLaunchAd/pic_test01.jpg"
 
 /** 动态图 */
-#define imageURL5 @"http://yun.it7090.com/image/XHLaunchAd/pic05.gif"
-#define imageURL6 @"http://yun.it7090.com/image/XHLaunchAd/pic06.gif"
+#define imageURL3 @"http://yun.it7090.com/image/XHLaunchAd/gif_test01.gif"
 
 /** 视频链接 */
-#define videoURL1 @"http://yun.it7090.com/video/XHLaunchAd/video01.mp4"
-#define videoURL2 @"http://yun.it7090.com/video/XHLaunchAd/video02.mp4"
-#define videoURL3 @"http://yun.it7090.com/video/XHLaunchAd/video03.mp4"
+#define videoURL1 @"http://yun.it7090.com/video/XHLaunchAd/video_test01.mp4"
+
 
 @interface XHLaunchAdManager()<XHLaunchAdDelegate>
 
@@ -365,7 +360,7 @@
  */
 -(void)batchDownloadImageAndCache{
     
-    [XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1],[NSURL URLWithString:imageURL2],[NSURL URLWithString:imageURL3],[NSURL URLWithString:imageURL4],[NSURL URLWithString:imageURL5]] completed:^(NSArray * _Nonnull completedArray) {
+    [XHLaunchAd downLoadImageAndCacheWithURLArray:@[[NSURL URLWithString:imageURL1]] completed:^(NSArray * _Nonnull completedArray) {
         
         /** 打印批量下载缓存结果 */
         
@@ -380,7 +375,7 @@
  */
 -(void)batchDownloadVideoAndCache{
     
-    [XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1],[NSURL URLWithString:videoURL2],[NSURL URLWithString:videoURL3]] completed:^(NSArray * _Nonnull completedArray) {
+    [XHLaunchAd downLoadVideoAndCacheWithURLArray:@[[NSURL URLWithString:videoURL1]] completed:^(NSArray * _Nonnull completedArray) {
         
         /** 打印批量下载缓存结果 */
         
