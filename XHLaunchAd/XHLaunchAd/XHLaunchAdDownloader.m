@@ -40,7 +40,7 @@
     if (self) {
         self.url = url;
         self.progressBlock = progressBlock;
-        _completedBlock = completedBlock;
+        self.completedBlock = completedBlock;
         NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         sessionConfiguration.timeoutIntervalForRequest = 15.0;
         self.session = [NSURLSession sessionWithConfiguration:sessionConfiguration
@@ -59,10 +59,10 @@ didFinishDownloadingToURL:(NSURL *)location {
     NSData *data = [NSData dataWithContentsOfURL:location];
     UIImage *image = [UIImage imageWithData:data];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (_completedBlock) {
-            _completedBlock(image,data, nil);
+        if (self.completedBlock) {
+            self.completedBlock(image,data, nil);
             // 防止重复调用
-            _completedBlock = nil;
+            self.completedBlock = nil;
         }
         //下载完成回调
         if ([self.delegate respondsToSelector:@selector(downloadFinishWithURL:)]) {
@@ -86,10 +86,10 @@ didFinishDownloadingToURL:(NSURL *)location {
     if (error){
         XHLaunchAdLog(@"error = %@",error);
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (_completedBlock) {
-                _completedBlock(nil,nil, error);
+            if (self.completedBlock) {
+                self.completedBlock(nil,nil, error);
             }
-            _completedBlock = nil;
+            self.completedBlock = nil;
         });
     }
 }
@@ -140,14 +140,14 @@ didFinishDownloadingToURL:(NSURL *)location {
     [[NSFileManager defaultManager] copyItemAtURL:location toURL:toURL error:&error];
     if(error)  XHLaunchAdLog(@"error = %@",error);
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (_completedBlock) {
+        if (self.completedBlock) {
             if(!error){
-                _completedBlock(toURL,nil);
+                self.completedBlock(toURL,nil);
             }else{
-                _completedBlock(nil,error);
+                self.completedBlock(nil,error);
             }
             // 防止重复调用
-            _completedBlock = nil;
+            self.completedBlock = nil;
         }
         //下载完成回调
         if ([self.delegate respondsToSelector:@selector(downloadFinishWithURL:)]) {
@@ -170,10 +170,10 @@ didFinishDownloadingToURL:(NSURL *)location {
     if (error){
         XHLaunchAdLog(@"error = %@",error);
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (_completedBlock) {
-                _completedBlock(nil, error);
+            if (self.completedBlock) {
+                self.completedBlock(nil, error);
             }
-            _completedBlock = nil;
+            self.completedBlock = nil;
         });
     }
 }

@@ -390,7 +390,7 @@
 #pragma mark - subViews
 -(NSArray<UIView *> *)launchAdSubViews_alreadyView{
     
-    CGFloat y = XH_IPHONEX ? 46:22;
+    CGFloat y = XH_FULLSCREEN ? 46:22;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-140, y, 60, 30)];
     label.text  = @"已预载";
     label.font = [UIFont systemFontOfSize:12];
@@ -405,7 +405,7 @@
 
 -(NSArray<UIView *> *)launchAdSubViews{
     
-    CGFloat y = XH_IPHONEX ? 54 : 30;
+    CGFloat y = XH_FULLSCREEN ? 54 : 30;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-170, y, 60, 30)];
     label.text  = @"subViews";
     label.font = [UIFont systemFontOfSize:12];
@@ -429,7 +429,7 @@
     button.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:14];
-    CGFloat y = XH_IPHONEX ? 54 : 30;
+    CGFloat y = XH_FULLSCREEN ? 54 : 30;
     button.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-100,y, 85, 30);
     [button addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
     return button;
@@ -461,19 +461,19 @@
  广告点击事件回调
  */
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
-    
+
     NSLog(@"广告点击事件");
-    
+
     /** openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel) */
      if(openModel==nil) return;
-    
+
     WebViewController *VC = [[WebViewController alloc] init];
     NSString *urlString = (NSString *)openModel;
     VC.URLString = urlString;
     //此处不要直接取keyWindow
     UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
     [rootVC.myNavigationController pushViewController:VC animated:YES];
-    
+
 }
 
 /**

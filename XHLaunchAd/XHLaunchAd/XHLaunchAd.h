@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.9.7
-//  发布:2018.03.11
+//  版本:3.9.8
+//  发布:2018.11.06
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
- 广告点击
+ 广告点击回调
 
  @param launchAd launchAd
  @param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)

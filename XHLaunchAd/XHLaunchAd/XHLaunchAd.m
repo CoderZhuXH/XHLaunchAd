@@ -162,6 +162,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 - (instancetype)init{
     self = [super init];
     if (self) {
+        XHWeakSelf
         [self setupLaunchAd];
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             [self setupLaunchAdEnterForeground];
@@ -170,10 +171,10 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             [self removeOnly];
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageWillShowNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            _detailPageShowing = YES;
+            weakSelf.detailPageShowing = YES;
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageShowFinishNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            _detailPageShowing = NO;
+            weakSelf.detailPageShowing = NO;
         }];
     }
     return self;

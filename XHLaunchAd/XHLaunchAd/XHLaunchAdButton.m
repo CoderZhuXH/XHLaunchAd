@@ -36,7 +36,7 @@
     if (self) {
         
         _skipType = skipType;
-        CGFloat y = XH_IPHONEX ? 44 : 20;
+        CGFloat y = XH_FULLSCREEN ? 44 : 20;
         //环形
         if(skipType == SkipTypeRoundTime || skipType ==SkipTypeRoundText || skipType == SkipTypeRoundProgressTime || skipType == SkipTypeRoundProgressText){
             self.frame = CGRectMake(XH_ScreenW-55,y, 42, 42);
@@ -175,7 +175,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if(roundDuration<=0){
                 self.roundLayer.strokeStart = 1;
-                DISPATCH_SOURCE_CANCEL_SAFE(_roundTimer);
+                DISPATCH_SOURCE_CANCEL_SAFE(self.roundTimer);
             }
             self.roundLayer.strokeStart += 1/(duration/period);
             roundDuration -= period;
