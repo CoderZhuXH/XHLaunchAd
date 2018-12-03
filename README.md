@@ -29,6 +29,29 @@
 ![](Logo/qqgroup.png)
 
 
+###  常见问题
+####    1.为什么设置了本地图片广告,却提示找不到图片资源?
+*   请将本地广告图片,直接放在工程目录,不要放在Assets里面,XHLaunchAd不是通过imageName:读取图片,而是是通过[NSBundle mainBundle] path....的方式读取本地图片的(此处涉及到内存优化)
+
+####    2.为什么我启动的时候会先进入根控制器后,再显示广告页面?
+*   请确认下,你在请求广告数据之前,是否有调用`[XHLaunchAd setWaitDataDuration:3];`方法设置数据等待时间
+
+####    3.为什么有时候启动广告倒计时出现跳秒现象或者出现卡顿现象?
+*   此问题是你APP启动时主线程阻塞造成的.
+*   XHLaunchAd采用GCD定时器,倒计时不受主线程阻塞影响,但更新秒数/UI是在主线程中进行的.主线程阻塞影响UI更新.
+*   请检查你程序启动时,有没有掉用同步方法或同步请求,(例如:环信SDK同步登录等).
+*   建议打开手机-设置-开发者-弱网环境 进行调试比较容易找到阻塞原因.
+
+####    4.为什么设置了缓存策略,关闭网络后,开屏广告却不显示?
+*   XHLaunchAd 图片广告设置configuration.imageOption为XHLaunchAdImageDefault 或者XHLaunchAdImageRefreshCached 或者XHLaunchAdImageCacheInBackground后,都会缓存广告image,视频广告会默认缓存视频文件,断网后广告数据请求会失败,你需要在广告数据请求失败的回调里初始化XHLaunchAd,没有初始化XHLaunchAd,开屏广告是不会显示的.
+[XHLaunchAd cacheImageURLString]和 [XHLaunchAd cacheVideoURLString]可以获取上一次广告显示时的ImageURLString和videoUrlString.
+
+####    5.如何用一张广告图,适配所有机型?
+*      1.图片广告:设置imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill;<br>
+       视频广告:设置videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
+*      2.广告图片/视频内容到四周保留适当安全距离,多余的会裁剪掉,例如:用8P尺寸1242*2208的广告图,在iphonex,iphonexr,iphonexs,iphonexs max上显示时,左右两侧会多出一部分,多出的的部分会裁剪掉,这一区域不要放广告内容.
+
+
 ### 更新记录:  
 
 *   2018.01.31 -- v3.9.6 -->1.添加视频广告静音属性(muted),2.显示视频广告时暂停其它APP音频播放显示完恢复,3.增加视频播放失败通知
@@ -644,20 +667,6 @@ configuration.customSkipView = [self customSkipView];
 }
 
 ```
-
-##  常见问题
-####    1.为什么设置了本地图片广告,却提示找不到图片资源?
-*   请将本地广告图片,直接放在工程目录,不要放在Assets里面,XHLaunchAd不是通过imageName:读取图片,而是是通过[NSBundle mainBundle] path....的方式读取本地图片的(此处涉及到内存优化)
-
-####    2.为什么我启动的时候会先进入根控制器后,再显示广告页面?
-*   请确认下,你在请求广告数据之前,是否有调用`[XHLaunchAd setWaitDataDuration:3];`方法设置数据等待时间
-
-####    3.为什么有时候启动广告倒计时出现跳秒现象或者出现卡顿现象?
-*   此问题是你APP启动时主线程阻塞造成的.
-*   XHLaunchAd采用GCD定时器,倒计时不受主线程阻塞影响,但更新秒数/UI是在主线程中进行的.主线程阻塞影响UI更新.
-*   请检查你程序启动时,有没有掉用同步方法或同步请求,(例如:环信SDK同步登录等).
-*   建议打开手机-设置-开发者-弱网环境 进行调试比较容易找到阻塞原因.
-
 
 
 ##  依赖
