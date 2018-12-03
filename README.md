@@ -47,9 +47,8 @@
 [XHLaunchAd cacheImageURLString]和 [XHLaunchAd cacheVideoURLString]可以获取上一次广告显示时的ImageURLString和videoUrlString.
 
 ####    5.如何用一张广告图,适配所有机型?
-*      1.图片广告:设置imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill;<br>
-       视频广告:设置videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
-*      2.广告图片/视频内容到四周保留适当安全距离,多余的会裁剪掉,例如:用8P尺寸1242*2208的广告图,在iphonex,iphonexr,iphonexs,iphonexs max上显示时,左右两侧会多出一部分,多出的的部分会裁剪掉,这一区域不要放广告内容.
+*      图片广告:设置imageAdconfiguration.contentMode = UIViewContentModeScaleAspectFill; 视频广告:设置videoAdconfiguration.videoGravity = AVLayerVideoGravityResizeAspectFill;
+*      广告图片/视频内容到四周保留适当安全距离,多余的会裁剪掉,例如:用8P尺寸1242*2208的广告图,在iphonex,iphonexr,iphonexs,iphonexs max上显示时,左右两侧会多出一部分,多出的的部分会裁剪掉,这一区域不要放广告内容.
 
 
 ### 更新记录:  
