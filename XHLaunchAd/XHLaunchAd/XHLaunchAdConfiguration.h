@@ -62,6 +62,9 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 /** 点击打开页面参数 */
 @property (nonatomic, strong) id openModel;
 
+/** 是否允许点击跳转(默认为允许) */
+@property (nonatomic,assign) BOOL allowTouch;
+
 /** 自定义跳过按钮(若定义此视图,将会自定替换系统跳过按钮) */
 @property(nonatomic,strong) UIView *customSkipView;
 
