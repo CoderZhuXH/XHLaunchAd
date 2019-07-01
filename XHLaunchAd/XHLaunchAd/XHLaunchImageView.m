@@ -74,19 +74,19 @@
 }
 
 -(UIImage *)launchImageWithType:(NSString *)type{
-    CGSize viewSize = [UIScreen mainScreen].bounds.size;
+    //比对分辨率,获取启动图 fix #158:https://github.com/CoderZhuXH/XHLaunchAd/issues/158
+    CGFloat screenScale = [UIScreen mainScreen].scale;
+    CGSize screenDipSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * screenScale, [UIScreen mainScreen].bounds.size.height * screenScale);
     NSString *viewOrientation = type;
-    NSString *launchImageName = nil;
     NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
     for (NSDictionary* dict in imagesDict){
-        CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
+        UIImage *image = [UIImage imageNamed:dict[@"UILaunchImageName"]];
+        CGSize imageDpiSize = CGSizeMake(CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
         if([viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]]){
             if([dict[@"UILaunchImageOrientation"] isEqualToString:@"Landscape"]){
-                imageSize = CGSizeMake(imageSize.height, imageSize.width);
+                imageDpiSize = CGSizeMake(imageDpiSize.height, imageDpiSize.width);
             }
-            if(CGSizeEqualToSize(imageSize, viewSize)){
-                launchImageName = dict[@"UILaunchImageName"];
-                UIImage *image = [UIImage imageNamed:launchImageName];
+            if(CGSizeEqualToSize(screenDipSize, imageDpiSize)){
                 return image;
             }
         }
