@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
 
 /**
+ 跳过按钮点击回调(注意:自定义跳过按钮不会走此回调)
+
+ @param launchAd launchAd
+ @param skipButton 跳过按钮
+ */
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickSkipButton:(UIButton *)skipButton;
+
+/**
  *  图片本地读取/或下载完成回调
  *
  *  @param launchAd  XHLaunchAd

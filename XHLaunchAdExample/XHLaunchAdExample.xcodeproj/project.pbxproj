@@ -127,6 +127,7 @@
 		4B1BBA931DF44C1D00E7839E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4B6CF2361D0E904900F76B47 /* ViewController.h */,
 				4B1BBA941DF44C1D00E7839E /* LaunchAdModel.h */,
 				4B1BBA951DF44C1D00E7839E /* LaunchAdModel.m */,
 			);
@@ -216,7 +217,6 @@
 			children = (
 				4B2784541DF544B300417DB2 /* Tools */,
 				4B1BBA931DF44C1D00E7839E /* Model */,
-				4B6CF2361D0E904900F76B47 /* ViewController.h */,
 				4B6CF2371D0E904900F76B47 /* ViewController.m */,
 				0C4412CF1ED7CC0B0065B6AE /* ViewController.xib */,
 				4B5C5C261D8118A700C18148 /* WebViewController.h */,
@@ -323,6 +323,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

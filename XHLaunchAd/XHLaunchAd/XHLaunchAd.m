@@ -303,7 +303,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         if(_skipButton == nil){
             _skipButton = [[XHLaunchAdButton alloc] initWithSkipType:configuration.skipButtonType];
             _skipButton.hidden = YES;
-            [_skipButton addTarget:self action:@selector(skipButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [_skipButton addTarget:self action:@selector(skipButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         }
         [_window addSubview:_skipButton];
         [_skipButton setTitleWithSkipType:configuration.skipButtonType duration:configuration.duration];
@@ -430,7 +430,10 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 }
 
 #pragma mark - Action
--(void)skipButtonClick{
+-(void)skipButtonClick:(XHLaunchAdButton *)button{
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickSkipButton:)]) {
+        [self.delegate xhLaunchAd:self clickSkipButton:button];
+    }
     [self removeAndAnimated:YES];
 }
 

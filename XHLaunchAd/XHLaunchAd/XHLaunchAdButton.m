@@ -37,12 +37,19 @@
         
         _skipType = skipType;
         CGFloat y = XH_FULLSCREEN ? 44 : 20;
-        //环形
-        if(skipType == SkipTypeRoundTime || skipType ==SkipTypeRoundText || skipType == SkipTypeRoundProgressTime || skipType == SkipTypeRoundProgressText){
-            self.frame = CGRectMake(XH_ScreenW-55,y, 42, 42);
-        }else{//方形
-             self.frame = CGRectMake(XH_ScreenW-80,y, 70, 35);
+        self.frame = CGRectMake(XH_ScreenW-80,y, 70, 35);//方形
+        switch (skipType) {
+            case SkipTypeRoundTime:
+            case SkipTypeRoundText:
+            case SkipTypeRoundProgressTime:
+            case SkipTypeRoundProgressText:{//环形
+                self.frame = CGRectMake(XH_ScreenW-55,y, 42, 42);
+            }
+                break;
+            default:
+                break;
         }
+        
         switch (skipType) {
             case SkipTypeNone:{
                 self.hidden = YES;
@@ -201,7 +208,7 @@
     if(topBottomSpace<=0 || topBottomSpace*2>= height) return;
     frame = CGRectMake(frame.origin.x, topBottomSpace, frame.size.width, height-2*topBottomSpace);
     self.timeLab.frame = frame;
-   [self cornerRadiusWithView:self.timeLab];
+    [self cornerRadiusWithView:self.timeLab];
 }
 
 -(void)cornerRadiusWithView:(UIView *)view{
