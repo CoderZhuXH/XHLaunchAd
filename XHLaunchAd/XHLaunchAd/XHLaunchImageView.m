@@ -55,7 +55,10 @@
     UIViewController *LaunchScreenSb = [[UIStoryboard storyboardWithName:UILaunchStoryboardName bundle:nil] instantiateInitialViewController];
     if(LaunchScreenSb){
         UIView * view = LaunchScreenSb.view;
-        view.frame = [UIScreen mainScreen].bounds;
+        UIWindow *containerWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        [containerWindow addSubview:view];
+        view.frame = containerWindow.bounds;
+        
         UIImage *image = [self imageFromView:view];
         return image;
     }
