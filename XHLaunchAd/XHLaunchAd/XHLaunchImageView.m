@@ -58,6 +58,7 @@
         UIWindow *containerWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         [containerWindow addSubview:view];
         view.frame = containerWindow.bounds;
+        [containerWindow layoutIfNeeded];
         
         UIImage *image = [self imageFromView:view];
         return image;
