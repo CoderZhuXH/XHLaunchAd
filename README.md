@@ -1,5 +1,7 @@
 ![](Logo/header.png)
 
+### Github下载不了/下载慢 可以访问国内下载地址: [https://gitee.com/CoderZhuXH/XHLaunchAd](https://gitee.com/CoderZhuXH/XHLaunchAd)
+
 ### 开屏广告、启动广告解决方案-支持静态/动态图片广告/mp4视频广告
 
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://github.com/CoderZhuXH/XHLaunchAd)
