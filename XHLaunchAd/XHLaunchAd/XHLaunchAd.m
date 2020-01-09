@@ -460,8 +460,8 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     }
 #pragma clang diagnostic pop
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenModel:clickPoint:)]) {
-        [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
-        [self removeAndAnimateDefault];
+        BOOL status = [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
+        if (status) [self removeAndAnimateDefault];
     }
 }
 
