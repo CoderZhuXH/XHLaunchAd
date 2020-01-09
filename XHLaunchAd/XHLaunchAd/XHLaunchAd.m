@@ -458,10 +458,14 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         [self.delegate xhLaunchAd:self clickAndOpenURLString:configuration.openURLString clickPoint:point];
         [self removeAndAnimateDefault];
     }
-#pragma clang diagnostic pop
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenModel:clickPoint:)]) {
-        BOOL status = [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
-        if (status) [self removeAndAnimateDefault];
+        [self.delegate xhLaunchAd:self clickAndOpenModel:configuration.openModel clickPoint:point];
+        [self removeAndAnimateDefault];
+    }
+#pragma clang diagnostic pop
+    if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAtOpenModel:clickPoint:)]) {
+        BOOL status =  [self.delegate xhLaunchAd:self clickAtOpenModel:configuration.openModel clickPoint:point];
+        if(status) [self removeAndAnimateDefault];
     }
 }
 

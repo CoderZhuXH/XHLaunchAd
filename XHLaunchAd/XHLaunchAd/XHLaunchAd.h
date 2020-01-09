@@ -6,8 +6,8 @@
 //  Copyright © 2016年 it7090.com. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHLaunchAd
 
-//  版本:3.9.9
-//  发布:2019.8.15
+//  版本:3.9.10
+//  发布:2020.01.09
 
 //  如果你在使用过程中出现bug,请及时以下面任意一种方式联系我，我会及时修复bug并帮您解决问题。
 //  QQ交流群:537476189
@@ -31,14 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
- 广告点击回调
+广告点击回调
 
- @param launchAd launchAd
- @param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)
- @param clickPoint 点击位置
- @return 返回布尔值，YES -> 移除，NO -> 不移除
- */
-- (BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
+@param launchAd launchAd
+@param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)
+@param clickPoint 点击位置
+@param return  YES移除广告,NO不移除
+*/
+- (BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAtOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
 
 /**
  跳过按钮点击回调(注意:自定义跳过按钮不会走此回调)
@@ -101,8 +101,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark - 过期-XHLaunchAdDelegate
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenModel:clickPoint:");
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAndOpenModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAtOpenModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString XHLaunchAdDeprecated("请使用xhLaunchAd:clickAtOpenModel:clickPoint:");
+- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenURLString:(NSString *)openURLString clickPoint:(CGPoint)clickPoint XHLaunchAdDeprecated("请使用xhLaunchAd:clickAtOpenModel:clickPoint:");
 -(void)xhLaunchAd:(XHLaunchAd *)launchAd imageDownLoadFinish:(UIImage *)image XHLaunchAdDeprecated("请使用xhLaunchAd:imageDownLoadFinish:imageData:");
 -(void)xhLaunchShowFinish:(XHLaunchAd *)launchAd XHLaunchAdDeprecated("请使用xhLaunchAdShowFinish:");
 
@@ -120,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)setLaunchSourceType:(SourceType)sourceType;
 
 /**
- *  设置等待数据源时间(建议值:3)
+ *  设置等待数据源时间(建议值:2)
  *
  *  @param waitDataDuration waitDataDuration
  */

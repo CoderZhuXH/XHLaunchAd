@@ -36,7 +36,7 @@
 *   请将本地广告图片,直接放在工程目录,不要放在Assets里面,XHLaunchAd不是通过imageName:读取图片,而是是通过[NSBundle mainBundle] path....的方式读取本地图片的(此处涉及到内存优化)
 
 ####    2.为什么我启动的时候会先进入根控制器后,再显示广告页面?
-*   请确认下,你在请求广告数据之前,是否有调用`[XHLaunchAd setWaitDataDuration:3];`方法设置数据等待时间
+*   请确认下,你在请求广告数据之前,是否有调用`[XHLaunchAd setWaitDataDuration:2];`方法设置数据等待时间
 
 ####    3.为什么有时候启动广告倒计时出现跳秒现象或者出现卡顿现象?
 *   此问题是你APP启动时主线程阻塞造成的.
@@ -55,6 +55,7 @@
 
 ### 更新记录:  
 
+*   2020.01.09 -- v3.9.10 -->1.广告点击事件代理支持返回bool值决定是否移除广告(- (BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAtOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint) 2.LaunchScreen.storyboard safeAreaInsets问题修复 3.其他bug fix
 *   2018.01.31 -- v3.9.6 -->1.添加视频广告静音属性(muted),2.显示视频广告时暂停其它APP音频播放显示完恢复,3.增加视频播放失败通知
 *   2018.01.11 -- v3.9.5 -->1.修复videoGravity修饰符错误bug...
 *   2017.12.29 -- v3.9.4 -->1.替换视频播放控制器为AVPlayerViewController 2.解决/优化在线程阻塞的情况下视频播放加载慢的问题 3.注意:此次更新后XHLaunchAd支持iOS8及以上版本,不在支持iOS7...
@@ -164,10 +165,10 @@
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
 	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
+    //2.设为2即表示:启动页将停留2s等待服务器返回广告数据,2s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
-    [XHLaunchAd setWaitDataDuration:3];
+    [XHLaunchAd setWaitDataDuration:2];
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -198,10 +199,10 @@
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
  	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
+    //2.设为2即表示:启动页将停留2s等待服务器返回广告数据,2s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
-    [XHLaunchAd setWaitDataDuration:3];
+    [XHLaunchAd setWaitDataDuration:2];
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -313,10 +314,10 @@
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
+    //2.设为2即表示:启动页将停留2s等待服务器返回广告数据,2s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
-    [XHLaunchAd setWaitDataDuration:3];
+    [XHLaunchAd setWaitDataDuration:2];
     
     //广告数据请求
     [Network getLaunchAdVideoDataSuccess:^(NSDictionary * response) {
@@ -347,10 +348,10 @@
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
 
  	//1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
+    //2.设为2即表示:启动页将停留2s等待服务器返回广告数据,2s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
-    [XHLaunchAd setWaitDataDuration:3];
+    [XHLaunchAd setWaitDataDuration:2];
     
     //广告数据请求
     [Network getLaunchAdVideoDataSuccess:^(NSDictionary * response) {
@@ -443,26 +444,26 @@ typedef NS_ENUM(NSInteger,SkipType) {
 ### 2.点击事件
 ```objc
 /**
-广告点击事件代理方法
-*/
--(void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
-
+ 广告点击事件回调(return YES移除广告,NO不移除广告)
+ */
+-(BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAtOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
+    
     NSLog(@"广告点击事件");
-
-    /** openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel) */
-     
-    if(openModel==nil) return;
-
+    
+    //openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel)
+    
+    if(openModel == nil) return NO;
+    
+    WebViewController *VC = [[WebViewController alloc] init];
     NSString *urlString = (NSString *)openModel;
-
-    //此处跳转页面
-    //WebViewController *VC = [[WebViewController alloc] init];
-    //VC.URLString = urlString;
-    ////此处不要直接取keyWindow
-    //UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
-    //[rootVC.myNavigationController pushViewController:VC animated:YES];
-
+    VC.URLString = urlString;
+    //此处不要直接取keyWindow
+    UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
+    [rootVC.myNavigationController pushViewController:VC animated:YES];
+    
+    return YES;//YES移除广告,NO不移除广告
 }
+
 
 ```
 ### 3.自定义跳过按钮
