@@ -36,8 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param launchAd launchAd
  @param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)
  @param clickPoint 点击位置
+ @return 返回布尔值，YES -> 移除，NO -> 不移除
  */
-- (void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
+- (BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
 
 /**
  跳过按钮点击回调(注意:自定义跳过按钮不会走此回调)
