@@ -59,26 +59,26 @@
 
 -(void)setupXHLaunchAd{
     
-    /** 1.图片开屏广告 - 网络数据 */
+    /*1.图片开屏广告 - 网络数据 */
     //[self example01];
     
-    //2.******图片开屏广告 - 本地数据******
+    /*2.图片开屏广告 - 本地数据*/
     [self example02];
     
-    //3.******视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行)******
+    /*3.视频开屏广告 - 网络数据(网络视频只支持缓存OK后下次显示,看效果请二次运行)*/
     //[self example03];
-
-    /** 4.视频开屏广告 - 本地数据 */
+    
+    /*4.视频开屏广告 - 本地数据 */
     //[self example04];
     
-    /** 5.如需自定义跳过按钮,请看这个示例 */
+    /*5.如需自定义跳过按钮,请看这个示例 */
     //[self example05];
     
-    /** 6.使用默认配置快速初始化,请看下面两个示例 */
+    /*6.使用默认配置快速初始化,请看下面两个示例 */
     //[self example06];//图片
     //[self example07];//视频
     
-    /** 7.如果你想提前批量缓存图片/视频请看下面两个示例 */
+    /*7.如果你想提前批量缓存图片/视频请看下面两个示例 */
     //[self batchDownloadImageAndCache]; //批量下载并缓存图片
     //[self batchDownloadVideoAndCache]; //批量下载并缓存视频
     
@@ -92,10 +92,11 @@
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
+    //2.设为2即表示:启动页将停留2s等待服务器返回广告数据,2s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
-    [XHLaunchAd setWaitDataDuration:3];
+    
+    [XHLaunchAd setWaitDataDuration:2];
     
     //广告数据请求
     [Network getLaunchAdImageDataSuccess:^(NSDictionary * response) {
@@ -188,10 +189,10 @@
     [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
     
     //1.因为数据请求是异步的,请在数据请求前,调用下面方法配置数据等待时间.
-    //2.设为3即表示:启动页将停留3s等待服务器返回广告数据,3s内等到广告数据,将正常显示广告,否则将不显示
+    //2.设为2即表示:启动页将停留2s等待服务器返回广告数据,2s内等到广告数据,将正常显示广告,否则将不显示
     //3.数据获取成功,配置广告数据后,自动结束等待,显示广告
     //注意:请求广告数据前,必须设置此属性,否则会先进入window的的根控制器
-    [XHLaunchAd setWaitDataDuration:3];
+    [XHLaunchAd setWaitDataDuration:2];
     
     //广告数据请求
     [Network getLaunchAdVideoDataSuccess:^(NSDictionary * response) {
@@ -293,9 +294,9 @@
     //广告停留时间
     imageAdconfiguration.duration = 5;
     //广告frame
-    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/1242*1786);
+    imageAdconfiguration.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width/400*711);
     //广告图片URLString/或本地图片名(.jpg/.gif请带上后缀)
-    imageAdconfiguration.imageNameOrURLString = @"image11.gif";
+    imageAdconfiguration.imageNameOrURLString = @"image12.gif";
     //缓存机制(仅对网络图片有效)
     imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
     //图片填充模式
@@ -460,22 +461,24 @@
 
 #pragma mark - XHLaunchAd delegate - 其他
 /**
- 广告点击事件回调
+ 广告点击事件回调(return YES移除广告,NO不移除广告)
  */
--(void)xhLaunchAd:(XHLaunchAd *)launchAd clickAndOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
-
+-(BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAtOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint{
+    
     NSLog(@"广告点击事件");
-
-    /** openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel) */
-     if(openModel==nil) return;
-
+    
+    //openModel即配置广告数据设置的点击广告时打开页面参数(configuration.openModel)
+    
+    if(openModel == nil) return NO;
+    
     WebViewController *VC = [[WebViewController alloc] init];
     NSString *urlString = (NSString *)openModel;
     VC.URLString = urlString;
     //此处不要直接取keyWindow
     UIViewController* rootVC = [[UIApplication sharedApplication].delegate window].rootViewController;
     [rootVC.myNavigationController pushViewController:VC animated:YES];
-
+    
+    return YES;//YES移除广告,NO不移除广告
 }
 
 /**

@@ -15,7 +15,6 @@
 		4B5C5C291D8118A700C18148 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C5C271D8118A700C18148 /* WebViewController.m */; };
 		4B63D27C1DF2DDAD00FA2520 /* image0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4B63D26C1DF2DDAD00FA2520 /* image0.jpg */; };
 		4B63D27D1DF2DDAD00FA2520 /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4B63D26D1DF2DDAD00FA2520 /* image1.jpg */; };
-		4B63D27E1DF2DDAD00FA2520 /* image11.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4B63D26E1DF2DDAD00FA2520 /* image11.gif */; };
 		4B63D27F1DF2DDAD00FA2520 /* image12.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4B63D26F1DF2DDAD00FA2520 /* image12.gif */; };
 		4B63D2801DF2DDAD00FA2520 /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4B63D2701DF2DDAD00FA2520 /* image2.jpg */; };
 		4B63D2811DF2DDAD00FA2520 /* image3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4B63D2711DF2DDAD00FA2520 /* image3.jpg */; };
@@ -58,7 +57,6 @@
 		4B5C5C271D8118A700C18148 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		4B63D26C1DF2DDAD00FA2520 /* image0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image0.jpg; sourceTree = "<group>"; };
 		4B63D26D1DF2DDAD00FA2520 /* image1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpg; sourceTree = "<group>"; };
-		4B63D26E1DF2DDAD00FA2520 /* image11.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = image11.gif; sourceTree = "<group>"; };
 		4B63D26F1DF2DDAD00FA2520 /* image12.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = image12.gif; sourceTree = "<group>"; };
 		4B63D2701DF2DDAD00FA2520 /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
 		4B63D2711DF2DDAD00FA2520 /* image3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpg; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 			children = (
 				4B63D26C1DF2DDAD00FA2520 /* image0.jpg */,
 				4B63D26D1DF2DDAD00FA2520 /* image1.jpg */,
-				4B63D26E1DF2DDAD00FA2520 /* image11.gif */,
 				4B63D26F1DF2DDAD00FA2520 /* image12.gif */,
 				4B63D2701DF2DDAD00FA2520 /* image2.jpg */,
 				4B63D2711DF2DDAD00FA2520 /* image3.jpg */,
@@ -343,7 +340,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C4412D01ED7CC0B0065B6AE /* ViewController.xib in Resources */,
-				4B63D27E1DF2DDAD00FA2520 /* image11.gif in Resources */,
 				4B63D2841DF2DDAD00FA2520 /* LaunchImageAd.json in Resources */,
 				4B63D2871DF2DDAD00FA2520 /* video0.mp4 in Resources */,
 				4B63D2881DF2DDAD00FA2520 /* video1.mp4 in Resources */,
