@@ -11,8 +11,13 @@
 #import "XHLaunchAdImageView+XHLaunchAdCache.h"
 #import "XHLaunchAdDownloader.h"
 #import "XHLaunchAdCache.h"
-#import "FLAnimatedImage.h"
 #import "XHLaunchAdController.h"
+
+#if __has_include(<FLAnimatedImage/FLAnimatedImage.h>)
+    #import <FLAnimatedImage/FLAnimatedImage.h>
+#else
+    #import "FLAnimatedImage.h"
+#endif
 
 typedef NS_ENUM(NSInteger, XHLaunchAdType) {
     XHLaunchAdTypeImage,

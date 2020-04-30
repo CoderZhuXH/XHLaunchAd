@@ -12,15 +12,15 @@
 #import <AVKit/AVKit.h>
 
 #if __has_include(<FLAnimatedImage/FLAnimatedImage.h>)
-#import <FLAnimatedImage/FLAnimatedImage.h>
+    #import <FLAnimatedImage/FLAnimatedImage.h>
 #else
-#import "FLAnimatedImage.h"
+    #import "FLAnimatedImage.h"
 #endif
 
 #if __has_include(<FLAnimatedImage/FLAnimatedImageView.h>)
-#import <FLAnimatedImage/FLAnimatedImageView.h>
+    #import <FLAnimatedImage/FLAnimatedImageView.h>
 #else
-#import "FLAnimatedImageView.h"
+    #import "FLAnimatedImageView.h"
 #endif
 
 
