@@ -77,11 +77,12 @@
     CGSize size = view.bounds.size;
     //参数1:表示区域大小 参数2:如果需要显示半透明效果,需要传NO,否则传YES 参数3:屏幕密度
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    if ([view respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
-        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-    }else{
-        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    }
+    /**
+     基于以下Issues反馈暂不使用drawViewHierarchyInRect:afterScreenUpdates:方法截图
+     1、如果直接在AppDelgate里直接初始化XHLaunchAd，该方法截图失败返回NO(https://github.com/CoderZhuXH/XHLaunchAd/issues/206)；
+     2、有人反馈在iOS 11.4真机crash(https://github.com/CoderZhuXH/XHLaunchAd/issues/208)。
+     */
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
