@@ -453,6 +453,9 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 -(void)clickAndPoint:(CGPoint)point{
     self.clickPoint = point;
     XHLaunchAdConfiguration * configuration = [self commonConfiguration];
+    if(configuration.allowTouch == NO) {
+        return;
+    }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if ([self.delegate respondsToSelector:@selector(xhLaunchAd:clickAndOpenURLString:)]) {
