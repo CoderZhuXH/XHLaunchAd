@@ -20,6 +20,7 @@
 #define XH_IPHONEXSMAX    ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
 #define XH_FULLSCREEN ((XH_IPHONEX || XH_IPHONEXR || XH_IPHONEXSMAX) ? YES : NO)
 
+#define XH_SAFEAREAINSETS ((([[UIDevice currentDevice].systemVersion floatValue] >= 11) && [UIApplication sharedApplication].keyWindow.safeAreaInsets.top >= 44) ? [UIApplication sharedApplication].keyWindow.safeAreaInsets : UIEdgeInsetsMake(20, 0, 0, 0))
 
 #define XHISURLString(string)  ([string hasPrefix:@"https://"] || [string hasPrefix:@"http://"]) ? YES:NO
 #define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES
