@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @param launchAd launchAd
 @param openModel 打开页面参数(此参数即你配置广告数据设置的configuration.openModel)
 @param clickPoint 点击位置
-@param return  YES移除广告,NO不移除
+@return YES移除广告,NO不移除
 */
 - (BOOL)xhLaunchAd:(XHLaunchAd *)launchAd clickAtOpenModel:(id)openModel clickPoint:(CGPoint)clickPoint;
 
@@ -204,6 +204,11 @@ NS_ASSUME_NONNULL_BEGIN
  @param animated 是否需要动画
  */
 +(void)removeAndAnimated:(BOOL)animated;
+
+/**
+ 手动显示广告
+ */
++(void)showAd;
 
 #pragma mark - 是否已缓存
 /**

@@ -92,6 +92,10 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     [[XHLaunchAd shareLaunchAd] removeAndAnimated:animated];
 }
 
++(void)showAd{
+    [[XHLaunchAd shareLaunchAd] showAd];
+}
+
 +(BOOL)checkImageInCacheWithURL:(NSURL *)url{
     return [XHLaunchAdCache checkImageInCacheWithURL:url];
 }
@@ -168,7 +172,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     self = [super init];
     if (self) {
         XHWeakSelf
-        [self setupLaunchAd];
+        [self setupLaunchAd:NO];
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             [self setupLaunchAdEnterForeground];
         }];
@@ -186,16 +190,24 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 }
 
 -(void)setupLaunchAdEnterForeground{
+    [self setupLaunchAd:NO];
+}
+
+-(void)setupLaunchAd:(BOOL)isManual{
     switch (_launchAdType) {
         case XHLaunchAdTypeImage:{
-            if(!_imageAdConfiguration.showEnterForeground || _detailPageShowing) return;
-            [self setupLaunchAd];
+            if (!isManual) {
+                if(!_imageAdConfiguration.showEnterForeground || _detailPageShowing) return;
+            }
+            [self setupLaunchAdView];
             [self setupImageAdForConfiguration:_imageAdConfiguration];
         }
             break;
         case XHLaunchAdTypeVideo:{
-            if(!_videoAdConfiguration.showEnterForeground || _detailPageShowing) return;
-            [self setupLaunchAd];
+            if (!isManual) {
+                if(!_videoAdConfiguration.showEnterForeground || _detailPageShowing) return;
+            }
+            [self setupLaunchAdView];
             [self setupVideoAdForConfiguration:_videoAdConfiguration];
         }
             break;
@@ -204,7 +216,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     }
 }
 
--(void)setupLaunchAd{
+-(void)setupLaunchAdView{
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     window.rootViewController = [XHLaunchAdController new];
     window.rootViewController.view.backgroundColor = [UIColor clearColor];
@@ -448,6 +460,10 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     }else{
         [self remove];
     }
+}
+
+-(void)showAd{
+    [self setupLaunchAd:YES];
 }
 
 -(void)clickAndPoint:(CGPoint)point{
